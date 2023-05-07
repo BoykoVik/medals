@@ -17,6 +17,9 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  backdrop-filter: blur(32px);
+  position: sticky;
+  top: 0;
 }
 .links-one {
   display: flex;
@@ -31,7 +34,6 @@ a {
 .link-one {
   width: 180px;
   height: 100%;
-  background-color: aqua;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,22 +41,45 @@ a {
   font-family: 'Inter', sans-serif;
   font-size: 18px;
   color: #000;
+  border-radius: 5px 5px 0 0;
 }
 .link-one:hover {
-  background-color: blueviolet;
+  background-color: rgba(98, 98, 98, 0.278);
 }
 .links-two {
   display: none;
   flex-direction: column;
   position: absolute;
   top: 100%;
+  max-height: 50vh;
   max-width: 1000px;
+  white-space: nowrap;
+  background-color: rgba(98, 98, 98, 0.164);
+  border-radius: 0 0 5px 5px;
+  animation: ani 0.5s forwards;
+  animation-duration: 0.5s;
 }
 .links-two .link-two {
+  min-width: 170px;
+  padding: 2px 5px 2px 5px;
   color: #000;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
 }
 .links-two .link-two:hover {
   background-color: beige;
+}
+@keyframes ani {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.box {
+  width: 100%;
+  height: 300px;
+  background-color: coral;
+  border: 3px black solid;
 }
