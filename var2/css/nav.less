@@ -63,9 +63,11 @@
     flex-wrap: wrap;
     position: absolute;
     top: 100%;
+    left: 0;
     white-space: nowrap;
     background-color: rgba(249, 246, 246, 0.852);
     border-radius: 0 0 5px 5px;
+    
     animation: ani 0.5s forwards;
     animation-duration: 0.5s;
     .link-two {
@@ -74,9 +76,10 @@
         color: @blackcolor;
         font-family: 'Inter', sans-serif;
         font-size: 15px;
+        transition: all 0.3s;
     }
     .link-two:hover {
-        background-color: rgba(246, 100, 219, 0.359);
+        background-color: rgba(178, 172, 172, 0.852);
     }
 }
 @keyframes ani {
