@@ -245,7 +245,20 @@ h2 {
   margin-left: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
+}
+.contacts-column a {
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  color: #000;
+  width: 100%;
+}
+.contact-icon {
+  width: 40px;
+  margin-right: 10px;
 }
 .card {
   width: 240px;
