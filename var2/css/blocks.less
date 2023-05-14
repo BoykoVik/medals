@@ -105,6 +105,8 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .contacts-column {
     margin-left: 10px;
@@ -112,13 +114,23 @@
     flex-direction: column;
     justify-content: center;
     a {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
         color: @blackcolor;
         width: 100%;
+        img {
+            filter: contrast(40%);
+            transition: all 0.5s;
+        }
+        &:hover {
+            font-weight: 700;
+        }
+        &:hover img {
+            filter: contrast(200%);
+        }
     }
 }
 .contact-icon {

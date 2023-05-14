@@ -240,6 +240,8 @@ h2 {
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .contacts-column {
   margin-left: 10px;
@@ -248,13 +250,23 @@ h2 {
   justify-content: center;
 }
 .contacts-column a {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   color: #000;
   width: 100%;
+}
+.contacts-column a img {
+  filter: contrast(40%);
+  transition: all 0.5s;
+}
+.contacts-column a:hover {
+  font-weight: 700;
+}
+.contacts-column a:hover img {
+  filter: contrast(200%);
 }
 .contact-icon {
   width: 40px;
