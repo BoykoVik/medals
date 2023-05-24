@@ -1,0 +1,16 @@
+@import "vendor/reset";
+
+// sys
+@import "sys/vars";
+
+// blocks
+@import "blocks/header";
+@import "blocks/nav";
+@import "blocks/blocks";
+@import "blocks/card";
+@import "blocks/main";
+@import "blocks/slider";
+@import "blocks/footer";
+
+// ui
+@import "ui/button";
