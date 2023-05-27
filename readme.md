@@ -1,4 +1,10 @@
 # Start using
+
+#### Установить зависимости
+```shell
+npm run i
+```
+
 #### Development
 ```shell
 npm run dev
