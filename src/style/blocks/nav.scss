@@ -1,5 +1,4 @@
 .nav {
-    position: relative;
     border-top: 1px solid;
     border-bottom: 1px solid;
     border-color: #dcd7cf;
@@ -28,6 +27,7 @@
 
 // категории
 .nav-categories {
+    position: relative;
     &:hover {
         .nav-categories-list {
             display: block;
@@ -53,25 +53,42 @@
         background-color: darken($primary, 10%);
         color: $white;
     }
-    
-
 }
 
 .nav-categories-list {
     display: none;
     position: absolute;
-    background-color: $gray;
-    width: 100%;
+    background-color: #f1f1f1;
+    width: 200%;
+    top: 100%;
     left: 0;
+    z-index: 1000;
+    border-radius: 0 0 $border-radius $border-radius;
 
     &-wrapper {
         padding: 1rem 0;
     }
 }
 
+.nav-category {
+    display: block;
+    color: $text;
+
+    @include transition;
+
+    &:hover {
+        color: $primary;
+    }
+
+    & + & {
+        margin-top: 1rem;
+    }
+}
+
 // меню и навигация по сайту
 .nav-menu {
     display: none;
+    z-index: 1001;
 
     // открытое меню в мобильной версии
     @include media-breakpoint-down($lg) {
