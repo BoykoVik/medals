@@ -1,0 +1,31 @@
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+// до breackpoint включительно - [0; breakpoint]
+@mixin media-breakpoint-down($breakpoint) {
+    @media (max-width: $breakpoint) {
+        @content;
+    }
+}
+
+// от breackpoint включительно - [breakpoint; inf)
+@mixin media-breakpoint-up($breakpoint) {
+    @media (min-width: $breakpoint) {
+        @content;
+    }
+}
+
+// между start и end - [start; end)
+@mixin media-breakpoint-between($start, $end) {
+    @media (min-width:$start) and (max-width:calc($end - 1px)) {
+        @content;
+    }
+}
+
+@mixin transition() {
+    transition: all .25s ease-in-out;
+}

@@ -1,7 +1,11 @@
 @import "vendor/reset";
 
+// vendor
+@import "vendor/reset";
+
 // sys
 @import "sys/vars";
+@import "sys/mixins";
 
 // blocks
 @import "blocks/header";
@@ -14,3 +18,55 @@
 
 // ui
 @import "ui/button";
+
+// -------------------------- base
+*,
+*:before
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    background-color: #fff;
+}
+
+// -------------------------- container
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
