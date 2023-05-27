@@ -12,8 +12,3 @@ $('.nav-menu-link').click(function (e) {
         $container.attr('data-is-opened', '1')
     }
 })
-
-$('#nav-menu').click(function (e) {
-    console.log(123123)
-    $(this).attr('data-is-opened', '0')
-})

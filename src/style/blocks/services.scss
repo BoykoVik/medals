@@ -1,0 +1,83 @@
+.services {
+    padding: 3rem 0;
+    background-color: #f1f1f1;
+}
+
+.service-title {
+    margin-bottom: 1rem;
+}
+
+.service-item {
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include transition;
+
+
+    &:hover {
+        @include media-breakpoint-up($md) {
+            .service-item-img {
+                filter: brightness(0.5);
+                transform: scale(1.05);
+            }
+        }
+
+        .service-item-link {
+            opacity: 1;
+        }
+
+    }
+}
+
+.service-item-title {
+    z-index: 10;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+
+    font-weight: 500;
+    top: 0;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.55);
+
+    a {
+        color: $white;
+    }
+}
+
+.service-item-img {
+    filter: brightness(0.8);
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    transition: all .3s ease-in-out;
+}
+
+.service-item-link {
+    position: absolute;
+    opacity: 0;
+
+    padding: 0.5rem 1rem;
+    background-color: rgba(213, 213, 213, 0.87);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $text;
+    border-radius: $border-radius;
+
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        color: $primary;
+    }
+}
