@@ -1,0 +1,41 @@
+.contacts {
+    margin-top: 3rem;
+}
+
+.contacts-title {
+    margin-bottom: 2rem;
+}
+
+.contacts-map {
+    iframe {
+        width: 100%;
+    }
+}
+
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    //height: 100%;
+
+    @include media-breakpoint-up($md) {
+        height: 100%;
+    }
+}
+
+.contacts-list-item {
+    color: $text;
+
+    @include transition;
+
+    &:hover {
+        color: $primary;
+        cursor: pointer;
+    }
+
+    i {
+        width: 35px;
+        text-align: center;
+    }
+}
