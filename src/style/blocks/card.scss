@@ -11,7 +11,6 @@
         "img"
         "img"
         "title"
-        "price"
         "actions"
 }
 
@@ -32,16 +31,18 @@
 }
 
 .card-price {
-    grid-area: price;
-
     color: $primary;
     font-weight: 500;
+    margin-bottom: 0;
 }
 
 .card-actions {
     grid-area: actions;
     display: flex;
-    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px 0;
 }
 
 .card-number {
@@ -55,11 +56,7 @@
 }
 
 .card-cart {
-    //margin-left: 10px;
-
-    min-width: 115px;
-    max-width: 115px;
-    padding: 0.3rem;
+    padding: 0.3rem 1rem;
     background-color: $primary;
     display: flex;
     align-items: center;

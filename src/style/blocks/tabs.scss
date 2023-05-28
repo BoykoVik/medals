@@ -27,6 +27,7 @@
     gap: 10px;
 
     @include transition;
+    @include select-off;
     
     &:hover {
         cursor: pointer;

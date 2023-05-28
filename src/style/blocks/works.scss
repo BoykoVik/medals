@@ -1,0 +1,101 @@
+.works {
+    margin-top: 2rem;
+}
+
+.works-slide {
+    margin-top: 2rem;
+    height: 300px;
+}
+
+.works-control {
+    color: $white;
+    width: 50px;
+    opacity: 1;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.24);
+    }
+
+
+    @include transition;
+
+
+    @include media-breakpoint-up($md) {
+        color: $primary!important;
+        width: 100px;
+
+        &-prev {
+            left: -100px;
+        }
+
+        &-next {
+            right: -100px;
+        }
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.works-item-img {height: 300px;
+    object-fit: cover;
+}
+
+.works-item-content {
+    position: absolute;
+    right: 20%;
+    left: 20%;
+    top: 50px;
+    bottom: 50px;
+    background-color: rgba(0, 0, 0, 0.63);
+    padding: 2rem;
+
+    @include media-breakpoint-up($md) {
+        left: unset;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 40%;
+    }
+}
+
+.works-item-title {
+    font-weight: 500;
+    color: $white;
+    font-size: 1.3rem;
+
+    @include media-breakpoint-up($md) {
+        font-size: 1.5rem;
+    }
+}
+
+.works-item-text {
+    color: $white;
+    font-size: 0.8rem;
+
+    @include media-breakpoint-up($md) {
+        font-size: 1rem;
+    }
+}
+
+.works-item-link {
+    display: inline;
+    padding: 0.3rem 1rem;
+    background-color: $primary;
+    color: $white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: $border-radius;
+    width: 110px;
+
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        background-color: darken($primary, 10%);
+        color: $white;
+    }
+}
