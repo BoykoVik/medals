@@ -1,0 +1,94 @@
+.tabs {
+    padding: 3rem 0;
+}
+
+// панель
+.tabs-panel {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid;
+    border-color: #dcd7cf;
+}
+
+.tabs-panel-item {
+    padding: 0.3rem 1rem;
+    color: $text;
+    border-radius: $border-radius;
+    font-weight: 500;
+    background-color: $white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    @include transition;
+    
+    &:hover {
+        cursor: pointer;
+        color: $primary;
+    }
+
+    &[data-is-active="1"] {
+        background-color: $primary;
+        color: $white;
+    }
+}
+
+.tabs-panel-item--sale {
+    padding: 0.3rem 1rem;
+    color: $danger;
+    border-radius: $border-radius;
+    font-weight: 500;
+    background-color: $danger-light;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    @include transition;
+
+    &:hover {
+        cursor: pointer;
+        color: $danger;
+        background-color: darken($danger-light, 5%);
+    }
+
+    &[data-is-active="1"] {
+        background-color: darken($danger-light, 5%);
+        color: $danger;
+    }
+}
+
+// контент
+.tabs-content {
+    margin-top: 1rem;
+}
+
+.tabs-content-item {
+
+    &[data-is-active="1"] {
+        display: block;
+    }
+
+    &[data-is-active="0"] {
+        display: none;
+    }
+}
+
+.tabs-content-item-plug {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+    font-weight: 500;
+    color: $gray;
+    background-color: $gray-light;
+    border-radius: $border-radius;
+    font-size: 1.3rem;
+}

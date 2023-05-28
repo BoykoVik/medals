@@ -1,67 +1,77 @@
 .card {
-    width: 240px;
+    padding: 1rem;
+    border: none;
+    background-color: $gray-light;
+    border-radius: $border-radius;
+
+    @include shadow;
+
+    display: grid;
+    grid-template-areas:
+        "img"
+        "img"
+        "title"
+        "price"
+        "actions"
+}
+
+.card-img {
+    grid-area: img;
+    border-radius: $border-radius;
+
+    height: 250px;
+    object-position: center;
+    object-fit: contain;
+}
+
+.card-title {
+    grid-area: title;
+    font-weight: 500;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card-price {
+    grid-area: price;
+
+    color: $primary;
+    font-weight: 500;
+}
+
+.card-actions {
+    grid-area: actions;
     display: flex;
-    flex-direction: column;
+    gap: 10px;
+}
+
+.card-number {
+    input {
+        width: 100%;
+        height: 100%;
+        border: 1px solid $gray;
+        border-radius: $border-radius;
+        padding: 0.3rem;
+    }
+}
+
+.card-cart {
+    //margin-left: 10px;
+
+    min-width: 115px;
+    max-width: 115px;
+    padding: 0.3rem;
+    background-color: $primary;
+    display: flex;
     align-items: center;
-    border-radius: $main-border-radius;
-    cursor: pointer;
-    transition: all 0.5s;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 10px;
+    border-radius: $border-radius;
+    color: $white;
+    outline: none;
 
-    .card-img {
-        margin-top: 10px;
-        width: 220px;
-        height: 220px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-            max-width: 220px;
-            max-height: 220px;
-            width: auto;
-            height: auto;
-        }
-    }
-
-    .card-about, .price {
-        margin-top: 10px;
-        width: 200px;
-        display: flex;
-    }
-
-    .card-about {
-        align-items: center;
-        justify-content: center;
-        height: 40px;
-        font-weight: 100;
-    }
-
-    .price {
-        justify-content: space-between;
-        align-items: center;
-        height: 50px;
-    }
-
-    .tocatd {
-        width: 100px;
-        height: 30px;
-        border-radius: $main-border-radius;
-        background-color: rgba(0, 0, 0, 0.212);
-        border-color: rgba(0, 0, 0, 0.202);
-        cursor: pointer;
-        transition: all 0.5s;
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.364);
-            border-color: rgba(0, 0, 0, 0.355);
-        }
-    }
+    @include transition;
 
     &:hover {
-        background-color: rgb(255, 255, 255);
-        -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-        -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-        box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+        background-color: darken($primary, 10%);
     }
 }
