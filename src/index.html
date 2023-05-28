@@ -90,8 +90,9 @@
                 </div>
 
                 <!-- корзина -->
-                <div class="nav-cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                <div id="cart" class="nav-cart">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                    <div class="nav-cart-count" data-is-active="0"></div>
                 </div>
             </div>
         </div>
@@ -128,24 +129,6 @@
 <!--                <a href="" class="link-two">Награды Федерального Агентство Правительственной Связи и Информации</a>-->
 <!--            </div>-->
 <!--        </div>-->
-
-<!--        <div class="links-one">-->
-<!--            <a href="" class="link-one">Жетоны</a>-->
-<!--        </div>-->
-
-<!--        <div class="links-one">-->
-<!--            <a href="" class="link-one">Сувенирные жетоны</a>-->
-<!--        </div>-->
-
-<!--        <div class="links-one">-->
-<!--            <a href="" class="link-one">Лазерная гравировка</a>-->
-<!--        </div>-->
-
-<!--        <form action="">-->
-<!--            <input type="text" placeholder="Поиск.." name="search">-->
-<!--            <button type="submit">🡆</button>-->
-<!--        </form>-->
-
     </div>
 
     <section class="section services">
@@ -241,8 +224,9 @@
                     <div class="row" style="gap: 20px 0">
 
                         <!-- это карточка -->
+                        <!-- у каждой карточки должен быть атрибут data-id со значением id товара из базы данных -->
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card">
+                            <div class="card" data-id="1">
                                 <img class="card-img" src="images/k9lybkkagycythkhqplb1687wzhq3bfq.jpg" alt="">
                                 <h3 class="card-title">Жетон сувенирный ПВО</h3>
 
@@ -257,7 +241,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card">
+                            <div class="card" data-id="2">
                                 <img class="card-img" src="images/jeton.png" alt="">
                                 <h3 class="card-title">Жетон сувенирный</h3>
 
@@ -272,7 +256,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card">
+                            <div class="card" data-id="3">
                                 <img class="card-img" src="images/planka1.png" alt="">
                                 <h3 class="card-title">Планка</h3>
 
@@ -287,7 +271,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="card">
+                            <div class="card" data-id="4">
                                 <img class="card-img" src="images/sh.jpg" alt="">
                                 <h3 class="card-title">Жетон</h3>
 

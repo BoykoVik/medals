@@ -163,6 +163,7 @@
 
 // корзина
 .nav-cart {
+    position: relative;
     float: right;
     padding: 0.3rem 0.6rem;
     border-radius: $border-radius;
@@ -175,8 +176,28 @@
     @include transition;
 
     &:hover {
-        background-color: $primary;
-        color: $white;
+        color: darken($primary, 10%);
         cursor: pointer;
+    }
+}
+
+.nav-cart-count {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    font-size: 10px;
+    background-color: $danger;
+    color: $white;
+    width: 20px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    display: none;
+
+    &[data-is-active='1'] {
+        display: flex;
     }
 }
