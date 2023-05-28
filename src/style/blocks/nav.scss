@@ -1,4 +1,9 @@
 .nav {
+    position: sticky;
+    z-index: 1000;
+    background-color: #f1f1f1;;
+    top: 0;
+
     border-top: 1px solid;
     border-bottom: 1px solid;
     border-color: #dcd7cf;
@@ -89,13 +94,14 @@
 
 // меню и навигация по сайту
 .nav-menu {
+    position: relative;
     display: none;
     z-index: 1001;
 
     // открытое меню в мобильной версии
     @include media-breakpoint-down($lg) {
         &[data-is-opened="1"] {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -117,7 +123,6 @@
     }
 
     @include media-breakpoint-up($lg) {
-
         display: contents;
         height: 100%;
     }
@@ -158,6 +163,31 @@
 
     &:hover {
         color: $primary;
+    }
+}
+
+.nav-menu-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: $white;
+
+    @include media-breakpoint-up($md) {
+        display: none;
+    }
+    
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.nav-search {
+    background-color: $white;
+    border-radius: $border-radius;
+
+
+    @include media-breakpoint-up($md) {
+        display: none;
     }
 }
 

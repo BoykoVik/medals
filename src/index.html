@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-6 col-md-5">
+                <div class="col-12 col-sm-12 col-md-5">
                     <div class="header-callback">
                         <div class="header-callback-phone">
                             <a href="tel:+79652960909"><i class="fa-solid fa-phone"></i>8 (965) 296-09-09</a>
@@ -40,12 +40,14 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="header-search">
-                        <input class="header-search-input" type="text" value="" placeholder="Поиск по сайту"/>
-                        <a class="header-search-btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
+                <div class="col-md-4 d-none d-md-block">
+                    <div class="site-search" data-method="GET" data-url="search">
+                        <form action="search" method="get">
+                            <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                            <a class="site-search-btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                        </form>
                     </div>
                 </div>
 
@@ -77,7 +79,20 @@
                     <!-- меню -->
                     <a href="" class="nav-item nav-menu-link"><i class="fa-solid fa-grip"></i>Меню</a>
                     <div id="nav-menu" class="nav-menu" data-is-opened="0">
-                        <a href="" class="nav-link">О нас</a>
+                        <div class="nav-menu-close fa-xl">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+
+                        <div class="site-search nav-search" data-method="GET" data-url="search">
+                            <form action="search" method="get">
+                                <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                                <a class="site-search-btn">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </a>
+                            </form>
+                        </div>
+
+                        <a href="#" class="nav-link">О нас</a>
                         <a href="" class="nav-link">Новости</a>
                         <a href="" class="nav-link">Оплата</a>
                         <a href="" class="nav-link">Доставка</a>

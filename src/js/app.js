@@ -9,13 +9,20 @@ $('.nav-menu-link').click(function (e) {
     e.preventDefault()
 
     const $container = $('#nav-menu')
+    $container.attr('data-is-opened', '1')
+    $('body').css('overflow', 'hidden')
+})
 
-    if ($container.attr('data-is-opened') === '1') {
-        $container.attr('data-is-opened', '0')
-    }
-    else {
-        $container.attr('data-is-opened', '1')
-    }
+$('.nav-menu-close').click(function (e) {
+    e.preventDefault()
+
+    $('#nav-menu').attr('data-is-opened', '0')
+    $('body').css('overflow', 'initial')
+})
+
+$('.nav-link').click(function (e) {
+    $('#nav-menu').attr('data-is-opened', '0')
+    $('body').css('overflow', 'initial')
 })
 
 // вкладки
@@ -71,3 +78,16 @@ function updateCart() {
         $cartCount.text('')
     }
 }
+
+// поиск по сайту
+$('.site-search-btn').click(function (e) {
+    const $form = $(this).closest('form')
+    const $input = $form.find('input')
+
+    if ($input.val() === '') {
+        $input.focus()
+    }
+    else {
+        $(this).closest('form').submit()
+    }
+})
