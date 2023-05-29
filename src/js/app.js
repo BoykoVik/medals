@@ -40,6 +40,12 @@ $('.tabs-panel-item').click(function (e) {
 
 // корзина
 $('.card').find('.card-cart').click(function (e) {
+    // e.stopPropagation()
+    // e.stopImmediatePropagation()
+    e.preventDefault()
+
+    console.log(e.target)
+
     const $root = $(this).closest('.card')
     const id = $root.attr('data-id')
 
@@ -54,6 +60,8 @@ $('.card').find('.card-cart').click(function (e) {
 
     localStorage.setItem(id, count)
     updateCart()
+
+    $('#cart').effect( "shake" )
 })
 
 function updateCart() {

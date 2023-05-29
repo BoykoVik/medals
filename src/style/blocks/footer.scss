@@ -26,6 +26,14 @@
         border: none;
         padding: 0;
     }
+
+    a {
+        color: $white;
+
+        &:hover {
+            color: $white;
+        }
+    }
 }
 
 // links

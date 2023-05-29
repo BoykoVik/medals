@@ -53,10 +53,12 @@
     background-color: $primary;
 
     @include transition;
+    @include select-off;
 
     &:hover {
         background-color: darken($primary, 10%);
         color: $white;
+        cursor: pointer;
     }
 }
 
@@ -193,7 +195,7 @@
 
 // корзина
 .nav-cart {
-    position: relative;
+
     float: right;
     padding: 0.3rem 0.6rem;
     border-radius: $border-radius;
@@ -211,11 +213,15 @@
     }
 }
 
+.nav-cart-icon {
+    position: relative;
+}
+
 .nav-cart-count {
     position: absolute;
-    top: -5px;
-    right: 0;
-    font-size: 10px;
+    top: -20px;
+    right: -10px;
+    font-size: 9px!important;
     background-color: $danger;
     color: $white;
     width: 20px;

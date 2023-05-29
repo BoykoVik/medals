@@ -1,17 +1,23 @@
 .card {
     padding: 1rem;
     border: none;
-    background-color: $gray-light;
+    background-color: $white;
     border-radius: $border-radius;
 
     @include shadow;
+    @include transition;
 
     display: grid;
     grid-template-areas:
         "img"
         "img"
         "title"
-        "actions"
+        "actions";
+
+    &:hover {
+        cursor: pointer;
+        @include shadow-primary;
+    }
 }
 
 .card-img {
@@ -28,6 +34,13 @@
     font-weight: 500;
     margin-top: 1rem;
     margin-bottom: 2rem;
+    color: $text;
+
+    @include transition;
+
+    &:hover {
+        color: $primary;
+    }
 }
 
 .card-price {

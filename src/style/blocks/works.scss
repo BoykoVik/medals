@@ -1,10 +1,17 @@
 .works {
     margin-top: 2rem;
+
 }
 
 .works-slide {
     margin-top: 2rem;
     height: 300px;
+
+    @include shadow;
+
+    .carousel-inner {
+        border-radius: $border-radius;
+    }
 }
 
 .works-control {
