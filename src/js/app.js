@@ -1,10 +1,16 @@
 import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
+import Inputmask from "inputmask";
+
+window.jQuery = $
+window.$ = $
+window.Inputmask = Inputmask
 
 import initCardCart from './modules/cart/index'
+import initFormCallback from './modules/formCallback/index'
 
 initCardCart()
+initFormCallback()
+
 
 
 // меню

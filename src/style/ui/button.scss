@@ -1,0 +1,66 @@
+.btn {
+    padding: 0.3rem 1rem;
+    background-color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: $border-radius;
+    color: $white;
+    outline: none;
+    border: none;
+
+    @include transition;
+
+    &:hover {
+        background-color: darken($primary, 10%);
+    }
+
+    &:active {
+        background-color: darken($primary, 15%);
+        box-shadow: none;
+    }
+
+    &:focus {
+        background-color: darken($primary, 12%);
+        box-shadow: none;
+    }
+
+    &:focus:active {
+        box-shadow: none;
+    }
+}
+
+.btn-outline {
+    padding: 0.3rem 1rem;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: $border-radius;
+    color: $text;
+    outline: none;
+    border: none;
+
+    @include transition;
+
+    &:hover {
+        color: $text;
+    }
+
+    &:active {
+
+        box-shadow: none;
+    }
+
+    &:focus {
+
+        box-shadow: none;
+    }
+
+    &:focus:active {
+        box-shadow: none;
+    }
+}
+

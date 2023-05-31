@@ -1,0 +1,21 @@
+.input {
+    padding: 0.5rem 55px 0.5rem 1rem;
+    border: 1px solid $gray;
+    border-radius: $border-radius;
+
+    width: 100%;
+
+    @include transition;
+
+    &:hover, &:focus {
+        border: 1px solid $primary-light;
+    }
+}
+
+input[type="submit"] {
+    background-color: $primary;
+}
+
+label {
+    margin-bottom: 0.3rem;
+}
