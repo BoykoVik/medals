@@ -7,6 +7,11 @@
 @import "sys/vars";
 @import "sys/mixins";
 
+// ui
+@import "ui/button";
+@import "ui/input";
+@import "ui/section";
+
 // blocks
 @import "blocks/header";
 @import "blocks/nav";
@@ -18,10 +23,7 @@
 @import "blocks/site-search";
 @import "blocks/footer";
 
-// ui
-@import "ui/button";
-@import "ui/input";
-@import "ui/section";
+@import "blocks/catalog/catalog";
 
 // -------------------------- base
 *,

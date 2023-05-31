@@ -1,0 +1,35 @@
+.catalog {
+    margin-top: 2rem;
+    padding: 3rem 0;
+}
+
+.catalog-title {
+    text-align: left;
+}
+
+.catalog-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+}
+
+.catalog-sections-item {
+    padding: 0.3rem 0.7rem;
+    border-radius: $border-radius;
+    background-color: #ececec;
+
+    @include transition;
+
+    a {
+        color: $text;
+        @include transition;
+    }
+
+    &:hover {
+        background-color: #cccccc;
+        a {
+            //color: $primary;
+        }
+    }
+}
