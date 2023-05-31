@@ -13,10 +13,17 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: "Development",
+            title: "Главная",
             template: path.resolve(CATALOG_SRC, 'index.html'),
             inject: 'body',
             minify: false
+        }),
+        new HtmlWebpackPlugin({
+            title: "Каталог",
+            template: path.resolve(CATALOG_SRC, 'catalog.html'),
+            inject: 'body',
+            minify: false,
+            filename: "catalog.html"
         }),
     ],
     module: {

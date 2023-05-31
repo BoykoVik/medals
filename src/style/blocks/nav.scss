@@ -251,3 +251,33 @@
     border-radius: $border-radius;
     text-align: center;
 }
+
+// breadcrumb
+.breadcrumb-wrapper {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    padding: 0.5rem;
+
+    background-color: $white;;
+
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #dcd7cf;
+}
+
+.breadcrumb {
+    margin-bottom: 0;
+}
+
+.breadcrumb-item {
+    a {
+        color: $text;
+    }
+
+    &.active {
+        a {
+            color: $primary;
+        }
+    }
+}

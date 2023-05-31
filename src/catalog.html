@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/b0f9a95edf.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="content">
+            <header class="header">
+                <div class="container">
+                    <div class="row header-inner">
+                        <div class="col-12 col-md-3">
+                            <a href="/" class="header-logo">
+                                <img src="images/logo.jpg" alt="">
+                            </a>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-5">
+                            <div class="header-callback">
+                                <div class="header-callback-phone">
+                                    <a href="tel:+79652960909"><i class="fa-solid fa-phone"></i>8 (965) 296-09-09</a>
+                                </div>
+                                <div class="header-callback-link" data-bs-toggle="modal" data-bs-target="#callbackModal">
+                                    Заказать обратный звонок
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 d-none d-md-block">
+                            <div class="site-search" data-method="GET" data-url="search">
+                                <form action="search" method="get">
+                                    <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                                    <a class="site-search-btn">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- модалка формы обратной связи -->
+                <div class="modal fade" id="callbackModal" tabindex="-1" aria-labelledby="callbackModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="callbackModalLabel">Заказать обратный звонок</h5>
+                                <button type="button" class="btn-outline" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                            <form action="" method="get" id="formCallback">
+                                <div class="modal-body">
+                                    <label for="formCallbackPhone">Укажите Ваш номер телефона:</label>
+                                    <input id="formCallbackPhone" name="phone_number" class="input" type="text" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Заказать обратный звонок">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="nav" class="nav">
+                <div class="container">
+                    <div class="nav-inner">
+                        <div class="nav-wrapper">
+                            <!-- категории -->
+                            <div class="nav-categories">
+                                <div class="nav-categories-link">
+                                    <i class="fa-solid fa-grip"></i>
+                                    Каталог
+                                </div>
+
+                                <div class="nav-categories-list">
+                                    <div class="container">
+                                        <div class="nav-categories-list-wrapper">
+                                            <!-- здесь перечислить категории -->
+                                            <a href="" class="nav-category">Орденские планки и колодки</a>
+                                            <a href="" class="nav-category">Жетоны</a>
+                                            <a href="" class="nav-category">Сувенирные жетоны</a>
+                                            <a href="" class="nav-category">Лазерная гравировка</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- меню -->
+                            <a href="" class="nav-item nav-menu-link">
+                                <i class="fa-solid fa-bars"></i>
+                                Меню
+                            </a>
+
+                            <div id="nav-menu" class="nav-menu" data-is-opened="0">
+                                <div class="nav-menu-close fa-xl">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </div>
+
+                                <div class="site-search nav-search" data-method="GET" data-url="search">
+                                    <form action="search" method="get">
+                                        <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                                        <a class="site-search-btn">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </a>
+                                    </form>
+                                </div>
+
+                                <a href="#" class="nav-link">О нас</a>
+                                <a href="" class="nav-link">Новости</a>
+                                <a href="" class="nav-link">Оплата</a>
+                                <a href="" class="nav-link">Доставка</a>
+                                <a href="" class="nav-link">Гарантии</a>
+                                <a href="" class="nav-link">Статьи и обзоры</a>
+                                <a href="" class="nav-link">Акции</a>
+                                <a href="" class="nav-link">Контакты</a>
+                            </div>
+
+                        </div>
+
+                        <!-- корзина -->
+                        <div id="cart" class="nav-cart">
+                            <div class="fa-solid fa-cart-shopping fa-xl nav-cart-icon">
+                                <div class="nav-cart-count" data-is-active="0"></div>
+                            </div>
+                            <div class="nav-cart-hint">Товар добавлен в корзину</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- хлебюные крошки -->
+                <div class="breadcrumb-wrapper">
+                    <div class="container">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                            <li class="breadcrumb-item active"><a href="catalog.html">Каталог</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!--        <div class="links-one">-->
+                <!--            <a href="" class="link-one">Орденские планки и колодки</a>-->
+                <!--            <div class="links-two">-->
+                <!--                <a href="" class="link-two">Ордена СССР</a>-->
+                <!--                <a href="" class="link-two">Ордена России</a>-->
+                <!--                <a href="" class="link-two">Медали СССР</a>-->
+                <!--                <a href="" class="link-two">Медали России</a>-->
+                <!--                <a href="" class="link-two">Почетные звания</a>-->
+                <!--                <a href="" class="link-two">Медали, являвшиеся государственными наградами до 2010 года</a>-->
+                <!--                <a href="" class="link-two">Награды Министерства Внутренних Дел</a>-->
+                <!--                <a href="" class="link-two">Награды Росгвардии</a>-->
+                <!--                <a href="" class="link-two">Медали и знаки отличия МЧС</a>-->
+                <!--                <a href="" class="link-two">Награды Министерство Иностранных Дел</a>-->
+                <!--                <a href="" class="link-two">Награды Министерство Обороны</a>-->
+                <!--                <a href="" class="link-two">Прочие награды ведомственных структур Российской Федерации</a>-->
+                <!--                <a href="" class="link-two">Памятные знаки Министерства Обороны</a>-->
+                <!--                <a href="" class="link-two">Премии и конкурсы Министерства обороны</a>-->
+                <!--                <a href="" class="link-two">Награды Федерального управления по безопасному хранению и уничтожению химического оружия</a>-->
+                <!--                <a href="" class="link-two">Награды Федерального агентства специального строительства</a>-->
+                <!--                <a href="" class="link-two">Награды Железнодорожных войск</a>-->
+                <!--                <a href="" class="link-two">Награды Министерство Юстиции</a>-->
+                <!--                <a href="" class="link-two">Награды Федеральной Службы Исполнения Наказаний</a>-->
+                <!--                <a href="" class="link-two">Награды Федеральной Службы Судебных Приставов</a>-->
+                <!--                <a href="" class="link-two">Награды Государственной Фельдъегерской Службы</a>-->
+                <!--                <a href="" class="link-two">Награды Федеральной Службы Внешней Разведки</a>-->
+                <!--                <a href="" class="link-two">Награды Федеральной Службы Безопасности</a>-->
+                <!--                <a href="" class="link-two">Награды Федеральной службы по контролю за оборотом наркотиков</a>-->
+                <!--                <a href="" class="link-two">Награды Федеральной Службы Охраны</a>-->
+                <!--                <a href="" class="link-two">Главное управление специальных программ Президента Российской Федерации</a>-->
+                <!--                <a href="" class="link-two">Награды Федерального Агентство Правительственной Связи и Информации</a>-->
+                <!--            </div>-->
+                <!--        </div>-->
+            </div>
+
+            <!-- ВЕРСТКА КАТАЛОГА ЗДЕСЬ (начало) -->
+
+            <div class="section catalog">
+                <div class="container">
+                    хуй
+                </div>
+            </div>
+
+            <!-- ВЕРСТКА КАТАЛОГА ЗДЕСЬ (конец) -->
+
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="footer-main">
+                            <h1 class="footer-title"><a href="/">&copy; Планки.Москва</a></h1>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="footer-links">
+                            <a href="" class="footer-link">Орденские планки и колодки</a>
+                            <a href="" class="footer-link">Жетоны</a>
+                            <a href="" class="footer-link">Сувенирные жетоны</a>
+                            <a href="" class="footer-link">Лазерная гравировка</a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <div class="footer-actions">
+                            <a href="#" class="footer-up">
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
