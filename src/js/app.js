@@ -1,6 +1,10 @@
-$(document).ready(function () {
-    updateCart()
-})
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
+
+import initCardCart from './modules/cart/index'
+
+initCardCart()
 
 
 // меню
@@ -37,55 +41,6 @@ $('.tabs-panel-item').click(function (e) {
     $('.tabs-panel-item').attr('data-is-active', '0')
     $(`.tabs-panel-item[data-target="${target}"]`).attr('data-is-active', '1')
 })
-
-// корзина
-$('.card').find('.card-cart').click(function (e) {
-    // e.stopPropagation()
-    // e.stopImmediatePropagation()
-    e.preventDefault()
-
-    console.log(e.target)
-
-    const $root = $(this).closest('.card')
-    const id = $root.attr('data-id')
-
-    let count = localStorage.getItem(id)
-
-    if (count === null) {
-        count = 1
-    }
-    else {
-        count++
-    }
-
-    localStorage.setItem(id, count)
-    updateCart()
-
-    $('#cart').effect( "shake" )
-})
-
-function updateCart() {
-    let count = 0
-
-    for(let key in localStorage) {
-        if (!localStorage.hasOwnProperty(key)) {
-            continue; // пропустит такие ключи, как "setItem", "getItem" и так далее
-        }
-
-        count += Number(localStorage.getItem(key))
-    }
-
-    const $cartCount = $('#cart').find('.nav-cart-count')
-
-    if (count > 0) {
-        $cartCount.attr('data-is-active', '1')
-        $cartCount.text(count)
-    }
-    else {
-        $cartCount.attr('data-is-active', '0')
-        $cartCount.text('')
-    }
-}
 
 // поиск по сайту
 $('.site-search-btn').click(function (e) {

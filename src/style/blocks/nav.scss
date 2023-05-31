@@ -237,3 +237,17 @@
         display: flex;
     }
 }
+
+.nav-cart-hint {
+    display: none;
+    z-index: 999;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem 1rem;
+    color: $white;
+    border-radius: $border-radius;
+    text-align: center;
+}
