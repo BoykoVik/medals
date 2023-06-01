@@ -7,10 +7,11 @@ window.Inputmask = Inputmask
 
 import initCardCart from './modules/cart/index'
 import initFormCallback from './modules/formCallback/index'
+import initCatalog from "./modules/catalog";
 
 initCardCart()
 initFormCallback()
-
+initCatalog()
 
 
 // меню

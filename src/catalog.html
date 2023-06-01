@@ -192,6 +192,155 @@
                         <div class="catalog-sections-item"><a href="">Главное управление специальных программ Президента Российской Федерации</a></div>
                         <div class="catalog-sections-item"><a href="">Награды Федерального Агентство Правительственной Связи и Информации</a></div>
                     </div>
+
+                    <!-- дейтсвия с каталогом, сортировка, и т.д. -->
+                    <div class="catalog-actions">
+                        <div class="catalog-actions-left">
+                            Сортировать по
+                            <div class="catalog-action-btn">
+                                <a href="catalog.html?sort_by=name&method=asc">
+                                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                                    Наименованию
+                                </a>
+                            </div>
+
+                            <div class="catalog-action-btn">
+                                <a href="catalog.html?sort_by=price&method=asc">
+                                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                                    Цене
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- кнопки для управления размером сетки каталога -->
+                        <div class="catalog-actions-right">
+                            <div class="catalog-action-btn catalog-mode-btn" data-is-active="0" data-mode="compact">
+                                <i class="fa-solid fa-table-cells-large"></i>
+                            </div>
+                            <div class="catalog-action-btn catalog-mode-btn" data-is-active="1" data-mode="expand">
+                                <i class="fa-solid fa-table-cells"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-list" data-mode="expand">
+
+                        <!-- это карточка -->
+                        <!-- у каждой карточки должен быть атрибут data-id со значением id товара из базы данных -->
+                        <a href="" class="card" data-id="1">
+                            <img class="card-img" src="images/k9lybkkagycythkhqplb1687wzhq3bfq.jpg" alt="">
+                            <h3 class="card-title">Жетон сувенирный ПВО</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="2">
+                            <img class="card-img" src="images/jeton.png" alt="">
+                            <h3 class="card-title">Жетон сувенирный</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="3">
+                            <img class="card-img" src="images/planka1.png" alt="">
+                            <h3 class="card-title">Планка</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="4">
+                            <img class="card-img" src="images/sh.jpg" alt="">
+                            <h3 class="card-title">Жетон</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="2">
+                            <img class="card-img" src="images/jeton.png" alt="">
+                            <h3 class="card-title">Жетон сувенирный</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="4">
+                            <img class="card-img" src="images/sh.jpg" alt="">
+                            <h3 class="card-title">Жетон</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="1">
+                            <img class="card-img" src="images/k9lybkkagycythkhqplb1687wzhq3bfq.jpg" alt="">
+                            <h3 class="card-title">Жетон сувенирный ПВО</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+
+                        <a href="" class="card" data-id="3">
+                            <img class="card-img" src="images/planka1.png" alt="">
+                            <h3 class="card-title">Планка</h3>
+
+                            <div class="card-actions">
+                                <p class="card-price">1200 ₽</p>
+                                <button class="card-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- если нужна пагинцая, то вот она -->
+                    <div class="catalog-pagination">
+                        <a href="catalog.html?page=1" class="catalog-pagination-number active">1</a>
+                        <a href="catalog.html?page=2" class="catalog-pagination-number">2</a>
+                        <a href="catalog.html?page=3" class="catalog-pagination-number">3</a>
+                        <a href="catalog.html?page=4" class="catalog-pagination-number">4</a>
+                        <a href="catalog.html?page=5" class="catalog-pagination-number">5</a>
+                    </div>
+
                 </div>
             </div>
             <!-- ВЕРСТКА КАТАЛОГА ЗДЕСЬ (конец) -->

@@ -12,19 +12,6 @@
 @import "ui/input";
 @import "ui/section";
 
-// blocks
-@import "blocks/header";
-@import "blocks/nav";
-@import "blocks/services";
-@import "blocks/tabs";
-@import "blocks/card";
-@import "blocks/works";
-@import "blocks/contacts";
-@import "blocks/site-search";
-@import "blocks/footer";
-
-@import "blocks/catalog/catalog";
-
 // -------------------------- base
 *,
 *:before,
@@ -52,6 +39,20 @@ body {
 }
 .footer {
     flex: 0 0 auto;
+}
+
+a {
+    @include transition;
+
+    &:hover {
+        cursor: pointer;
+        color: $primary;
+    }
+
+    &:focus {
+        cursor: pointer;
+        color: $primary;
+    }
 }
 
 // -------------------------- container
@@ -92,3 +93,16 @@ body {
         max-width: 1140px;
     }
 }
+
+// blocks
+@import "blocks/header";
+@import "blocks/nav";
+@import "blocks/services";
+@import "blocks/tabs";
+@import "blocks/card";
+@import "blocks/works";
+@import "blocks/contacts";
+@import "blocks/site-search";
+@import "blocks/footer";
+
+@import "blocks/catalog/catalog";
