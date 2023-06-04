@@ -1,6 +1,7 @@
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader')
 
 CATALOG_SRC = path.resolve(__dirname, 'src')
 CATALOG_PROD = path.resolve(__dirname, 'prod')
@@ -25,6 +26,7 @@ module.exports = {
             minify: false,
             filename: "catalog.html"
         }),
+        new VueLoaderPlugin()
     ],
     module: {
         rules: [
@@ -72,6 +74,10 @@ module.exports = {
                 generator: {
                     filename: 'fonts/[name][ext]'
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ],
     },
