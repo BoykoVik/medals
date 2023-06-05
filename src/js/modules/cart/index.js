@@ -21,8 +21,6 @@ export default function initCardCart() {
 
     ui.$cardCarts = $('.card-cart')
 
-    console.log(ui)
-
     ui.$cardCarts.click(cardCartClick)
     updateCartIcon()
 }

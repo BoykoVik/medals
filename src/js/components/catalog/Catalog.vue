@@ -1,6 +1,6 @@
 <template>
     <div>
-        <catalog-actions
+        <catalog-actions v-if="showActions"
             :catalogMode="catalogMode"
             @changeMode="changeMode"
             @inputSearch="inputSearch"
@@ -13,33 +13,23 @@
             }"
         >
             <div v-for="product of searchedProducts">
-                <transition-group name="catalog-list">
-                    <a class="card"
-                       :key="product.id"
-                       :href="product.url"
-                    >
-                        <img class="card-img" src="{{ product.image }}" alt="">
-                        <h3 class="card-title">{{ product.name }}</h3>
+                <a class="card"
+                   v-bind:key="product.id"
+                   :href="product.url"
+                >
+                    <img class="card-img" :src="product.image" alt="">
+                    <h3 class="card-title">{{ product.name }}</h3>
 
-                        <div class="card-actions" >
-                            <p class="card-price">{{ product.price }} ₽</p>
-                            <button class="card-cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                В корзину
-                            </button>
-                        </div>
-                    </a>
-                </transition-group>
+                    <div class="card-actions">
+                        <p class="card-price">{{ product.price }} ₽</p>
+                        <button class="card-cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            В корзину
+                        </button>
+                    </div>
+                </a>
             </div>
         </div>
-
-        <!--<div class="catalog-pagination">-->
-        <!--    <a href="catalog.html?page=1" class="catalog-pagination-number active">1</a>-->
-        <!--    <a href="catalog.html?page=2" class="catalog-pagination-number">2</a>-->
-        <!--    <a href="catalog.html?page=3" class="catalog-pagination-number">3</a>-->
-        <!--    <a href="catalog.html?page=4" class="catalog-pagination-number">4</a>-->
-        <!--    <a href="catalog.html?page=5" class="catalog-pagination-number">5</a>-->
-        <!--</div>-->
     </div>
 </template>
 
@@ -66,7 +56,12 @@ export default {
     },
     props: {
         productsApi: {
-            type: String
+            type: String,
+            required: true
+        },
+        showActions: {
+            type: Boolean,
+            default: true
         }
     },
     methods: {
@@ -77,9 +72,12 @@ export default {
             this.searchQuery = query
         }
     },
-    beforeCreate() {
+    created() {
+        console.log(this.productsApi)
+
         const fetching = async () => {
             return await axios.get(this.productsApi);
+
         };
 
         fetching().then(response => {
@@ -136,20 +134,6 @@ export default {
                 grid-template-columns: repeat(4, 1fr);
             }
         }
-    }
-
-    // transition
-    .catalog-list-enter-active,
-    .catalog-list-leave-active {
-        transition: all 0.2s ease;
-    }
-    .catalog-list-enter-from,
-    .catalog-list-leave-to {
-        opacity: 0;
-        transform: translateX(150px);
-    }
-    .catalog-list-move {
-        transition: transform 0.5s ease;
     }
 
 </style>

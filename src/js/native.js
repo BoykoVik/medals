@@ -1,57 +1,55 @@
 import initCardCart from './modules/cart/index'
 import initFormCallback from './modules/formCallback/index'
 
-export default function initNative() {
-    initCardCart()
-    initFormCallback()
 
-    // меню
-    $('.nav-menu-link').click(function (e) {
-        e.stopPropagation()
-        e.preventDefault()
+initCardCart()
+initFormCallback()
 
-        const $container = $('#nav-menu')
-        $container.attr('data-is-opened', '1')
-        $('body').css('overflow', 'hidden')
-    })
+// меню
+$('.nav-menu-link').click(function (e) {
+    e.stopPropagation()
+    e.preventDefault()
 
-    $('.nav-menu-close').click(function (e) {
-        e.preventDefault()
+    const $container = $('#nav-menu')
+    $container.attr('data-is-opened', '1')
+    $('body').css('overflow', 'hidden')
+})
 
-        $('#nav-menu').attr('data-is-opened', '0')
-        $('body').css('overflow', 'initial')
-    })
+$('.nav-menu-close').click(function (e) {
+    e.preventDefault()
 
-    $('.nav-link').click(function (e) {
-        $('#nav-menu').attr('data-is-opened', '0')
-        $('body').css('overflow', 'initial')
-    })
+    $('#nav-menu').attr('data-is-opened', '0')
+    $('body').css('overflow', 'initial')
+})
 
-    // вкладки
-    $('.tabs-panel-item').click(function (e) {
-        e.preventDefault()
+$('.nav-link').click(function (e) {
+    $('#nav-menu').attr('data-is-opened', '0')
+    $('body').css('overflow', 'initial')
+})
 
-        const target = $(this).attr('data-target')
+// вкладки
+$('.tabs-panel-item').click(function (e) {
+    e.preventDefault()
 
-        $('.tabs-content-item').attr('data-is-active', '0')
-        $(`.tabs-content-item[data-target="${target}"]`).attr('data-is-active', '1')
+    const target = $(this).attr('data-target')
 
-        $('.tabs-panel-item').attr('data-is-active', '0')
-        $(`.tabs-panel-item[data-target="${target}"]`).attr('data-is-active', '1')
-    })
+    $('.tabs-content-item').attr('data-is-active', '0')
+    $(`.tabs-content-item[data-target="${target}"]`).attr('data-is-active', '1')
 
-    // поиск по сайту
-    $('.site-search-btn').click(function (e) {
-        const $form = $(this).closest('form')
-        const $input = $form.find('input')
+    $('.tabs-panel-item').attr('data-is-active', '0')
+    $(`.tabs-panel-item[data-target="${target}"]`).attr('data-is-active', '1')
+})
 
-        if ($input.val() === '') {
-            $input.focus()
-        }
-        else {
-            $(this).closest('form').submit()
-        }
-    })
-}
+// поиск по сайту
+$('.site-search-btn').click(function (e) {
+    const $form = $(this).closest('form')
+    const $input = $form.find('input')
+
+    if ($input.val() === '') {
+        $input.focus()
+    } else {
+        $(this).closest('form').submit()
+    }
+})
 
 

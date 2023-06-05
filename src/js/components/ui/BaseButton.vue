@@ -1,5 +1,5 @@
 <template>
-    <button class="base-btn">
+    <button v-on:click="click" class="base-btn">
         <slot></slot>
     </button>
 </template>
@@ -8,7 +8,17 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-    name: "base-button"
+    name: "base-button",
+    data: () => {
+        return {
+            count: 0
+        }
+    },
+    methods: {
+        click() {
+            this.$emit('click')
+        }
+    }
 })
 </script>
 
@@ -22,10 +32,6 @@ export default defineComponent({
         background-color: #ececec;
         border-radius: $border-radius;
         color: $text;
-
-        i {
-            margin-right: 0.2rem;
-        }
 
         @include transition;
 
