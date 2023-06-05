@@ -21,7 +21,7 @@
 </head>
 <body>
 
-    <div class="wrapper">
+    <div id="app" class="wrapper">
         <div class="content">
             <header class="header">
                 <div class="container">
@@ -200,9 +200,11 @@
                             <a href="" class="catalog-sections-list-item">Награды Федерального Агентство Правительственной Связи и Информации</a>
                         </div>
                     </div>
-                    <div id="catalog" data-api-products="http://localhost:4000/products">
-                        <!-- vue -->
-                    </div>
+
+                    <catalog
+                            :show-actions="true"
+                            :products-api="'http://localhost:4000/products'"
+                    ></catalog>
                 </div>
             </div>
             <!-- ВЕРСТКА КАТАЛОГА ЗДЕСЬ (конец) -->

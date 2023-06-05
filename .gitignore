@@ -2,3 +2,4 @@ docs
 examples
 node_modules
 .idea
+prod/report.html
