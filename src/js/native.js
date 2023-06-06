@@ -1,8 +1,5 @@
-import initCardCart from './modules/cart/index'
 import initFormCallback from './modules/formCallback/index'
 
-
-initCardCart()
 initFormCallback()
 
 // меню

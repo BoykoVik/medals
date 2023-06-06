@@ -1,12 +1,13 @@
 <template>
-    <div>
+
+    <div v-if="searchedProducts.length">
         <catalog-actions v-if="showActions"
             :catalogMode="catalogMode"
             @changeMode="changeMode"
             @inputSearch="inputSearch"
         ></catalog-actions>
 
-        <div class="card-list"
+        <div class="catalog-list"
             :class="{
                 expand: catalogMode === catalogModeEnum.expand,
                 compact: catalogMode === catalogModeEnum.compact,
@@ -30,6 +31,17 @@
                 </a>
             </div>
         </div>
+
+        <div
+            v-if="limitProducts"
+            @click="showAll"
+            class="catalog-all"
+        >
+            показать все
+        </div>
+    </div>
+    <div v-else class="catalog-plug">
+        Здесь пока ничего нет :(
     </div>
 </template>
 
@@ -51,7 +63,8 @@ export default {
                 compact: 'compact',
             },
             catalogMode: 'expand',
-            searchQuery: ''
+            searchQuery: '',
+            limitProducts: null
         }
     },
     props: {
@@ -62,6 +75,10 @@ export default {
         showActions: {
             type: Boolean,
             default: true
+        },
+        limit: {
+            type: Number,
+            default: null,
         }
     },
     methods: {
@@ -70,11 +87,12 @@ export default {
         },
         inputSearch(query) {
             this.searchQuery = query
+        },
+        showAll() {
+            this.limitProducts = null
         }
     },
     created() {
-        console.log(this.productsApi)
-
         const fetching = async () => {
             return await axios.get(this.productsApi);
 
@@ -82,16 +100,27 @@ export default {
 
         fetching().then(response => {
             this.products = response.data
+
+            if (this.products.length > this.limit) {
+                this.limitProducts = this.limit
+            }
         }).catch(() => {
+            this.products = []
             console.error('Ошибка загрузки каталога')
         })
     },
     computed: {
         searchedProducts() {
-            return this.products.filter(product => {
+            let products = this.products.filter(product => {
                 const query = this.searchQuery.toLowerCase()
                 return product.name.toLowerCase().includes(query)
             })
+
+            if (this.limitProducts) {
+                products = products.slice(0, this.limitProducts)
+            }
+
+            return products
         }
     }
 }
@@ -101,7 +130,8 @@ export default {
     @import "../../../style/sys/vars";
     @import "../../../style/sys/mixins";
 
-    .card-list {
+    // список товаров
+    .catalog-list {
         margin-top: 2rem;
         display: grid;
         gap: 1.5rem;
@@ -132,6 +162,121 @@ export default {
             }
             &.expand {
                 grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    }
+
+    // показать все
+    .catalog-all {
+        display: block;
+        text-align: center;
+        color: $primary;
+        margin-top: 2rem;
+
+        @include transition;
+
+        &:hover {
+            cursor: pointer;
+            color: darken($primary, 10%);
+        }
+    }
+
+    // заглушка списка
+    .catalog-plug {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 150px;
+        background-color: $gray-plug;
+        border-radius: $border-radius;
+        color: $gray-dark;
+        font-size: 18px;
+        margin-top: 2rem;
+
+        @include select-off;
+    }
+
+    // карточка товара
+    .card {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        background-color: $white;
+        border-radius: $border-radius;
+
+        @include shadow;
+        @include transition;
+
+        display: grid;
+        grid-template-areas:
+            "img"
+            "img"
+            "title"
+            "actions";
+
+        &:hover {
+            cursor: pointer;
+            @include shadow-primary;
+        }
+
+        // картинка
+        &-img {
+            grid-area: img;
+            border-radius: $border-radius;
+
+            height: 250px;
+            object-position: center;
+            object-fit: cover;
+        }
+
+        // название
+        &-title {
+            grid-area: title;
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            color: $text;
+
+            @include transition;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+
+        // цена
+        &-price {
+            color: $primary;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        // действия
+        &-actions {
+            grid-area: actions;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px 0;
+        }
+
+        // кнопка добавить в корзину
+        &-cart {
+            padding: 0.3rem 1rem;
+            background-color: $primary;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: $border-radius;
+            color: $white;
+            outline: none;
+
+            @include transition;
+
+            &:hover {
+                background-color: darken($primary, 10%);
             }
         }
     }

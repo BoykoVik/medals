@@ -17,6 +17,7 @@
     padding: 0.7rem 0;
     display: flex;
     justify-content: space-between;
+    //align-items: flex-start;
 }
 
 .nav-wrapper {
@@ -26,7 +27,7 @@
     gap: 1rem;
 
     @include media-breakpoint-up($lg) {
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 }
 
@@ -174,7 +175,7 @@
     right: 30px;
     color: $white;
 
-    @include media-breakpoint-up($md) {
+    @include media-breakpoint-up($lg) {
         display: none;
     }
     
@@ -191,65 +192,6 @@
     @include media-breakpoint-up($md) {
         display: none;
     }
-}
-
-// корзина
-.nav-cart {
-
-    float: right;
-    padding: 0.3rem 0.6rem;
-    border-radius: $border-radius;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $primary;
-    justify-self: flex-end;
-
-    @include transition;
-
-    &:hover {
-        color: darken($primary, 10%);
-        cursor: pointer;
-    }
-}
-
-.nav-cart-icon {
-    position: relative;
-}
-
-.nav-cart-count {
-    position: absolute;
-    top: -20px;
-    right: -10px;
-    font-size: 9px!important;
-    background-color: $danger;
-    color: $white;
-    width: 20px;
-    aspect-ratio: 1/1;
-    border-radius: 100%;
-
-    align-items: center;
-    justify-content: center;
-
-    display: none;
-
-    &[data-is-active='1'] {
-        display: flex;
-    }
-}
-
-.nav-cart-hint {
-    display: none;
-    z-index: 999;
-    position: absolute;
-    top: 120%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 0.5rem 1rem;
-    color: $white;
-    border-radius: $border-radius;
-    text-align: center;
 }
 
 // breadcrumb

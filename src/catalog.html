@@ -45,6 +45,7 @@
 
                         <div class="col-md-4 d-none d-md-block">
                             <div class="site-search" data-method="GET" data-url="search">
+                                <!-- API -->
                                 <form action="search" method="get">
                                     <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
                                     <a class="site-search-btn">
@@ -67,6 +68,7 @@
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
+                            <!-- API -->
                             <form action="" method="get" id="formCallback">
                                 <div class="modal-body">
                                     <label for="formCallbackPhone">Укажите Ваш номер телефона:</label>
@@ -117,6 +119,7 @@
                                 </div>
 
                                 <div class="site-search nav-search" data-method="GET" data-url="search">
+                                    <!-- API -->
                                     <form action="search" method="get">
                                         <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
                                         <a class="site-search-btn">
@@ -138,12 +141,7 @@
                         </div>
 
                         <!-- корзина -->
-                        <div id="cart" class="nav-cart">
-                            <div class="fa-solid fa-cart-shopping fa-xl nav-cart-icon">
-                                <div class="nav-cart-count" data-is-active="0"></div>
-                            </div>
-                            <div class="nav-cart-hint">Товар добавлен в корзину</div>
-                        </div>
+                        <cart></cart>
                     </div>
                 </div>
 
@@ -158,7 +156,7 @@
                 </div>
             </div>
 
-            <!-- ВЕРСТКА КАТАЛОГА ЗДЕСЬ (начало) -->
+            <!----------------------------------------------------------------------------------------------------------------------------->
             <div class="section catalog">
                 <div class="container">
 
@@ -201,13 +199,14 @@
                         </div>
                     </div>
 
+                    <!-- API -->
                     <catalog
-                            :show-actions="true"
-                            :products-api="'http://localhost:4000/products'"
+                        :show-actions="true"
+                        :products-api="'http://localhost:4000/products'"
                     ></catalog>
                 </div>
             </div>
-            <!-- ВЕРСТКА КАТАЛОГА ЗДЕСЬ (конец) -->
+            <!----------------------------------------------------------------------------------------------------------------------------->
 
         </div>
 

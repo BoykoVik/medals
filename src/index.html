@@ -18,7 +18,7 @@
 </head>
 <body>
 
-    <div class="wrapper">
+    <div id="app" class="wrapper">
         <div class="content">
             <header class="header">
                 <div class="container">
@@ -42,6 +42,7 @@
 
                         <div class="col-md-4 d-none d-md-block">
                             <div class="site-search" data-method="GET" data-url="search">
+                                <!-- API -->
                                 <form action="search" method="get">
                                     <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
                                     <a class="site-search-btn">
@@ -64,6 +65,7 @@
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
+                            <!-- API -->
                             <form action="" method="get" id="formCallback">
                                 <div class="modal-body">
                                     <label for="formCallbackPhone">Укажите Ваш номер телефона:</label>
@@ -114,6 +116,7 @@
                                 </div>
 
                                 <div class="site-search nav-search" data-method="GET" data-url="search">
+                                    <!-- API -->
                                     <form action="search" method="get">
                                         <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
                                         <a class="site-search-btn">
@@ -135,12 +138,7 @@
                         </div>
 
                         <!-- корзина -->
-                        <div id="cart" class="nav-cart">
-                            <div class="fa-solid fa-cart-shopping fa-xl nav-cart-icon">
-                                <div class="nav-cart-count" data-is-active="0"></div>
-                            </div>
-                            <div class="nav-cart-hint">Товар добавлен в корзину</div>
-                        </div>
+                        <cart></cart>
                     </div>
                 </div>
 
@@ -226,10 +224,6 @@
                             Новинки
                         </div>
 
-                        <div class="tabs-panel-item" data-target="recommend" data-is-active="0">
-                            Рекомендуем
-                        </div>
-
                         <div class="tabs-panel-item" data-target="hit" data-is-active="0">
                             Хиты продаж
                         </div>
@@ -242,89 +236,28 @@
 
                     <div class="tabs-content">
                         <div class="tabs-content-item" data-target="news" data-is-active="1">
+                            <!-- API -->
+                            <catalog :products-api="'http://localhost:4000/new-products'"
+                                     :limit="4"
+                                     :show-actions="false">
+                            </catalog>
 
-                            <!-- пример с карточками -->
-                            <div class="row" style="gap: 20px 0">
-
-                                <!-- это карточка -->
-                                <!-- у каждой карточки должен быть атрибут data-id со значением id товара из базы данных -->
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="" class="card" data-id="1">
-                                        <img class="card-img" src="images/k9lybkkagycythkhqplb1687wzhq3bfq.jpg" alt="">
-                                        <h3 class="card-title">Жетон сувенирный ПВО</h3>
-
-                                        <div class="card-actions">
-                                            <p class="card-price">1200 ₽</p>
-                                            <button class="card-cart">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                                В корзину
-                                            </button>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="" class="card" data-id="2">
-                                        <img class="card-img" src="images/jeton.png" alt="">
-                                        <h3 class="card-title">Жетон сувенирный</h3>
-
-                                        <div class="card-actions">
-                                            <p class="card-price">1200 ₽</p>
-                                            <button class="card-cart">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                                В корзину
-                                            </button>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="" class="card" data-id="3">
-                                        <img class="card-img" src="images/planka1.png" alt="">
-                                        <h3 class="card-title">Планка</h3>
-
-                                        <div class="card-actions">
-                                            <p class="card-price">1200 ₽</p>
-                                            <button class="card-cart">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                                В корзину
-                                            </button>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="" class="card" data-id="4">
-                                        <img class="card-img" src="images/sh.jpg" alt="">
-                                        <h3 class="card-title">Жетон</h3>
-
-                                        <div class="card-actions">
-                                            <p class="card-price">1200 ₽</p>
-                                            <button class="card-cart">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                                В корзину
-                                            </button>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <a href="" class="tabs-all">показать все</a>
-                            </div>
-                        </div>
-
-                        <div class="tabs-content-item" data-target="recommend" data-is-active="0">
-                            <!-- заглушка - выводить, если ничего нет в данном разделе, текст какой хочешь напиши -->
-                            <div class="tabs-content-item-plug">Здесь пока ничего нет :(</div>
                         </div>
 
                         <div class="tabs-content-item" data-target="hit" data-is-active="0">
-                            <!-- заглушка - выводить, если ничего нет в данном разделе, текст какой хочешь напиши -->
-                            <div class="tabs-content-item-plug">Хиты продаж? Не, не знаем, о чем Вы...</div>
+                            <!-- API -->
+                            <catalog :products-api="'http://localhost:4000/hit-products'"
+                                     :limit="4"
+                                     :show-actions="false">
+                            </catalog>
                         </div>
 
                         <div class="tabs-content-item" data-target="sale" data-is-active="0">
-                            <!-- заглушка - выводить, если ничего нет в данном разделе, текст какой хочешь напиши -->
-                            <div class="tabs-content-item-plug">Здесь скоро будет интересно</div>
+                            <!-- API -->
+                            <catalog :products-api="'http://localhost:4000/sale-products'"
+                                     :limit="4"
+                                     :show-actions="false">
+                            </catalog>
                         </div>
                     </div>
                 </div>
@@ -388,7 +321,7 @@
                     <div class="row" style="gap: 20px 0">
                         <div class="col-12 col-md-6">
                             <div class="contacts-map">
-                                <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A4984cbb5adf3164b1f94359118c537e115b9e5380116b1f6b2dfd2960f6795cf&amp;width=600&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+                                <script type="application/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A4984cbb5adf3164b1f94359118c537e115b9e5380116b1f6b2dfd2960f6795cf&amp;width=600&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
                             </div>
                         </div>
 
