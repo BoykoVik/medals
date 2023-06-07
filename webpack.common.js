@@ -26,6 +26,13 @@ module.exports = {
             minify: false,
             filename: "catalog.html"
         }),
+        new HtmlWebpackPlugin({
+            title: "Каталог",
+            template: path.resolve(CATALOG_SRC, 'detail.html'),
+            inject: 'body',
+            minify: false,
+            filename: "detail.html"
+        }),
         new VueLoaderPlugin()
     ],
     module: {

@@ -214,12 +214,17 @@
 
 .breadcrumb-item {
     a {
+        @include transition;
         color: $text;
     }
 
-    &.active {
+    &:hover {
         a {
             color: $primary;
         }
+    }
+
+    &.active {
+        color: $primary;
     }
 }
