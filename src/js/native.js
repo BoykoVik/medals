@@ -1,6 +1,8 @@
 import initFormCallback from './modules/formCallback/index'
+import initCatalog from "./modules/catalog";
 
 initFormCallback()
+initCatalog()
 
 // меню
 $('.nav-menu-link').click(function (e) {
@@ -49,4 +51,6 @@ $('.site-search-btn').click(function (e) {
     }
 })
 
+// разделы в каталоге
+$
 

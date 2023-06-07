@@ -1,13 +1,13 @@
 <template>
 
-    <div v-if="searchedProducts.length">
+    <div>
         <catalog-actions v-if="showActions"
             :catalogMode="catalogMode"
             @changeMode="changeMode"
             @inputSearch="inputSearch"
         ></catalog-actions>
 
-        <div class="catalog-list"
+        <div v-if="searchedProducts.length" class="catalog-list"
             :class="{
                 expand: catalogMode === catalogModeEnum.expand,
                 compact: catalogMode === catalogModeEnum.compact,
@@ -23,32 +23,38 @@
 
                     <div class="card-actions">
                         <p class="card-price">{{ product.price }} ₽</p>
-                        <button class="card-cart">
-                            <i class="fa-solid fa-cart-shopping"></i>
+                        <button :data-id="product.id"
+                            @click.prevent="pushToCart"
+                            class="card-cart">
+                            <i :data-id="product.id" class="fa-solid fa-cart-shopping"></i>
                             В корзину
                         </button>
                     </div>
                 </a>
             </div>
+
+
+        </div>
+        <div v-else class="catalog-plug">
+            Здесь пока ничего нет :(
         </div>
 
         <div
-            v-if="limitProducts"
+            v-if="limitProducts && searchedProducts.length"
             @click="showAll"
-            class="catalog-all"
-        >
+            class="catalog-all">
             показать все
         </div>
+
     </div>
-    <div v-else class="catalog-plug">
-        Здесь пока ничего нет :(
-    </div>
+
 </template>
 
 <script>
 import axios from "axios";
 
 import CatalogActions from "./CatalogActions.vue"
+import { mapActions } from "vuex";
 
 export default {
     name: "Catalog",
@@ -82,6 +88,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions('Cart', ['pushProduct', 'initCart']),
+        ...mapActions('Notification', ['pushNotification']),
+
         changeMode(mode) {
             this.catalogMode = mode
         },
@@ -90,6 +99,11 @@ export default {
         },
         showAll() {
             this.limitProducts = null
+        },
+        pushToCart(event) {
+            const id = event.target.getAttribute('data-id')
+            this.pushProduct(id)
+            this.pushNotification('Товар добавлен в корзину')
         }
     },
     created() {

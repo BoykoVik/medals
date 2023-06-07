@@ -8,13 +8,18 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex/dist/vuex.esm.browser'
 
 export default {
     name: 'Cart',
-    data: () => {
-        return {
-            count: 20
-        }
+    computed: {
+        ...mapGetters('Cart', ['count', 'hash']),
+    },
+    methods: {
+        ...mapActions('Cart', ['initCart']),
+    },
+    beforeMount() {
+        this.initCart()
     }
 }
 

@@ -17,7 +17,7 @@
     padding: 0.7rem 0;
     display: flex;
     justify-content: space-between;
-    //align-items: flex-start;
+    align-items: center;
 }
 
 .nav-wrapper {
@@ -99,7 +99,7 @@
 .nav-menu {
     position: relative;
     display: none;
-    z-index: 1001;
+    z-index: 1002;
 
     // открытое меню в мобильной версии
     @include media-breakpoint-down($lg) {
@@ -189,7 +189,7 @@
     border-radius: $border-radius;
 
 
-    @include media-breakpoint-up($md) {
+    @include media-breakpoint-up($lg) {
         display: none;
     }
 }
