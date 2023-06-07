@@ -6,6 +6,10 @@ window.jQuery = $
 window.$ = $
 window.Inputmask = Inputmask
 
+// bootstrap
+require('bootstrap/js/dist/modal')
+require('bootstrap/js/dist/carousel')
+
 // axios
 import axios from "axios"
 

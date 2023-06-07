@@ -9,21 +9,3 @@ npm install -g json-server
 ```shell
 npm run server
 ```
-
-# Npm
-#### Установить зависимости
-```shell
-npm run i
-```
-
-#### Development
-```shell
-npm run dev
-```
-
-#### Production
-```shell
-npm run prod
-```
-
-You'll find production files in ``prod/`` folder.

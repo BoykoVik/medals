@@ -49,19 +49,19 @@
         align-items: flex-start;
         margin-top: 0;
     }
-}
 
-.footer-link {
-    display: block;
-    color: $white;
-
-    &+& {
-        margin-top: 5px;
-    }
-
-    &:hover {
+    .nav-category {
+        display: block;
         color: $white;
-        text-decoration: underline;
+
+        &+& {
+            margin-top: 5px;
+        }
+
+        &:hover {
+            color: $white;
+            text-decoration: underline;
+        }
     }
 }
 

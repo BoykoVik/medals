@@ -15,6 +15,7 @@ function initCatalogSections() {
         let isActive = ui.$catalogSectionsList.attr('data-is-active')
         isActive = (isActive === '1' ? '0' : '1')
 
+        ui.$catalogSectionsList.scrollTop(0)
         ui.$catalogSectionsList.attr('data-is-active', isActive)
     })
 

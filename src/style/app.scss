@@ -1,4 +1,18 @@
 @import "vendor/reset";
+@import "bootstrap/scss/functions";
+
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/maps";
+
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/bootstrap-utilities";
+@import "bootstrap/scss/breadcrumb";
+
 
 // vendor
 @import "vendor/reset";
@@ -28,6 +42,7 @@ body {
 html,
 body {
     height: 100%;
+    scroll-behavior: smooth;
 }
 .wrapper {
     display: flex;

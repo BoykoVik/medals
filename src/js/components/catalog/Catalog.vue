@@ -241,6 +241,7 @@ export default {
             height: 250px;
             object-position: center;
             object-fit: cover;
+            width: 100%;
         }
 
         // название
@@ -269,7 +270,8 @@ export default {
         &-actions {
             grid-area: actions;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-start;
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 10px 0;
@@ -286,6 +288,7 @@ export default {
             border-radius: $border-radius;
             color: $white;
             outline: none;
+            width: 100%;
 
             @include transition;
 

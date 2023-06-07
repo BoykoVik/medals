@@ -63,11 +63,15 @@ export default {
 
     .catalog-actions {
         margin-top: 2rem;
-        display: flex;
         justify-content: space-between;
 
         & + & {
             margin-left: 5px;
+        }
+
+        display: none;
+        @include media-breakpoint-up($sm) {
+            display: flex;
         }
     }
 
