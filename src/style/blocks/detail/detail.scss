@@ -1,0 +1,97 @@
+.detail {
+
+}
+
+.detail-title {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 700;
+}
+
+.detail-price {
+    color: $primary;
+    font-weight: 500;
+    font-size: 22px;
+    margin-top: 0.5rem;
+}
+
+.detail-main {
+     @include media-breakpoint-down($md) {
+         margin-top: 3rem;
+     }
+}
+
+.detail-img--main {
+    border-radius: $border-radius;
+
+    img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+.detail-img--second {
+    margin-top: 0.5rem;
+
+    display: flex;
+
+    gap: 0.5rem;
+    flex-direction: row;
+
+    a {
+        width: 100%;
+        aspect-ratio: 1/1;
+    }
+
+    img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: center;
+    }
+
+}
+
+.detail-subtitle {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+}
+
+.detail-section-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.detail-section {
+    padding: 0.3rem 0.8rem;
+    border-radius: $border-radius;
+    color: $white;
+
+    &:hover, &:focus, &:active {
+        color: $white;
+        cursor: pointer;
+    }
+}
+
+.detail-sep {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.detail-description {
+    margin-top: 1rem;
+
+    strong {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.detail-product {
+    margin-top: 1.5rem;
+}

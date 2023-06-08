@@ -51,6 +51,7 @@ $('.site-search-btn').click(function (e) {
     }
 })
 
-// разделы в каталоге
-$
+// Fancybox
+import { Fancybox } from "@fancyapps/ui";
 
+Fancybox.bind("[data-fancybox]", {});

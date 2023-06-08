@@ -91,10 +91,10 @@
                                 <div class="container">
                                     <div class="nav-categories-list-wrapper">
                                         <!-- здесь перечислить категории -->
-                                        <a href="" class="nav-category">Орденские планки и колодки</a>
-                                        <a href="" class="nav-category">Жетоны</a>
-                                        <a href="" class="nav-category">Сувенирные жетоны</a>
-                                        <a href="" class="nav-category">Лазерная гравировка</a>
+                                        <a href="catalog.html" class="nav-category">Орденские планки и колодки</a>
+                                        <a href="catalog.html" class="nav-category">Жетоны</a>
+                                        <a href="catalog.html" class="nav-category">Сувенирные жетоны</a>
+                                        <a href="catalog.html" class="nav-category">Лазерная гравировка</a>
                                     </div>
                                 </div>
                             </div>
@@ -154,8 +154,66 @@
         <!----------------------------------------------------------------------------------------------------------------------------->
         <div class="detail catalog">
             <div class="container">
-                Work in progress<br>
-                <img src="images/billy.jpg" alt="" width="400" style="margin-top: 1rem">
+                <div class="detail-body">
+                    <div class="row">
+
+                        <!-- писание -->
+                        <div class="col-12 col-md-6 order-1 order-md-0 detail-main">
+                            <div class="detail-subtitle">Жетон ВВС России</div>
+                            <div class="detail-price">120 ₽</div>
+                            <div class="detail-sep"></div>
+                            <div class="detail-section-list">
+                                <!-- один или несколько категорий, можно вообще ничего не выводить -->
+                                <a href="catalog.html" style="background-color: #b2b2b2;" class="detail-section">Жетоны</a>
+                                <a href="catalog.html" style="background-color: #f32091;" class="detail-section">Подарочные жетоны</a>
+                            </div>
+                            <div class="detail-description">
+                                <strong>Описание:</strong><br>
+                                Описание товара, если оно нужно. Ооооочень подробное описание, или короткое, как 5 лет учебы. Просто
+                                нужен был какой-то текст для примера.
+                            </div>
+
+                            <div class="detail-product">
+                                <!-- title - не обязательное поле -->
+                                <product :id="1"
+                                         :title="'Жетон ВВС России'"
+                                ></product>
+                            </div>
+                        </div>
+
+                        <!-- картинки -->
+                        <div class="col-12 col-md-6 order-0 order-md-1">
+                            <div class="detail-img--main">
+                                <!-- здесь основная картинка, она обязательно должна быть -->
+                                <a href="images/dkqb7zobqez8ocyx0pkgj4vjudvsl8ne.jpg" data-fancybox="gallery" data-caption="Подпись к фото 1">
+                                    <img src="images/dkqb7zobqez8ocyx0pkgj4vjudvsl8ne.jpg" />
+                                </a>
+                            </div>
+
+                            <div class="detail-img--second">
+                                <!-- здесь должны быть перечислены другие картинки, вообще этого блока может и не быть -->
+                                <a href="images/eap46boyh6bxvrse7u6e9sqi96hvjt6t.png" data-fancybox="gallery"
+                                   data-caption="Подпись к фото 3">
+                                    <img src="images/eap46boyh6bxvrse7u6e9sqi96hvjt6t.png" />
+                                </a>
+
+                                <a href="images/billy.jpg" data-fancybox="gallery" data-caption="Подпись к фото 4">
+                                    <img src="images/billy.jpg" />
+                                </a>
+
+                                <a href="images/photo_2023-05-07_21-26-20.jpg" data-fancybox="gallery" data-caption="Подпись к фото 4">
+                                    <img src="images/photo_2023-05-07_21-26-20.jpg" />
+                                </a>
+
+                                <a href="images/io7mtsl699hbfy701uy7poa5p7q865fm.jpg" data-fancybox="gallery" data-caption="Подпись к фото 4">
+                                    <img src="images/io7mtsl699hbfy701uy7poa5p7q865fm.jpg" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
         </div>
         <!----------------------------------------------------------------------------------------------------------------------------->
