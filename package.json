@@ -51,6 +51,7 @@
 		"webpack-merge": "^5.8.0"
 	},
 	"dependencies": {
+		"@fancyapps/ui": "^5.0.19",
 		"axios": "^1.4.0",
 		"babel-loader": "^9.1.2",
 		"bootstrap": "^5.3.0",

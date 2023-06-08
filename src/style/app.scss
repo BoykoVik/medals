@@ -15,7 +15,7 @@
 
 
 // vendor
-@import "vendor/reset";
+@import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 // sys
 @import "sys/vars";
@@ -70,45 +70,6 @@ a {
     }
 }
 
-// -------------------------- container
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px;
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 720px;
-    }
-}
-
-@media (min-width: 992px) {
-    .container {
-        max-width: 960px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1140px;
-    }
-}
-
 // blocks
 @import "blocks/header";
 @import "blocks/nav";
@@ -119,4 +80,6 @@ a {
 @import "blocks/site-search";
 @import "blocks/footer";
 
+
 @import "blocks/catalog/catalog";
+@import "blocks/detail/detail";
