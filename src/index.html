@@ -135,7 +135,7 @@
 
                         <!-- корзина -->
                         <!-- API -->
-                        <cart :cart-page-url="'cart.html'"></cart>
+                        <cart :href="'cart.html'"></cart>
                         <notification></notification>
                     </div>
                 </div>
@@ -235,7 +235,7 @@
                     <div class="tabs-content">
                         <div class="tabs-content-item" data-target="news" data-is-active="1">
                             <!-- API -->
-                            <catalog :products-api="'http://localhost:4000/new-products'"
+                            <catalog :products-api="'api/products-new'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>
@@ -244,7 +244,7 @@
 
                         <div class="tabs-content-item" data-target="hit" data-is-active="0">
                             <!-- API -->
-                            <catalog :products-api="'http://localhost:4000/hit-products'"
+                            <catalog :products-api="'api/products-hit'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>
@@ -252,7 +252,7 @@
 
                         <div class="tabs-content-item" data-target="sale" data-is-active="0">
                             <!-- API -->
-                            <catalog :products-api="'http://localhost:4000/sale-products'"
+                            <catalog :products-api="'api/products-sale'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>

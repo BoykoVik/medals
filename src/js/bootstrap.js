@@ -6,6 +6,9 @@ window.jQuery = $
 window.$ = $
 window.Inputmask = Inputmask
 
+// lodash
+window._ = require('lodash')
+
 // bootstrap
 require('bootstrap/js/dist/modal')
 require('bootstrap/js/dist/carousel')

@@ -1,4 +1,5 @@
 const path = require('path')
+const Dotenv = require('dotenv-webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
@@ -27,13 +28,21 @@ module.exports = {
             filename: "catalog.html"
         }),
         new HtmlWebpackPlugin({
-            title: "Каталог",
+            title: "Товар",
             template: path.resolve(CATALOG_SRC, 'detail.html'),
             inject: 'body',
             minify: false,
             filename: "detail.html"
         }),
-        new VueLoaderPlugin()
+        new HtmlWebpackPlugin({
+            title: "Корзина",
+            template: path.resolve(CATALOG_SRC, 'cart.html'),
+            inject: 'body',
+            minify: false,
+            filename: "cart.html"
+        }),
+        new VueLoaderPlugin(),
+        new Dotenv()
     ],
     module: {
         rules: [

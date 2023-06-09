@@ -134,7 +134,7 @@
 
                         <!-- корзина -->
                         <!-- API -->
-                        <cart :cart-page-url="'cart.html'"></cart>
+                        <cart :href="'cart.html'"></cart>
                         <notification></notification>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
                     <!-- API -->
                     <catalog
                         :show-actions="true"
-                        :products-api="'http://localhost:4000/products'"
+                        :products-api="'api/products'"
                     ></catalog>
                 </div>
             </div>

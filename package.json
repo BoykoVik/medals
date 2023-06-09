@@ -5,8 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"prod": "webpack --config webpack.prod.js",
-		"dev": "webpack-dev-server --config webpack.dev.js",
-		"server": "json-server -p 4000 -w server/db.json"
+		"dev": "webpack-dev-server --config webpack.dev.js"
 	},
 	"repository": {
 		"type": "git",
@@ -31,9 +30,12 @@
 		"browser-sync": "^2.27.10",
 		"browser-sync-webpack-plugin": "^2.3.0",
 		"css-loader": "^6.7.1",
+		"dotenv-webpack": "^8.0.1",
 		"html-loader": "^4.2.0",
 		"html-webpack-plugin": "^5.5.0",
+		"lodash": "^4.17.21",
 		"mini-css-extract-plugin": "^2.6.1",
+		"miragejs": "^0.1.47",
 		"postcss": "^8.4.18",
 		"postcss-loader": "^7.0.1",
 		"sass": "^1.56.1",

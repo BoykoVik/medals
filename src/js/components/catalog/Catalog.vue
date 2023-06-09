@@ -113,7 +113,7 @@ export default {
         };
 
         fetching().then(response => {
-            this.products = response.data
+            this.products = response.data.products
 
             if (this.products.length > this.limit) {
                 this.limitProducts = this.limit

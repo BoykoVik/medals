@@ -1,10 +1,12 @@
 <template>
-    <div class="fa-solid fa-cart-shopping fa-xl cart">
-        <div v-if="count"
-             class="cart-count">
-            {{ count }}
+    <a :href="href">
+        <div class="fa-solid fa-cart-shopping fa-xl cart">
+            <div v-if="count"
+                 class="cart-count">
+                {{ count }}
+            </div>
         </div>
-    </div>
+    </a>
 </template>
 
 <script>
@@ -17,6 +19,12 @@ export default {
     },
     methods: {
         ...mapActions('Cart', ['initCart']),
+    },
+    props: {
+        href: {
+            type: String,
+            required: true
+        }
     },
     beforeMount() {
         this.initCart()
