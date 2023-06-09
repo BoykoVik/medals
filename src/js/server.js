@@ -34,6 +34,14 @@ export function makeServer({ environment = "development"} = {}) {
             this.get('/products-sale', (schema) => {
                 return schema.products.where(product => product.id > 12)
             })
+
+            this.post('/cart-positions', (schema, request) => {
+                const data = JSON.parse(request.requestBody).data
+
+                return schema.products.where(product => {
+                    return data.includes(product.id)
+                })
+            })
         }
     })
 }

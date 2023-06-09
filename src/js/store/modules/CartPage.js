@@ -1,6 +1,7 @@
 const state = {
     count: 0,
-    products: {}
+    productCounts: {},
+    productIds: []
 }
 
 const getters = {
@@ -12,9 +13,13 @@ const mutations = {
         state.count = count
     },
 
-    SET_PRODUCTS: (state, products) => {
-        state.products = products
+    SET_PRODUCT_COUNTS: (state, productCounts) => {
+        state.productCounts = productCounts
     },
+
+    SET_PRODUCT_IDS: (state, productIds) => {
+        state.productIds = productIds
+    }
 }
 
 const actions = {
@@ -27,10 +32,11 @@ const actions = {
             }
         }
 
-        const {count, ...products} = cart
+        const {count, ...productCounts} = cart
 
         commit('SET_COUNT', count)
-        commit('SET_PRODUCTS', products)
+        commit('SET_PRODUCT_COUNTS', productCounts)
+        commit('SET_PRODUCT_IDS', Object.keys(productCounts))
     }
 }
 

@@ -4,7 +4,9 @@
 
         <div class="cart-content">
             <div class="cart-list">
-                Список
+                <div v-for="item of itemsWithCount">
+                    {{ item.name }} - {{ item.count }}
+                </div>
             </div>
 
             <div class="cart-result">
@@ -16,15 +18,54 @@
 
 <script>
 
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
+import axios from "axios";
 
 export default {
     name: 'CartPage',
+    data() {
+        return {
+            items: []
+        }
+    },
+    props: {
+        cartPositionsApi: {
+            type: String,
+            required: true
+        }
+    },
     methods: {
-        ...mapActions('CartPage', ['init'])
+        ...mapActions('CartPage', ['init']),
+
+        fetchingPositions(productIds) {
+            const fetching = async (productIds) => {
+                return await axios.post(this.cartPositionsApi, {
+                    data: productIds
+                })
+            }
+
+            fetching(productIds).then(response => {
+                this.items = response.data.products
+            }).catch(e => {
+                this.items = []
+                console.error('Ошибка загрузки товаров в корзине')
+            })
+        }
+    },
+    computed: {
+        ...mapState('CartPage', ['count', 'productCounts', 'productIds']),
+
+        itemsWithCount() {
+            return this.items.map(item => {
+                item.count = this.productCounts[item.id]
+
+                return item
+            })
+        }
     },
     beforeMount() {
         this.init()
+        this.fetchingPositions(this.productIds)
     }
 }
 </script>
