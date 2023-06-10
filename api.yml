@@ -1,0 +1,180 @@
+openapi: 3.0.3
+info:
+  title: Магазин медалей
+  description: OpenAPI спецификация
+  version: 0.0.1
+
+paths:
+  /api/products:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров
+      operationId: getProducts
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+  /api/products-news:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров для блока Новинки
+      operationId: getProductsNew
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+  /api/products-hits:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров для блока Хиты продаж
+      operationId: getProductsHit
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+  /api/products-sale:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров для блока Распродажа
+      operationId: getProductsSale
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+
+#  /api/product/{id}:
+#    get:
+#      tags:
+#        - products
+#      summary: Метод получения конкретного товара
+#      operationId: getProduct
+#      parameters:
+#        - name: id
+#          in: path
+#          required: true
+#          description: Идентификатор товара
+#          schema:
+#            type: integer
+#          example: 1
+#      responses:
+#        '200':
+#          description: Успешный ответ с получением конкретного товара
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/Product"
+
+#  /api/cart/items:
+#    get:
+#      tags:
+#        - cart
+#      summary: Метод получения списка всех товаров в корзине
+#      description: Передается массив идентификаторов товаров, нужно вернуть только те товары, id которых есть в этом массиве
+#      operationId: getCartItems
+#      parameters:
+#        - name: data
+#          in: path
+#          required: true
+#          description: Массив идентификаторов товаров
+#          schema:
+#            type: array
+#      responses:
+#        '200':
+#          description: Успешный ответ с получением списка товаров
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/Products"
+#  /api/cart/do-order:
+#    post:
+#      tags:
+#        - cart
+#      summary: Оформление заказа
+#      description: Передается JSON-объект с идентификаторами товаров, количеством и параметрами покупки
+#      operationId: doOrder
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/CartOrder"
+#      responses:
+#        '200':
+#          description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - image
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Планка'
+        description:
+          type: string
+          example: 'Планка с ореданми'
+        price:
+          type: integer
+          example: 60
+        image:
+          type: string
+          example: 'https://some-url/image.jpg'
+        image_alt:
+          type: string
+          example: 'планка'
+    Products:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+      example:
+        - id: 1
+          name: 'Планка'
+          price: 100
+          image: 'https://some-url/image.jpg'
+        - id: 2
+          name: 'Жетон'
+          price: 200
+          image: 'https://some-url/image2.jpg'
+    CartOrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+    CartOrder:
+      type: array
+      items:
+        $ref: "#/components/schemas/CartOrderItem"
+      example:
+        - id: 1
+          count: 4
+        - id: 2
+          count: 25
+        - id: 14
+          count: 1
+

@@ -2,8 +2,6 @@ import Vue from 'vue/dist/vue.js'
 import Vuex from 'vuex'
 import store from "./store";
 
-import {makeServer} from "./server";
-
 import Catalog from "./components/catalog/Catalog.vue"
 import Cart from "./components/cart/Cart.vue";
 import Notification from "./components/notification/Notification.vue";
@@ -17,10 +15,6 @@ Vue.component('product', Product)
 Vue.component('cart-page', CartPage)
 
 Vue.use(Vuex)
-
-if (process.env.NODE_ENV === 'development') {
-    makeServer()
-}
 
 const app = new Vue({
     el: '#app',

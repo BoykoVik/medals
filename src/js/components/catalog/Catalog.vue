@@ -109,11 +109,10 @@ export default {
     created() {
         const fetching = async () => {
             return await axios.get(this.productsApi);
-
         };
 
         fetching().then(response => {
-            this.products = response.data.products
+            this.products = response.data
 
             if (this.products.length > this.limit) {
                 this.limitProducts = this.limit
