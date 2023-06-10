@@ -14,3 +14,4 @@ function importAll(r) {
 }
 
 const images = importAll(require.context('./assets/images', false, /\.(png|jpe?g|svg)$/));
+import favicon from './favicon.png'

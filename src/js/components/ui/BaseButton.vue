@@ -1,5 +1,8 @@
 <template>
-    <button v-on:click="click" class="base-btn">
+    <button v-on:click="click"
+            class="base-btn"
+            :class="styleType"
+    >
         <slot></slot>
     </button>
 </template>
@@ -12,6 +15,12 @@ export default defineComponent({
     data: () => {
         return {
             count: 0
+        }
+    },
+    props: {
+        styleType: {
+            type: String,
+            default: 'primary' // other values: flat
         }
     },
     methods: {
@@ -28,22 +37,43 @@ export default defineComponent({
 
     .base-btn {
         display: inline-block;
-        padding: 0.3rem 0.9rem;
-        background-color: #ececec;
+        padding: 0.5rem 0.7rem;
         border-radius: $border-radius;
-        color: $text;
 
         @include transition;
 
         &:hover {
             cursor: pointer;
-            background-color: $primary;
-            color: $white;
         }
 
-        &.active {
+        // варианты кнопок по стилю
+        &.primary {
             background-color: $primary;
             color: $white;
+
+            &:hover, &:active {
+                background-color: darken($primary, 10%);
+            }
+        }
+
+        &.flat {
+            background-color: #ececec;
+            color: $text;
+
+            &:hover, &:active {
+                background-color: $primary;
+                color: $white;
+            }
+        }
+
+        &.transparent {
+            background-color: transparent;
+            color: #838383;
+
+            &:hover, &:active {
+                background-color: #ececec;
+                color: #5b5b5b;
+            }
         }
     }
 </style>

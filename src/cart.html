@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Корзина</title>
+
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,7 +137,9 @@
 
                     <!-- корзина -->
                     <!-- API -->
-                    <cart :href="'cart.html'"></cart>
+                    <a href="cart.html">
+                        <cart></cart>
+                    </a>
                     <notification></notification>
                 </div>
             </div>
@@ -153,13 +157,10 @@
         <!----------------------------------------------------------------------------------------------------------------------------->
         <div class="section" style="margin-top: 5rem">
             <div class="container">
-                <!-- API: post
-                     Принимает JSON-массив id товаров, которые нужно вернуть также в JSON
-
-                     параметры: data - JSON-массив
-                -->
+                <!-- API -->
                 <cart-page
                     :cart-positions-api="'api/cart-positions'"
+                    :cart-order-api="'api/do-order'"
                 ></cart-page>
             </div>
         </div>

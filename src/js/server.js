@@ -42,6 +42,10 @@ export function makeServer({ environment = "development"} = {}) {
                     return data.includes(product.id)
                 })
             })
+
+            this.post('/do-order', (schema, request) => {
+                const data = JSON.parse(request.requestBody).data
+            })
         }
     })
 }

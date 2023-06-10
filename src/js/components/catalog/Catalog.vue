@@ -88,7 +88,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('Cart', ['pushProduct', 'initCart']),
+        ...mapActions('Cart', ['pushProduct']),
         ...mapActions('Notification', ['pushNotification']),
 
         changeMode(mode) {
