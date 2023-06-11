@@ -14,14 +14,20 @@
         <div class="catalog-actions-right">
             <base-button
                 @click="changeModeCompact"
-                :class="{ active: catalogMode === 'compact' }"
+                :class="{
+                    primary: catalogMode === 'compact',
+                    flat: catalogMode === 'expand',
+                }"
             >
                 <i class="fa-solid fa-table-cells-large"></i>
             </base-button>
 
             <base-button
                 @click="changeModeExpand"
-                :class="{ active: catalogMode === 'expand' }"
+                :class="{
+                    primary: catalogMode === 'expand',
+                    flat: catalogMode === 'compact',
+                }"
             >
                 <i class="fa-solid fa-table-cells"></i>
             </base-button>
