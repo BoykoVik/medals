@@ -68,13 +68,19 @@
 }
 
 .detail-section {
-    padding: 0.3rem 0.8rem;
-    border-radius: $border-radius;
-    color: $white;
+    display: inline;
+    font-weight: 400;
+    padding: 0.3rem 0.6rem;
+    color: #7e7d7d;
+    font-size: 12px;
+    background-color: #eaeaea;
+    border-radius: 20px;
 
-    &:hover, &:focus, &:active {
+    @include transition;
+
+    &:hover {
+        background-color: $primary;
         color: $white;
-        cursor: pointer;
     }
 }
 

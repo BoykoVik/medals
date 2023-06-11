@@ -167,9 +167,7 @@
                             <div class="detail-price">120 ₽</div>
                             <div class="detail-sep"></div>
                             <div class="detail-section-list">
-                                <!-- один или несколько категорий, можно вообще ничего не выводить -->
-                                <a href="catalog.html" style="background-color: #b2b2b2;" class="detail-section">Жетоны</a>
-                                <a href="catalog.html" style="background-color: #f32091;" class="detail-section">Подарочные жетоны</a>
+                                <a href="catalog.html" class="detail-section">Жетоны</a>
                             </div>
                             <div class="detail-description">
                                 <strong>Описание:</strong><br>
@@ -178,9 +176,9 @@
                             </div>
 
                             <div class="detail-product">
-                                <!-- title - не обязательное поле -->
-                                <product :id="1"
-                                         :title="'Жетон ВВС России'"
+                                <!-- здесь нужно добавить в первый роут нужный id -->
+                                <product :product-api="'http://medals.localhost/api/product/1'"
+                                         :parameters-api="'http://medals.localhost/api/parameters'"
                                 ></product>
                             </div>
                         </div>

@@ -144,8 +144,8 @@ export default {
             this.products = []
             this.isLoading = false
 
-            if (error.response) {
-                this.errorMessage = error.response.data?.message ?? this.errorDefaultMessage
+            if (error?.response?.message) {
+                this.errorMessage = error.response.data.message
             }
             else {
                 this.errorMessage = this.errorDefaultMessage
