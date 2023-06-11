@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Главная</title>
+
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,7 +137,9 @@
 
                         <!-- корзина -->
                         <!-- API -->
-                        <cart :cart-page-url="'cart.html'"></cart>
+                        <a href="cart.html">
+                            <cart></cart>
+                        </a>
                         <notification></notification>
                     </div>
                 </div>
@@ -235,7 +239,7 @@
                     <div class="tabs-content">
                         <div class="tabs-content-item" data-target="news" data-is-active="1">
                             <!-- API -->
-                            <catalog :products-api="'http://localhost:4000/new-products'"
+                            <catalog :products-api="'http://medals.localhost/api/products-news'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>
@@ -244,7 +248,7 @@
 
                         <div class="tabs-content-item" data-target="hit" data-is-active="0">
                             <!-- API -->
-                            <catalog :products-api="'http://localhost:4000/hit-products'"
+                            <catalog :products-api="'http://medals.localhost/api/products-hits'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>
@@ -252,7 +256,7 @@
 
                         <div class="tabs-content-item" data-target="sale" data-is-active="0">
                             <!-- API -->
-                            <catalog :products-api="'http://localhost:4000/sale-products'"
+                            <catalog :products-api="'http://medals.localhost/api/products-sale'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>

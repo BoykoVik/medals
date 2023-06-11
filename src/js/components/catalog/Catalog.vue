@@ -1,51 +1,65 @@
 <template>
 
-    <div>
-        <catalog-actions v-if="showActions"
-            :catalogMode="catalogMode"
-            @changeMode="changeMode"
-            @inputSearch="inputSearch"
-        ></catalog-actions>
+    <div v-if="!isLoading">
+        <div v-if="!isError">
+            <!-- действия каталога -->
+            <catalog-actions v-if="showActions && searchedProducts.length"
+                             :catalogMode="catalogMode"
+                             @changeMode="changeMode"
+                             @inputSearch="inputSearch"
+            ></catalog-actions>
 
-        <div v-if="searchedProducts.length" class="catalog-list"
-            :class="{
+            <!-- список товаров -->
+            <div v-if="searchedProducts.length" class="catalog-list"
+                 :class="{
                 expand: catalogMode === catalogModeEnum.expand,
                 compact: catalogMode === catalogModeEnum.compact,
             }"
-        >
-            <div v-for="product of searchedProducts">
-                <a class="card"
-                   v-bind:key="product.id"
-                   :href="product.url"
-                >
-                    <img class="card-img" :src="product.image" alt="">
-                    <h3 class="card-title">{{ product.name }}</h3>
+            >
+                <div v-for="product of searchedProducts">
+                    <a class="card"
+                       v-bind:key="product.id"
+                       :href="product.url"
+                    >
+                        <img class="card-img" :src="product.image" alt="">
+                        <h3 class="card-title">{{ product.name }}</h3>
+                        <div class="card-section">
+                            <p>{{ product.sectionName }}</p>
+                        </div>
 
-                    <div class="card-actions">
-                        <p class="card-price">{{ product.price }} ₽</p>
-                        <button :data-id="product.id"
-                            @click.prevent="pushToCart"
-                            class="card-cart">
-                            <i :data-id="product.id" class="fa-solid fa-cart-shopping"></i>
-                            В корзину
-                        </button>
-                    </div>
-                </a>
+                        <div class="card-actions">
+                            <p class="card-price">{{ product.price }} ₽</p>
+                            <button :data-id="product.id"
+                                    @click.prevent="pushToCart"
+                                    class="card-cart">
+                                <i :data-id="product.id" class="fa-solid fa-cart-shopping"></i>
+                                В корзину
+                            </button>
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+            <div v-else class="catalog-plug">
+                Здесь пока ничего нет :(
             </div>
 
-
+            <!-- показать все -->
+            <div
+                v-if="limitProducts && searchedProducts.length"
+                @click="showAll"
+                class="catalog-all">
+                показать все
+            </div>
         </div>
-        <div v-else class="catalog-plug">
-            Здесь пока ничего нет :(
+        <div v-else class="catalog-error">
+            <i class="fa-solid fa-circle-exclamation fa-2xl"></i>
+            {{ errorMessage }}
         </div>
-
-        <div
-            v-if="limitProducts && searchedProducts.length"
-            @click="showAll"
-            class="catalog-all">
-            показать все
-        </div>
-
+    </div>
+    <div v-else class="catalog-loader">
+        <span class="loader"></span>
     </div>
 
 </template>
@@ -70,7 +84,11 @@ export default {
             },
             catalogMode: 'expand',
             searchQuery: '',
-            limitProducts: null
+            limitProducts: null,
+            isError: false,
+            errorMessage: '',
+            errorDefaultMessage: 'Ошибка загрузки каталога',
+            isLoading: false
         }
     },
     props: {
@@ -88,7 +106,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('Cart', ['pushProduct', 'initCart']),
+        ...mapActions('Cart', ['pushProduct']),
         ...mapActions('Notification', ['pushNotification']),
 
         changeMode(mode) {
@@ -107,20 +125,32 @@ export default {
         }
     },
     created() {
+        this.isLoading = true
+
         const fetching = async () => {
             return await axios.get(this.productsApi);
-
         };
 
         fetching().then(response => {
             this.products = response.data
+            this.isError = false
+            this.isLoading = false
 
             if (this.products.length > this.limit) {
                 this.limitProducts = this.limit
             }
-        }).catch(() => {
+        }).catch(error => {
+            this.isError = true
             this.products = []
-            console.error('Ошибка загрузки каталога')
+            this.isLoading = false
+
+            if (error.response) {
+                this.errorMessage = error.response.data?.message ?? this.errorDefaultMessage
+            }
+            else {
+                this.errorMessage = this.errorDefaultMessage
+            }
+
         })
     },
     computed: {
@@ -210,6 +240,38 @@ export default {
         @include select-off;
     }
 
+    // заглушка списка при ошибке
+    .catalog-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 150px;
+        background-color: $gray-plug;
+        border-radius: $border-radius;
+        color: #ffacac;
+        font-size: 18px;
+        margin-top: 2rem;
+        gap: 1rem;
+
+        @include select-off;
+    }
+
+    // заглушка списка прелоадер
+    .catalog-loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 150px;
+        background-color: $gray-plug;
+        border-radius: $border-radius;
+        color: $gray-dark;
+        font-size: 18px;
+        margin-top: 2rem;
+
+        @include select-off;
+        @include preloader($gray-dark, 48px);
+    }
+
     // карточка товара
     .card {
         width: 100%;
@@ -226,6 +288,7 @@ export default {
             "img"
             "img"
             "title"
+            "section"
             "actions";
 
         &:hover {
@@ -249,13 +312,29 @@ export default {
             grid-area: title;
             font-weight: 500;
             margin-top: 1rem;
-            margin-bottom: 2rem;
             color: $text;
 
             @include transition;
 
             &:hover {
                 color: $primary;
+            }
+        }
+
+        // раздел
+        &-section {
+            grid-area: section;
+            margin-top: 0.7rem;
+            margin-bottom: 2rem;
+
+            p {
+                display: inline;
+                font-weight: 400;
+                padding: 0.3rem 0.6rem;
+                color: #7e7d7d;
+                font-size: 12px;
+                background-color: #eaeaea;
+                border-radius: 20px;
             }
         }
 

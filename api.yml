@@ -1,0 +1,298 @@
+openapi: 3.0.3
+info:
+  title: Магазин медалей
+  description: OpenAPI спецификация
+  version: 0.0.1
+
+paths:
+  # ТОВАРЫ
+  /api/products{?sectionId}:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров
+      description: Получение всех товаров или для конкретного раздела.
+      operationId: getProducts
+      parameters:
+        - name: sectionId
+          in: path
+          required: false
+          description: Идентификатор раздела
+          schema:
+            type: integer
+          example: 3
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/products-news:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров для блока Новинки
+      operationId: getProductsNew
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/products-hits:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров для блока Хиты продаж
+      operationId: getProductsHit
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/products-sale:
+    get:
+      tags:
+        - products
+      summary: Метод получения списка товаров для блока Распродажа
+      operationId: getProductsSale
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/product/{id}:
+    get:
+      tags:
+        - products
+      summary: Метод получения конкретного товара
+      operationId: getProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор товара
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Успешный ответ с получением конкретного товара
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  # ПАРАМЕТРЫ
+  /api/parameters/{parameterType}:
+    get:
+      tags:
+        - parameters
+      summary: Метод получения списка значений параметра товара
+      operationId: getParameters
+      parameters:
+        - name: parameterType
+          in: path
+          required: true
+          description: Тип параметра
+          schema:
+            type: string
+          example: 'color'
+      responses:
+        '200':
+          description: Успешный ответ с получением списка значений параметра товара
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParametersList'
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+#  /api/cart/items:
+#    get:
+#      tags:
+#        - cart
+#      summary: Метод получения списка всех товаров в корзине
+#      description: Передается массив идентификаторов товаров, нужно вернуть только те товары, id которых есть в этом массиве
+#      operationId: getCartItems
+#      parameters:
+#        - name: data
+#          in: path
+#          required: true
+#          description: Массив идентификаторов товаров
+#          schema:
+#            type: array
+#      responses:
+#        '200':
+#          description: Успешный ответ с получением списка товаров
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/Products"
+#  /api/cart/do-order:
+#    post:
+#      tags:
+#        - cart
+#      summary: Оформление заказа
+#      description: Передается JSON-объект с идентификаторами товаров, количеством и параметрами покупки
+#      operationId: doOrder
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/CartOrder"
+#      responses:
+#        '200':
+#          description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - image
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Планка'
+        description:
+          type: string
+          example: 'Планка с ореданми'
+        price:
+          type: integer
+          example: 60
+        image:
+          type: string
+          example: 'https://some-url/image.jpg'
+        image_alt:
+          type: string
+          example: 'планка'
+        parameters:
+          type: array
+          example: ["color", "base"]
+        sectionName:
+          type: string
+          example: 'Планки'
+    Products:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+      example:
+        - id: 1
+          name: 'Планка'
+          price: 100
+          image: 'https://some-url/image.jpg'
+          image_alt: 'alt'
+          parameters: ["color", "base"]
+          sectionName: 'Планки'
+        - id: 2
+          name: 'Жетон'
+          price: 200
+          image: 'https://some-url/image2.jpg'
+          image_alt: 'alt image text'
+          parameters: [ "color" ]
+          sectionName: 'Жетоны'
+    CartOrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+    CartOrder:
+      type: array
+      items:
+        $ref: "#/components/schemas/CartOrderItem"
+      example:
+        - id: 1
+          count: 4
+        - id: 2
+          count: 25
+        - id: 14
+          count: 1
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 422
+        message:
+          type: string
+          example: 'Ошибка загрузки'
+    Parameter:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Синий'
+    Parameters:
+      type: array
+      items:
+        $ref: "#/components/schemas/Parameter"
+      example:
+        - id: 1
+          name: 'Синий'
+        - id: 2
+          name: 'Черный'
+        - id: 14
+          name: 'Белый'
+    ParametersList:
+      type: object
+      properties:
+        label:
+          type: string
+          example: 'Цвет подложки'
+        items:
+          $ref: "#/components/schemas/Parameters"
