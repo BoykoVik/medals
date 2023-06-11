@@ -23,6 +23,9 @@
                     >
                         <img class="card-img" :src="product.image" alt="">
                         <h3 class="card-title">{{ product.name }}</h3>
+                        <div class="card-section">
+                            <p>{{ product.sectionName }}</p>
+                        </div>
 
                         <div class="card-actions">
                             <p class="card-price">{{ product.price }} ₽</p>
@@ -285,6 +288,7 @@ export default {
             "img"
             "img"
             "title"
+            "section"
             "actions";
 
         &:hover {
@@ -308,13 +312,29 @@ export default {
             grid-area: title;
             font-weight: 500;
             margin-top: 1rem;
-            margin-bottom: 2rem;
             color: $text;
 
             @include transition;
 
             &:hover {
                 color: $primary;
+            }
+        }
+
+        // раздел
+        &-section {
+            grid-area: section;
+            margin-top: 0.7rem;
+            margin-bottom: 2rem;
+
+            p {
+                display: inline;
+                font-weight: 400;
+                padding: 0.3rem 0.6rem;
+                color: #7e7d7d;
+                font-size: 12px;
+                background-color: #eaeaea;
+                border-radius: 20px;
             }
         }
 
