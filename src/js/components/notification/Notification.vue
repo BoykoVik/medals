@@ -23,7 +23,7 @@ export default {
     @import "../../../style/sys/mixins";
 
     .notify {
-        z-index: 1001;
+        z-index: 1002;
         position: absolute;
         top: 83px;
         left: 50%;
