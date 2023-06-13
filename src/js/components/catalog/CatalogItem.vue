@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="catalog-item-wrapper">
         <a class="catalog-item"
            v-bind:key="this.id"
            :href="this.url"
         >
-            <img class="catalog-item-img" :src="this.image" alt="">
+            <img class="catalog-item-img" :src="this.image" :alt="this.imageAlt">
             <h3 class="catalog-item-title">{{ this.name }}</h3>
             <div class="catalog-item-section">
                 <p>{{ this.sectionName }}</p>
@@ -15,25 +15,24 @@
                 <button @click.prevent="pushToCart"
                         class="catalog-item-cart"
                 >
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    В корзину
+                    <i class="fa-solid fa-cart-shopping"></i>В корзину
                 </button>
             </div>
         </a>
 
-        <base-modal :show="isShow"
-                    @hide="isShow = false"
+        <base-modal v-if="parameters.length"
+                    :show="isShowModal"
+                    @hide="isShowModal = false"
         >
-            <base-button :style-type="'transparent'"
-                         class="catalog-item-modal-btn-close"
+            <div class="catalog-item-dialog-label">Укажите параметры заказа</div>
+            <product-parameters :parameterTypes="parameters"
+                                :parametersData.sync="parametersData"
+            ></product-parameters>
+            <base-button @click="pushToCartDialog"
+                         class="catalog-item-cart-dialog"
             >
-                <i class="fa-solid fa-xmark"></i>
+                <i class="fa-solid fa-cart-shopping"></i>В корзину
             </base-button>
-            <product :id="this.id"
-                     :name="this.name"
-                     :params="this.parameters"
-                     @pushedToCart="pushedToCart"
-            ></product>
         </base-modal>
     </div>
 
@@ -41,15 +40,17 @@
 
 <script>
 import {mapActions} from "vuex";
-import BaseModal from "../ui/BaseModal.vue";
 import BaseButton from "../ui/BaseButton.vue";
+import ProductParameters from "./ProductParameters.vue";
+import BaseModal from "../ui/BaseModal.vue";
 
 export default {
     name: 'CatalogItem',
-    components: {BaseButton, BaseModal},
+    components: {BaseModal, ProductParameters, BaseButton},
     data() {
         return {
-            isShow: false
+            parametersData: {},
+            isShowModal: false
         }
     },
     props: {
@@ -92,18 +93,34 @@ export default {
     },
     methods: {
         ...mapActions('Cart', ['pushProduct']),
-        ...mapActions('Notification', ['pushNotification']),
+        ...mapActions('Notification', ['pushNotification', 'pushNotificationLight']),
 
         pushToCart() {
-            if (this.parameters.length) {
-                this.isShow = true
+            for (let parameter of this.parameters) {
+                if (this.parametersData[parameter] === undefined) {
+                    this.isShowModal = true
+                    return
+                }
             }
 
+            // todo: добавление в корзину
+            this.parametersData = {}
             this.pushNotification('Товар добавлен в корзину')
         },
 
-        pushedToCart() {
-            this.isShow = false
+        pushToCartDialog() {
+            for (let parameter of this.parameters) {
+                if (this.parametersData[parameter] === undefined) {
+                    this.parametersData = {}
+                    this.pushNotificationLight('Укажите все параметры товара')
+                    return
+                }
+            }
+
+            // todo: добавление в корзину
+            this.isShowModal = false
+            this.parametersData = {}
+            this.pushNotification('Товар добавлен в корзину')
         }
     }
 }
@@ -113,6 +130,21 @@ export default {
     @import "../../../style/sys/vars";
     @import "../../../style/sys/mixins";
 
+    .catalog-item-wrapper {
+        position: relative;
+
+        @include shadow;
+        @include transition;
+
+        &:hover {
+            @include shadow-primary;
+
+            .catalog-item-parameters {
+                display: block;
+            }
+        }
+    }
+
     // карточка товара
     .catalog-item {
         width: 100%;
@@ -120,9 +152,6 @@ export default {
         border: none;
         background-color: $white;
         border-radius: $border-radius;
-
-        @include shadow;
-        @include transition;
 
         display: grid;
         grid-template-areas:
@@ -134,7 +163,6 @@ export default {
 
         &:hover {
             cursor: pointer;
-            @include shadow-primary;
         }
 
         // картинка
@@ -218,13 +246,22 @@ export default {
         }
     }
 
-    .catalog-item-modal {
-        padding-top: 100px;
+    .catalog-item-dialog-label {
+        font-weight: 500;
+        margin-top: 0.5rem;
     }
 
-    .catalog-item-modal-btn-close {
-        position: absolute;
-        top: 0;
-        right: 0;
+    .catalog-item-cart-dialog {
+        text-align: center;
+        margin-top: 2rem;
+        width: 100%;
+
+        @include media-breakpoint-up($sm) {
+            width: 180px;
+        }
+
+        i {
+            margin-right: 5px;
+        }
     }
 </style>

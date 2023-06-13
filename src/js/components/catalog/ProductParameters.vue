@@ -2,6 +2,7 @@
     <div class="product-parameters">
         <div v-for="parameter of parameters" class="product-parameters-type">
             <base-select :id="parameter.type"
+                         :value="parametersData[parameter.type]"
                          :options="parameter.items"
                          :label="parameter.label"
                          class="product-parameter-type-select"
@@ -14,18 +15,30 @@
 <script>
 import BaseSelect from "../ui/BaseSelect.vue";
 import api from "../../api/api";
-import {mapActions, mapState} from "vuex";
 
 export default {
     name: 'ProductParameters',
     components: {BaseSelect},
+    data() {
+        return {
+            parameters: []
+        }
+    },
+    props: {
+        parameterTypes: {
+            type: Array,
+            required: true
+        },
+        parametersData: {
+            type: Object,
+            required: true
+        }
+    },
     methods: {
-        ...mapActions('Product', ['pushParameter', 'setParameter']),
-
         init() {
-            this.product.parameters.forEach(parameterType => {
+            this.parameterTypes.forEach(parameterType => {
                 api.fetchingParameter(parameterType).then(response => {
-                    this.pushParameter({
+                    this.parameters.push({
                         type: parameterType,
                         label: response.data.label,
                         items: response.data.items
@@ -37,14 +50,8 @@ export default {
         },
 
         selectParameter(data) {
-            this.setParameter({
-                type: data.id,
-                value: data.value,
-            })
-        }
-    },
-    computed: {
-        ...mapState('Product', ['product', 'parameters'])
+            this.parametersData[data.id] = data.value
+        },
     },
     created() {
         this.init()

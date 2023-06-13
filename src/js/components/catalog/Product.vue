@@ -1,11 +1,11 @@
 <template>
-
     <div v-if="!isLoading">
         <div v-if="!isError">
             <div class="product">
                 <div class="product-title">{{ this.product.name }}</div>
 
-                <product-parameters
+                <product-parameters :parameterTypes="product.parameters"
+                                    :parametersData.sync="parametersData"
                 ></product-parameters>
 
                 <div class="product-cart">
@@ -23,11 +23,10 @@
     <div v-else class="product-loader">
         <span class="loader"></span>
     </div>
-
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex"
+import {mapActions} from "vuex"
 
 import ProductParameters from "./ProductParameters.vue";
 import BaseButton from "../ui/BaseButton.vue"
@@ -40,6 +39,9 @@ export default {
     components: {ProductParameters, BaseButton},
     data() {
         return {
+            product: {},
+            parametersData: {},
+
             isLoading: false,
             isError: false,
             errorMessage: '',
@@ -50,42 +52,31 @@ export default {
         id: {
             type: Number,
             required: true
-        },
-        name: {
-            type: String
-        },
-        description: {
-            type: String
-        },
-        params: {
-            type: Array
         }
     },
     methods: {
         ...mapActions('Cart', ['pushProduct']),
         ...mapActions('Notification', ['pushNotification']),
-        ...mapActions('Product', ['initProduct']),
 
         pushToCart() {
-            for (let prop in this.parametersData) {
-                if (this.parametersData[prop] === null) {
+            for (let parameter of this.product.parameters) {
+                if (this.parametersData[parameter] === undefined) {
+                    this.parametersData = {}
                     this.pushNotification('Укажите все параметры товара')
                     return
                 }
             }
 
-            this.pushProduct(this.product.id)
+            // todo: добавление в корзину
+            this.parametersData = {}
             this.pushNotification('Товар добавлен в корзину')
-            this.$emit('pushedToCart')
         },
 
         init() {
             this.isLoading = true
 
             api.fetchingProduct(this.id).then(response => {
-                this.initProduct({
-                    product: response.data
-                })
+                this.product = response.data
                 this.isError = false
                 this.isLoading = false
             }).catch(error => {
@@ -101,20 +92,8 @@ export default {
             })
         }
     },
-    computed: {
-        ...mapState('Product', ['product', 'parametersData'])
-    },
     created() {
-        if (this.id) {
-            this.init()
-        }
-        else {
-            // this.product = {
-            //     id: this.id,
-            //     name: this.name,
-            //     parameters: this.params
-            // }
-        }
+        this.init()
     },
 }
 </script>

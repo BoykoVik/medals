@@ -1,8 +1,19 @@
 <template>
-    <div class="dialog" v-if="show" @click="hideDialog">
+    <div class="dialog"
+         :class="{ active: show }"
+         @click="hideDialog">
         <div class="dialog-inner">
             <div @click.stop class="dialog-wrapper">
-                <slot></slot>
+                <base-button :style-type="'transparent'"
+                             dialog-hide
+                             @click="hideDialog"
+                             class="dialog-hide"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </base-button>
+                <div class="dialog-content">
+                    <slot></slot>
+                </div>
             </div>
         </div>
     </div>
@@ -10,8 +21,11 @@
 
 <script>
 
+import BaseButton from "./BaseButton.vue";
+
 export default {
     name: "BaseModal",
+    components: {BaseButton},
     props: {
         show: {
             type: Boolean,
@@ -37,8 +51,13 @@ export default {
         bottom: 0;
         left: 0;
         right: 0;
-        display: flex;
         background-color: rgba(0, 0, 0, 0.65);
+
+        display: none;
+
+        &.active {
+            display: flex;
+        }
     }
 
     .dialog-inner {
@@ -50,16 +69,23 @@ export default {
 
     .dialog-wrapper {
         margin: auto;
-        display: flex;
-        padding: 30px;
         background-color: white;
         border-radius: 5px;
         position: relative;
-
         width: 100%;
 
         @include media-breakpoint-up($sm) {
             width: 400px;
         }
+    }
+
+    .dialog-hide {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .dialog-content {
+        padding: 2rem;
     }
 </style>

@@ -1,8 +1,14 @@
 const time = 2000;
 
+const TYPE_ENUM = {
+    DEFAULT: 'default',
+    LIGHT: 'light',
+}
+
 const state = {
     message: null,
-    isShow: false
+    isShow: false,
+    type: TYPE_ENUM.DEFAULT
 }
 
 const getters = {
@@ -12,6 +18,10 @@ const getters = {
 
     message: state => {
         return state.message
+    },
+
+    type: state => {
+        return state.type
     }
 }
 
@@ -26,11 +36,15 @@ const mutations = {
 
     SET_MESSAGE: (state, message) => {
         state.message = message
-    }
+    },
+
+    SET_TYPE: (state, type) => {
+        state.type = type
+    },
 }
 
 const actions = {
-    pushNotification: ({ commit}, message) => {
+    pushNotification: ({commit}, message) => {
         if (state.status !== true) {
             commit('SET_BUSY')
             commit('SET_MESSAGE', message)
@@ -38,6 +52,21 @@ const actions = {
             setTimeout(function() {
                 commit('SET_FREE')
                 commit('SET_MESSAGE', null)
+                commit('SET_MESSAGE', TYPE_ENUM.DEFAULT)
+            }, time)
+        }
+    },
+
+    pushNotificationLight: ({commit}, message) => {
+        if (state.status !== true) {
+            commit('SET_BUSY')
+            commit('SET_MESSAGE', message)
+            commit('SET_TYPE', TYPE_ENUM.LIGHT)
+
+            setTimeout(function() {
+                commit('SET_FREE')
+                commit('SET_MESSAGE', null)
+                commit('SET_MESSAGE', TYPE_ENUM.DEFAULT)
             }, time)
         }
     }

@@ -1,7 +1,11 @@
 <template>
     <transition name="notification-fade">
-        <div v-if="isShow"
+        <div v-if="isShow && type === 'default'"
             class="notify">
+            {{ message }}
+        </div>
+        <div v-if="isShow && type === 'light'"
+             class="notify-light">
             {{ message }}
         </div>
     </transition>
@@ -13,8 +17,8 @@ import { mapGetters } from "vuex";
 export default {
     name: 'Notification',
     computed: {
-        ...mapGetters('Notification', ['isShow', 'message'])
-    }
+        ...mapGetters('Notification', ['isShow', 'message', 'type'])
+    },
 }
 </script>
 
@@ -23,8 +27,8 @@ export default {
     @import "../../../style/sys/mixins";
 
     .notify {
-        z-index: 1002;
-        position: absolute;
+        z-index: 1003;
+        position: fixed;
         top: 83px;
         left: 50%;
         transform: translateX(-50%);
@@ -33,6 +37,21 @@ export default {
         border-radius: $border-radius;
         color: $white;
         text-align: center;
+    }
+
+    .notify-light {
+        z-index: 1003;
+        position: fixed;
+        top: 83px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0.5rem 1rem;
+        background-color: $white;
+        border-radius: $border-radius;
+        color: $text;
+        text-align: center;
+
+        @include shadow;
     }
 
     .notification-fade-enter-active, .notification-fade-leave-active {

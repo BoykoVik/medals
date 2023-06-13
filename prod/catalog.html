@@ -17,6 +17,8 @@
 <body>
 
     <div id="app" class="wrapper">
+        <notification></notification>
+
         <div class="content">
             <header class="header">
                 <div class="container">
@@ -139,7 +141,6 @@
                         <a href="cart.html">
                             <cart></cart>
                         </a>
-                        <notification></notification>
                     </div>
                 </div>
 
@@ -200,7 +201,7 @@
                     <!-- API -->
                     <catalog
                         :show-actions="true"
-                        :products-api="'api/products'"
+                        :products-api="'http://medals.localhost/api/products'"
                     ></catalog>
                 </div>
             </div>
