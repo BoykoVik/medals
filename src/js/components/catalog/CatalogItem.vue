@@ -103,9 +103,12 @@ export default {
                 }
             }
 
-            // todo: добавление в корзину
-            this.parametersData = {}
+            this.pushProduct({
+                id: this.id,
+                parametersData: this.parametersData
+            })
             this.pushNotification('Товар добавлен в корзину')
+            this.parametersData = {}
         },
 
         pushToCartDialog() {
@@ -117,10 +120,13 @@ export default {
                 }
             }
 
-            // todo: добавление в корзину
             this.isShowModal = false
-            this.parametersData = {}
+            this.pushProduct({
+                id: this.id,
+                parametersData: this.parametersData
+            })
             this.pushNotification('Товар добавлен в корзину')
+            this.parametersData = {}
         }
     }
 }

@@ -1,24 +1,35 @@
 import md5 from 'md5/md5'
 
 const state = {
-    count: 0,
-    hash: null,
-    products: {},
-    ids: []
+    count: 0,      // общее количество товаров, нужно для отображения на значке корзины
+    products: {},  // вся информация о каждом заказе из корзины, нужна для отображения списка товаров и передачи на сервер
+    ids: []        // id элементов корзины, нужны для загрузки с сервера информации о товарах
 }
 
+/**
+ * Получение корзины из localStorage
+ *
+ * @returns {any}
+ */
 function getActualCart() {
     let cart = localStorage.getItem('cart')
 
     if (!cart) {
-        cart = JSON.stringify({
-            count: 0,
-            products: {}
-        })
+        cart = JSON.stringify({})
         localStorage.setItem('cart', cart)
     }
 
     return JSON.parse(cart)
+}
+
+/**
+ * Ключ для заказа в корзине по id и параметрам заказа
+ *
+ * @param obj
+ * @returns {*}
+ */
+function md5Key(obj) {
+    return md5(JSON.stringify(obj))
 }
 
 const getters = {
@@ -28,10 +39,6 @@ const getters = {
 const mutations = {
     SET_COUNT: (state, value) => {
         state.count = value
-    },
-
-    UPDATE_HASH: (state, cart) => {
-        state.hash = md5(JSON.stringify(cart))
     },
 
     SET_PRODUCTS: (state, products) => {
@@ -48,48 +55,64 @@ const actions = {
     initCart({ commit }) {
         const cart = getActualCart();
 
-        commit('SET_COUNT', cart.count)
-        commit('SET_PRODUCTS', cart.products)
-        commit('SET_IDS', _.keys(cart.products))
-        commit('UPDATE_HASH', cart)
-    },
+        let count = 0
+        const ids = []
+        const products = {}
 
-    // действие при нажатии на карточке товара или при детальном просмотре
-    pushProduct({ commit }, id) {
-        const cart = getActualCart();
+        for (let key in cart) {
+            const product = cart[key]
 
-        if (!cart.products.hasOwnProperty(id)) {
-            cart.products[id] = 0
+            count += product.count
+            ids.push(product.id)
+            products[key] = {
+                count: product.count,
+                parametersData: product.parametersData,
+            }
         }
 
-        cart.products[id]++
-        cart.count++
+        commit('SET_COUNT', count)
+        commit('SET_PRODUCTS', products)
+        commit('SET_IDS', [...new Set(ids)])
+    },
 
-        commit('SET_COUNT', cart.count)
-        commit('SET_PRODUCTS', cart.products)
-        commit('SET_IDS', _.keys(cart.products))
-        commit('UPDATE_HASH', cart)
+    // действие при нажатии добавить в корзину на карточке товара или при детальном просмотре
+    pushProduct({ commit, dispatch }, payload) {
+        const cart = getActualCart()
+        const key = md5Key(payload)
+
+        if (!cart[key]) {
+            cart[key] = {
+                count: 1,
+                id: payload.id,
+                parametersData: payload.parametersData
+            }
+        }
+        else {
+            cart[key].count++
+        }
 
         localStorage.setItem('cart', JSON.stringify(cart))
+        dispatch('initCart')
     },
 
     // удаление товара из корзины
-    deleteProduct({ commit }, id) {
+    deleteProduct({ commit, dispatch }, payload) {
         const cart = getActualCart();
+        const key = md5Key(payload)
 
-        if (!cart.products.hasOwnProperty(id)) {
+        if (!cart[key]) {
             return
         }
 
-        cart.count -= cart.products[id]
-        delete cart.products[id]
-
-        commit('SET_COUNT', cart.count)
-        commit('SET_PRODUCTS', cart.products)
-        commit('SET_IDS', _.keys(cart.products))
-        commit('UPDATE_HASH', cart)
+        if (cart[key].count > 1) {
+            cart[key].count--
+        }
+        else {
+            delete cart[key]
+        }
 
         localStorage.setItem('cart', JSON.stringify(cart))
+        dispatch('initCart')
     },
 
     // изменение количества товара в корзине
@@ -106,7 +129,6 @@ const actions = {
 
         commit('SET_COUNT', cart.count)
         commit('SET_PRODUCTS', cart.products)
-        commit('UPDATE_HASH', cart)
 
         localStorage.setItem('cart', JSON.stringify(cart))
     }

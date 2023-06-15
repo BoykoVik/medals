@@ -44,6 +44,7 @@ import CartItem from "./CartItem.vue";
 import {mapState} from "vuex";
 import axios from "axios";
 import BaseButton from "../ui/BaseButton.vue";
+import api from "../../api/api";
 
 export default {
     name: 'CartPage',
@@ -56,29 +57,13 @@ export default {
             items: []
         }
     },
-    props: {
-        cartPositionsApi: {
-            type: String,
-            required: true
-        },
-        cartOrderApi: {
-            type: String,
-            required: true
-        }
-    },
     methods: {
         fetchingPositions(ids) {
-            const fetching = async (ids) => {
-                return await axios.post(this.cartPositionsApi, {
-                    data: ids
-                })
-            }
-
-            fetching(ids).then(response => {
-                this.items = response.data.products
+            api.fetchingCartItems(ids).then(response => {
+                this.items = response.data
             }).catch(e => {
                 this.items = []
-                console.error('Ошибка загрузки товаров в корзине')
+                // todo: error
             })
         },
 

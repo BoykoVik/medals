@@ -149,28 +149,35 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  # КОРЗИНА
+  /api/cart/items:
+    get:
+      tags:
+        - cart
+      summary: Метод получения списка всех товаров в корзине
+      description: Передается массив идентификаторов товаров, нужно вернуть только те товары, id которых есть в этом массиве
+      operationId: getCartItems
+      parameters:
+        - in: query
+          name: data
+          schema:
+            $ref: "#/components/schemas/CartIds"
+          required: true
+          description: Id товаров
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
-#  /api/cart/items:
-#    get:
-#      tags:
-#        - cart
-#      summary: Метод получения списка всех товаров в корзине
-#      description: Передается массив идентификаторов товаров, нужно вернуть только те товары, id которых есть в этом массиве
-#      operationId: getCartItems
-#      parameters:
-#        - name: data
-#          in: path
-#          required: true
-#          description: Массив идентификаторов товаров
-#          schema:
-#            type: array
-#      responses:
-#        '200':
-#          description: Успешный ответ с получением списка товаров
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/Products"
 #  /api/cart/do-order:
 #    post:
 #      tags:
@@ -301,3 +308,9 @@ components:
           example: 'Цвет подложки'
         items:
           $ref: "#/components/schemas/Parameters"
+    CartIds:
+      type: object
+      properties:
+        data:
+          type: array
+          example: [1, 2, 3, 4, 7, 11]
