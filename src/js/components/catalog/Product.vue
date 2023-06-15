@@ -1,17 +1,17 @@
 <template>
-
-
     <div v-if="!isLoading">
         <div v-if="!isError">
             <div class="product">
                 <div class="product-title">{{ this.product.name }}</div>
+
+                <product-parameters :parameterTypes="product.parameters"
+                                    :parametersData.sync="parametersData"
+                ></product-parameters>
+
                 <div class="product-cart">
-                    <button :data-id="this.product.id"
-                            @click.prevent="pushToCart"
-                            class="card-cart">
-                        <i :data-id="this.product.id" class="fa-solid fa-cart-shopping"></i>
-                        В корзину
-                    </button>
+                    <base-button @click="pushToCart">
+                        <i class="fa-solid fa-cart-shopping"></i>Добавить в корзину
+                    </base-button>
                 </div>
             </div>
         </div>
@@ -23,27 +23,34 @@
     <div v-else class="product-loader">
         <span class="loader"></span>
     </div>
-
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import axios from "axios";
+import {mapActions} from "vuex"
+
+import ProductParameters from "./ProductParameters.vue";
+import BaseButton from "../ui/BaseButton.vue"
+
+import api from "../../api/api"
+
 
 export default {
     name: 'Product',
+    components: {ProductParameters, BaseButton},
     data() {
         return {
             product: {},
+            parametersData: {},
+
+            isLoading: false,
             isError: false,
             errorMessage: '',
             errorDefaultMessage: 'Ошибка загрузки',
-            isLoading: false
         }
     },
     props: {
-        productApi: {
-            type: String,
+        id: {
+            type: Number,
             required: true
         }
     },
@@ -51,34 +58,42 @@ export default {
         ...mapActions('Cart', ['pushProduct']),
         ...mapActions('Notification', ['pushNotification']),
 
-        pushToCart(event) {
-            const id = event.target.getAttribute('data-id')
-            this.pushProduct(id)
+        pushToCart() {
+            for (let parameter of this.product.parameters) {
+                if (this.parametersData[parameter] === undefined) {
+                    this.parametersData = {}
+                    this.pushNotification('Укажите все параметры товара')
+                    return
+                }
+            }
+
+            // todo: добавление в корзину
+            this.parametersData = {}
             this.pushNotification('Товар добавлен в корзину')
+        },
+
+        init() {
+            this.isLoading = true
+
+            api.fetchingProduct(this.id).then(response => {
+                this.product = response.data
+                this.isError = false
+                this.isLoading = false
+            }).catch(error => {
+                this.isError = true
+                this.isLoading = false
+
+                if (error?.response?.message) {
+                    this.errorMessage = error.response.data.message
+                }
+                else {
+                    this.errorMessage = this.errorDefaultMessage
+                }
+            })
         }
     },
     created() {
-        const fetching = async () => {
-            return await axios.get(this.productApi);
-        };
-
-        fetching().then(response => {
-            this.product = response.data
-            this.isError = false
-            this.isLoading = false
-        }).catch(error => {
-            this.isError = true
-            this.products = {}
-            this.isLoading = false
-
-            if (error?.response?.message) {
-                this.errorMessage = error.response.data.message
-            }
-            else {
-                this.errorMessage = this.errorDefaultMessage
-            }
-
-        })
+        this.init()
     },
 }
 </script>
@@ -91,10 +106,6 @@ export default {
         padding: 1rem;
         border-radius: $border-radius;
         border: 1px solid #e7e7e7;
-
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
     }
 
     .product-title {
@@ -103,20 +114,10 @@ export default {
     }
 
     .product-cart {
-        padding: 0.3rem 1rem;
-        background-color: $primary;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        border-radius: $border-radius;
-        color: $white;
-        outline: none;
+        margin-top: 2rem;
 
-        @include transition;
-
-        &:hover {
-            background-color: darken($primary, 10%);
+        i {
+            margin-right: 0.5rem;
         }
     }
 

@@ -17,6 +17,8 @@
 <body>
 
 <div id="app" class="wrapper">
+    <notification></notification>
+
     <div class="content">
         <header class="header">
             <div class="container">
@@ -139,7 +141,6 @@
                     <a href="cart.html">
                         <cart></cart>
                     </a>
-                    <notification></notification>
                 </div>
             </div>
 
@@ -171,15 +172,11 @@
                             </div>
                             <div class="detail-description">
                                 <strong>Описание:</strong><br>
-                                Описание товара, если оно нужно. Ооооочень подробное описание, или короткое, как 5 лет учебы. Просто
-                                нужен был какой-то текст для примера.
+                                Описание товара.
                             </div>
 
                             <div class="detail-product">
-                                <!-- здесь нужно добавить в первый роут нужный id -->
-                                <product :product-api="'http://medals.localhost/api/product/1'"
-                                         :parameters-api="'http://medals.localhost/api/parameters'"
-                                ></product>
+                                <product :id="1"></product>
                             </div>
                         </div>
 

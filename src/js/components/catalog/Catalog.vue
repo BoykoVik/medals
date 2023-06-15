@@ -12,33 +12,22 @@
             <!-- список товаров -->
             <div v-if="searchedProducts.length" class="catalog-list"
                  :class="{
-                expand: catalogMode === catalogModeEnum.expand,
-                compact: catalogMode === catalogModeEnum.compact,
-            }"
+                    expand: catalogMode === catalogModeEnum.expand,
+                    compact: catalogMode === catalogModeEnum.compact,
+                }"
             >
-                <div v-for="product of searchedProducts">
-                    <a class="card"
-                       v-bind:key="product.id"
-                       :href="product.url"
-                    >
-                        <img class="card-img" :src="product.image" alt="">
-                        <h3 class="card-title">{{ product.name }}</h3>
-                        <div class="card-section">
-                            <p>{{ product.sectionName }}</p>
-                        </div>
-
-                        <div class="card-actions">
-                            <p class="card-price">{{ product.price }} ₽</p>
-                            <button :data-id="product.id"
-                                    @click.prevent="pushToCart"
-                                    class="card-cart">
-                                <i :data-id="product.id" class="fa-solid fa-cart-shopping"></i>
-                                В корзину
-                            </button>
-                        </div>
-                    </a>
-                </div>
-
+                <catalog-item v-for="product of searchedProducts"
+                              :key="product.id"
+                              :id="product.id"
+                              :name="product.name"
+                              :description="product.description"
+                              :price="product.price"
+                              :url="product.url"
+                              :image="product.image"
+                              :image-alt="product.imageAlt"
+                              :section-name="product.sectionName"
+                              :parameters="product.parameters"
+                ></catalog-item>
 
             </div>
             <div v-else class="catalog-plug">
@@ -69,10 +58,12 @@ import axios from "axios";
 
 import CatalogActions from "./CatalogActions.vue"
 import { mapActions } from "vuex";
+import CatalogItem from "./CatalogItem.vue";
 
 export default {
     name: "Catalog",
     components: {
+        CatalogItem,
         'catalog-actions': CatalogActions
     },
     data: () => {
@@ -106,9 +97,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions('Cart', ['pushProduct']),
-        ...mapActions('Notification', ['pushNotification']),
-
         changeMode(mode) {
             this.catalogMode = mode
         },
@@ -117,11 +105,6 @@ export default {
         },
         showAll() {
             this.limitProducts = null
-        },
-        pushToCart(event) {
-            const id = event.target.getAttribute('data-id')
-            this.pushProduct(id)
-            this.pushNotification('Товар добавлен в корзину')
         }
     },
     created() {
@@ -270,111 +253,6 @@ export default {
 
         @include select-off;
         @include preloader($gray-dark, 48px);
-    }
-
-    // карточка товара
-    .card {
-        width: 100%;
-        padding: 1rem;
-        border: none;
-        background-color: $white;
-        border-radius: $border-radius;
-
-        @include shadow;
-        @include transition;
-
-        display: grid;
-        grid-template-areas:
-            "img"
-            "img"
-            "title"
-            "section"
-            "actions";
-
-        &:hover {
-            cursor: pointer;
-            @include shadow-primary;
-        }
-
-        // картинка
-        &-img {
-            grid-area: img;
-            border-radius: $border-radius;
-
-            height: 250px;
-            object-position: center;
-            object-fit: cover;
-            width: 100%;
-        }
-
-        // название
-        &-title {
-            grid-area: title;
-            font-weight: 500;
-            margin-top: 1rem;
-            color: $text;
-
-            @include transition;
-
-            &:hover {
-                color: $primary;
-            }
-        }
-
-        // раздел
-        &-section {
-            grid-area: section;
-            margin-top: 0.7rem;
-            margin-bottom: 2rem;
-
-            p {
-                display: inline;
-                font-weight: 400;
-                padding: 0.3rem 0.6rem;
-                color: #7e7d7d;
-                font-size: 12px;
-                background-color: #eaeaea;
-                border-radius: 20px;
-            }
-        }
-
-        // цена
-        &-price {
-            color: $primary;
-            font-weight: 500;
-            margin-bottom: 0;
-        }
-
-        // действия
-        &-actions {
-            grid-area: actions;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 10px 0;
-        }
-
-        // кнопка добавить в корзину
-        &-cart {
-            padding: 0.3rem 1rem;
-            background-color: $primary;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border-radius: $border-radius;
-            color: $white;
-            outline: none;
-            width: 100%;
-
-            @include transition;
-
-            &:hover {
-                background-color: darken($primary, 10%);
-            }
-        }
     }
 
 </style>

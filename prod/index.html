@@ -17,6 +17,8 @@
 <body>
 
     <div id="app" class="wrapper">
+        <notification></notification>
+
         <div class="content">
             <header class="header">
                 <div class="container">
@@ -140,7 +142,6 @@
                         <a href="cart.html">
                             <cart></cart>
                         </a>
-                        <notification></notification>
                     </div>
                 </div>
 
@@ -239,7 +240,7 @@
                     <div class="tabs-content">
                         <div class="tabs-content-item" data-target="news" data-is-active="1">
                             <!-- API -->
-                            <catalog :products-api="'api/products-new'"
+                            <catalog :products-api="'http://medals.localhost/api/products-news'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>
@@ -248,7 +249,7 @@
 
                         <div class="tabs-content-item" data-target="hit" data-is-active="0">
                             <!-- API -->
-                            <catalog :products-api="'api/products-hit'"
+                            <catalog :products-api="'http://medals.localhost/api/products-hits'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>
@@ -256,7 +257,7 @@
 
                         <div class="tabs-content-item" data-target="sale" data-is-active="0">
                             <!-- API -->
-                            <catalog :products-api="'api/products-sale'"
+                            <catalog :products-api="'http://medals.localhost/api/products-sale'"
                                      :limit="4"
                                      :show-actions="false">
                             </catalog>

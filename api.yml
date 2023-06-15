@@ -92,7 +92,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /api/product/{id}:
+  /api/product/id:
     get:
       tags:
         - products
@@ -121,7 +121,7 @@ paths:
                 $ref: "#/components/schemas/Error"
 
   # ПАРАМЕТРЫ
-  /api/parameters/{parameterType}:
+  /api/parameters{?parameterType}:
     get:
       tags:
         - parameters
@@ -210,6 +210,9 @@ components:
         price:
           type: integer
           example: 60
+        url:
+          type: string
+          example: 'ссылка на детальную страницу'
         image:
           type: string
           example: 'https://some-url/image.jpg'
@@ -230,6 +233,7 @@ components:
         - id: 1
           name: 'Планка'
           price: 100
+          url: 'ссылка на детальную страницу'
           image: 'https://some-url/image.jpg'
           image_alt: 'alt'
           parameters: ["color", "base"]
@@ -238,6 +242,7 @@ components:
           name: 'Жетон'
           price: 200
           image: 'https://some-url/image2.jpg'
+          url: 'ссылка на детальную страницу'
           image_alt: 'alt image text'
           parameters: [ "color" ]
           sectionName: 'Жетоны'
