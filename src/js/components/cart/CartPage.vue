@@ -7,19 +7,20 @@
             <div class="cart-list">
                 <cart-item v-for="item of items"
                            :key="item.key"
-                           :keyId="item.key"
-                           :id="item.id"
                            :title="item.name"
                            :description="item.description"
                            :url="item.url"
                            :image="item.image"
-                           :imageAlt="item.image_alt"
+                           :imageAlt="item.imageAlt"
                            :price="item.price"
                            :sectionName="item.sectionName"
-                           :parameterLabels="item.parameterLabels"
-                           :count="item.count"
                            @deleteItem="deleteItem">
                 </cart-item>
+                <base-button @click="dropCart"
+                             class="cart-drop-btn"
+                >
+                    Очистить корзину
+                </base-button>
             </div>
 
             <div class="cart-result">
@@ -46,7 +47,7 @@
 
 <script>
 import CartItem from "./CartItem.vue";
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 import axios from "axios";
 import BaseButton from "../ui/BaseButton.vue";
 import api from "../../api/api";
@@ -63,23 +64,20 @@ export default {
         }
     },
     methods: {
-        fetchingPositions() {
-            const products = []
-            for (let key in this.products) {
-                products.push({
-                    id: this.products[key].id,
-                    parametersData: this.products[key].parametersData,
-                })
+        ...mapActions('Cart', ['clearCart']),
+
+        fetchingItems(ids) {
+            if (!ids.length) {
+                return
             }
 
-            api.fetchingCartItems(products).then(response => {
+            api.fetchingCartItems(ids).then(response => {
                 for (let key in this.products) {
                     const product = this.products[key]
 
                     this.items.push({
                         key,
-                        count: product.count,
-                        ...response.data.filter(i => i.id === product.id)[0]
+                        ...response.data.filter(i => i.id === product.id)[0],
                     })
                 }
             }).catch(e => {
@@ -88,8 +86,13 @@ export default {
             })
         },
 
-        deleteItem(keyId) {
-            this.items = this.items.filter(item => item.key !== keyId)
+        deleteItem(key) {
+            this.items = this.items.filter(item => item.key !== key)
+        },
+
+        dropCart() {
+            this.items.length = 0
+            this.clearCart()
         },
 
         doOrder() {
@@ -108,13 +111,17 @@ export default {
         ...mapState('Cart', ['ids', 'count', 'products']),
 
         resultPrice() {
+            if (!this.items.length) {
+                return 0
+            }
+
             return this.items.reduce((price, item) => {
-                return price + item.price * item.count
+                return price + item.price * this.products[item.key].count
             }, 0)
         }
     },
     beforeMount() {
-        this.fetchingPositions()
+        this.fetchingItems(this.ids)
     }
 }
 </script>
@@ -160,6 +167,8 @@ export default {
     }
 
     .cart-result {
+        position: sticky;
+        top: 120px;
         align-self: start;
 
         &-title {
@@ -183,5 +192,10 @@ export default {
         button {
             width: 100%;
         }
+    }
+
+    .cart-drop-btn {
+        margin-top: 1rem;
+        float: right;
     }
 </style>

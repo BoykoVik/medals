@@ -83,6 +83,46 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /api/parameters/label?{parameterTuple}:
+    get:
+      tags:
+        - Параметры товаров
+      summary: Метод получения названий параметра и одного его значения
+      operationId: getParameterLabels
+      parameters:
+        - name: parameterTuple
+          in: path
+          required: true
+          description: Тип параметра
+          schema:
+            type: object
+            properties:
+              parameter:
+                type: string
+                example: 'type'
+              value:
+                type: integer
+                example: 3
+      responses:
+        '200':
+          description: Успешный ответ с получением списка значений параметра товара
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parameter:
+                    type: string
+                    example: 'Тип'
+                  value:
+                    type: string
+                    example: 'Зеленый'
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   # КОРЗИНА
   /api/cart/items?{data}:
@@ -95,7 +135,11 @@ paths:
         - in: path
           name: data
           schema:
-            $ref: "#/components/schemas/CartProductList"
+            type: object
+            properties:
+              data:
+                type: array
+                example: [1, 2]
           required: true
           description: массив с идентификаторами товаров и параметрами товара (если они есть)
       responses:
@@ -161,7 +205,7 @@ components:
         image:
           type: string
           example: 'https://some-url/image.jpg'
-        image_alt:
+        imageAlt:
           type: string
           example: 'планка'
         parameters:
@@ -181,7 +225,7 @@ components:
           price: 100
           url: 'ссылка на детальную страницу'
           image: 'https://some-url/image.jpg'
-          image_alt: 'alt'
+          imageAlt: 'alt'
           parameters: ["color", "base"]
           sectionName: 'Планки'
         - id: 2
@@ -190,7 +234,7 @@ components:
           price: 200
           image: 'https://some-url/image2.jpg'
           url: 'ссылка на детальную страницу'
-          image_alt: 'alt image text'
+          imageAlt: 'alt image text'
           parameters: [ "color" ]
           sectionName: 'Жетоны'
 
@@ -258,31 +302,6 @@ components:
           example: 'Синий'
 
     # корзина
-    CartProduct:
-      type: object
-      required:
-        - id
-        - parametersData
-      properties:
-        id:
-          type: integer
-          example: 1
-        parametersData:
-          type: object
-          additionalProperties:
-            type: object
-    CartProductList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CartProduct'
-      example:
-        - id: 1
-          parametersData:
-            - type: 1
-              color: 4
-            - base: 7
-              color: 4
-        - id: 2
     CartItem:
       required:
         - id
@@ -313,21 +332,12 @@ components:
             image:
               type: string
               example: 'https://some-url/image.jpg'
-            image_alt:
+            imageAlt:
               type: string
               example: 'планка'
             sectionName:
               type: string
               example: 'Планки'
-            parameterLabels:
-              type: array
-              items:
-                $ref: "#/components/schemas/ParameterLabel"
-              example:
-                - parameter: 'Цвет'
-                  value: 'Синий'
-                - parameter: 'Тип'
-                  value: 'Какой-то тип'
     CartItemList:
       type: array
       items:
@@ -339,28 +349,16 @@ components:
           price: 100
           url: 'ссылка на детальную страницу'
           image: 'https://some-url/image.jpg'
-          image_alt: 'alt'
+          imageAlt: 'alt'
           sectionName: 'Планки'
-          parameterLabels:
-            - parameter: 'Цвет'
-              value: 'Синий'
-            - parameter: 'Тип'
-              value: 'Какой-то тип'
         - id: 2
           name: 'Жетон'
           description: 'Жетон какой-то'
           price: 200
           image: 'https://some-url/image2.jpg'
           url: 'ссылка на детальную страницу'
-          image_alt: 'alt image text'
+          imageAlt: 'alt image text'
           sectionName: 'Жетоны'
-          parameterLabels:
-            - parameter: 'Цвет'
-              value: 'Синий'
-            - parameter: 'Тип'
-              value: 'Какой-то тип'
-            - parameter: 'Тип крепления'
-              value: 'Крепление какое-то'
 
     CartOrderItem:
       type: object

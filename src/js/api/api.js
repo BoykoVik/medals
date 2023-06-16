@@ -6,6 +6,7 @@ if (process.env.NODE_ENV) {
 }
 
 const API_PARAMETERS = baseUrl + '/api/parameters'
+const API_PARAMETERS_LABEL = baseUrl + '/api/parameters/label'
 const API_PRODUCT = baseUrl + '/api/product/'
 const API_CART_ITEMS = baseUrl + '/api/cart/items'
 
@@ -13,7 +14,15 @@ export default {
     fetchingParameter(parameterType) {
         return axios.get(API_PARAMETERS, {
             params: {
-                parameterType: parameterType
+                parameterType
+            }
+        })
+    },
+
+    fetchingParameterLabel(parameterTuple) {
+        return axios.get(API_PARAMETERS_LABEL, {
+            params: {
+                parameterTuple
             }
         })
     },
@@ -28,5 +37,9 @@ export default {
                 data
             }
         })
+    },
+
+    doOrder(data) {
+
     }
 }

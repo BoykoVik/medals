@@ -112,21 +112,24 @@ const actions = {
     },
 
     // изменение количества товара в корзине
-    changeCount({ commit }, payload) {
+    changeCount({ commit, dispatch }, payload) {
         const cart = getActualCart();
+        const key = payload.key
 
-        if (!cart.products.hasOwnProperty(payload.id)) {
+        if (!cart.hasOwnProperty(key)) {
             return
         }
 
-        cart.count -= cart.products[payload.id]
-        cart.products[payload.id] = payload.count
-        cart.count += cart.products[payload.id]
-
-        commit('SET_COUNT', cart.count)
-        commit('SET_PRODUCTS', cart.products)
+        cart[key].count = payload.count
 
         localStorage.setItem('cart', JSON.stringify(cart))
+        dispatch('initCart')
+    },
+
+    // очистить корзину
+    clearCart({ dispatch }) {
+        localStorage.setItem('cart', JSON.stringify({}))
+        dispatch('initCart')
     }
 }
 

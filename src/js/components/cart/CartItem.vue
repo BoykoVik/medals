@@ -65,6 +65,8 @@
 import BaseInputNumber from "../ui/BaseInputNumber.vue";
 import BaseButton from "../ui/BaseButton.vue";
 import {mapActions, mapState} from "vuex";
+import axios from "axios";
+import api from "../../api/api";
 
 export default {
     name: 'CartItem',
@@ -72,13 +74,13 @@ export default {
         BaseButton,
         BaseInputNumber
     },
+    data() {
+        return {
+            count: 1,
+            parameterLabels: []
+        }
+    },
     props: {
-        keyId: {
-            required: true
-        },
-        id: {
-            required: true
-        },
         title: {
             type: String,
             required: true
@@ -103,37 +105,52 @@ export default {
         imageAlt: {
             default: undefined
         },
-        parameterLabels: {
-            type: Array,
-            required: true
-        },
-        count: {
-            type: Number,
-            required: true
-        }
     },
     methods: {
         ...mapActions('Cart', ['changeCount', 'deleteProduct']),
 
+        initParameterLabels() {
+            const parametersData = this.products[this.$vnode.key].parametersData
+
+            for (let key in parametersData) {
+                const tuple = {
+                    parameter: key,
+                    value: parametersData[key],
+                }
+
+                api.fetchingParameterLabel(tuple).then(response => {
+                    this.parameterLabels.push(response.data)
+                }).catch(e => {
+                    console.error(e)
+                })
+            }
+        },
+
         incrementCount() {
             this.count++
-            this.updateCount(this.id, this.count)
+            this.changeCount({
+                key: this.$vnode.key,
+                count: this.count
+            })
         },
         decrementCount() {
             this.count--
-            this.updateCount(this.id, this.count)
+            this.changeCount({
+                key: this.$vnode.key,
+                count: this.count
+            })
         },
         onInput(value) {
-            this.updateCount(this.id, value)
+            this.changeCount({
+                key: this.$vnode.key,
+                count: value
+            })
         },
 
         deleteItem() {
-            this.deleteProduct(this.keyId)
-            this.$emit('deleteItem', this.keyId)
+            this.deleteProduct(this.$vnode.key)
+            this.$emit('deleteItem', this.$vnode.key)
         },
-        updateCount(id, count) {
-            this.changeCount({ id, count })
-        }
     },
     computed: {
         ...mapState('Cart', ['products']),
@@ -144,6 +161,10 @@ export default {
                 this.count = oldValue
             }
         }
+    },
+    mounted() {
+        this.count = this.products[this.$vnode.key].count
+        this.initParameterLabels()
     }
 }
 </script>
@@ -196,7 +217,7 @@ export default {
             color: #7e7d7d;
             font-size: 10px;
             background-color: #eaeaea;
-            border-radius: 20px;
+            border-radius: 5px;
         }
     }
 
@@ -209,11 +230,11 @@ export default {
         &-item {
             display: inline;
             font-weight: 400;
-            padding: 0.4rem 0.7rem;
+            padding: 0.3rem 0.6rem;
             color: $primary;
             font-size: 12px;
             background-color: $primary-tag;
-            border-radius: 20px;
+            border-radius: 5px;
         }
     }
 

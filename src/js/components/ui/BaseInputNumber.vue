@@ -22,7 +22,7 @@ export default {
                 event.target.value = '1'
             }
 
-            if (isNaN(value) || value.length > 12 || parseFloat(value) < 1) {
+            if (isNaN(value) || value.length > 5 || parseFloat(value) < 1) {
                 event.target.value = this.value;
             } else {
                 this.$emit("input", parseInt(value, 10));
