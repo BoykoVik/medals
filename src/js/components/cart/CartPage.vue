@@ -6,13 +6,18 @@
         <div class="cart-content">
             <div class="cart-list">
                 <cart-item v-for="item of items"
-                           :key="item.id"
+                           :key="item.key"
+                           :keyId="item.key"
                            :id="item.id"
                            :title="item.name"
                            :description="item.description"
                            :url="item.url"
                            :image="item.image"
+                           :imageAlt="item.image_alt"
                            :price="item.price"
+                           :sectionName="item.sectionName"
+                           :parameterLabels="item.parameterLabels"
+                           :count="item.count"
                            @deleteItem="deleteItem">
                 </cart-item>
             </div>
@@ -58,17 +63,33 @@ export default {
         }
     },
     methods: {
-        fetchingPositions(ids) {
-            api.fetchingCartItems(ids).then(response => {
-                this.items = response.data
+        fetchingPositions() {
+            const products = []
+            for (let key in this.products) {
+                products.push({
+                    id: this.products[key].id,
+                    parametersData: this.products[key].parametersData,
+                })
+            }
+
+            api.fetchingCartItems(products).then(response => {
+                for (let key in this.products) {
+                    const product = this.products[key]
+
+                    this.items.push({
+                        key,
+                        count: product.count,
+                        ...response.data.filter(i => i.id === product.id)[0]
+                    })
+                }
             }).catch(e => {
                 this.items = []
-                // todo: error
+                console.error(e)
             })
         },
 
-        deleteItem(id) {
-            this.items = this.items.filter(item => item.id !== id)
+        deleteItem(keyId) {
+            this.items = this.items.filter(item => item.key !== keyId)
         },
 
         doOrder() {
@@ -88,12 +109,12 @@ export default {
 
         resultPrice() {
             return this.items.reduce((price, item) => {
-                return price + item.price * this.products[item.id]
+                return price + item.price * item.count
             }, 0)
         }
     },
     beforeMount() {
-        this.fetchingPositions(this.ids)
+        this.fetchingPositions()
     }
 }
 </script>

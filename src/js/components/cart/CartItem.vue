@@ -10,6 +10,16 @@
         <div class="cart-item-second">
             <a class="cart-item-title" :href="url">{{ this.title}}</a>
             <p class="cart-item-description">{{ this.description }}</p>
+
+            <div v-if="sectionName" class="cart-item-section">
+                <p>{{ this.sectionName }}</p>
+            </div>
+
+            <div class="cart-item-parameters">
+                <div v-for="parameterLabel of parameterLabels" class="cart-item-parameters-item">
+                    <b>{{ parameterLabel.parameter }}</b>: {{ parameterLabel.value.toLowerCase() }}
+                </div>
+            </div>
         </div>
 
         <div class="cart-item-count">
@@ -62,12 +72,10 @@ export default {
         BaseButton,
         BaseInputNumber
     },
-    data() {
-        return {
-            count: 1
-        }
-    },
     props: {
+        keyId: {
+            required: true
+        },
         id: {
             required: true
         },
@@ -88,6 +96,20 @@ export default {
         url: {
             type: String,
             required: true
+        },
+        sectionName: {
+            default: undefined
+        },
+        imageAlt: {
+            default: undefined
+        },
+        parameterLabels: {
+            type: Array,
+            required: true
+        },
+        count: {
+            type: Number,
+            required: true
         }
     },
     methods: {
@@ -106,8 +128,8 @@ export default {
         },
 
         deleteItem() {
-            this.deleteProduct(this.id)
-            this.$emit('deleteItem', this.id)
+            this.deleteProduct(this.keyId)
+            this.$emit('deleteItem', this.keyId)
         },
         updateCount(id, count) {
             this.changeCount({ id, count })
@@ -115,14 +137,6 @@ export default {
     },
     computed: {
         ...mapState('Cart', ['products']),
-
-        dd() {
-            console.log(this.products)
-            return this.products
-        }
-    },
-    beforeMount() {
-        this.count = this.products[this.id]
     },
     watch: {
         count: function(newValue, oldValue) {
@@ -155,7 +169,7 @@ export default {
 
     .cart-item-image {
         width: 120px;
-        height: 100px;
+        height: 120px;
         border-radius: $border-radius;
 
         object-fit: cover;
@@ -163,13 +177,44 @@ export default {
     }
 
     .cart-item-title {
+        font-weight: 500;
         color: $text;
         font-size: 1.2rem;
-        font-weight: 500;
     }
 
     .cart-item-description {
-        margin-top: 0.2rem;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .cart-item-section {
+        margin-top: 0.5rem;
+        p {
+            display: inline;
+            font-weight: 400;
+            padding: 0.2rem 0.4rem;
+            color: #7e7d7d;
+            font-size: 10px;
+            background-color: #eaeaea;
+            border-radius: 20px;
+        }
+    }
+
+    .cart-item-parameters {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        &-item {
+            display: inline;
+            font-weight: 400;
+            padding: 0.4rem 0.7rem;
+            color: $primary;
+            font-size: 12px;
+            background-color: $primary-tag;
+            border-radius: 20px;
+        }
     }
 
     .cart-item-count {

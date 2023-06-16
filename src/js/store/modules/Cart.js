@@ -65,6 +65,7 @@ const actions = {
             count += product.count
             ids.push(product.id)
             products[key] = {
+                id: product.id,
                 count: product.count,
                 parametersData: product.parametersData,
             }
@@ -98,18 +99,13 @@ const actions = {
     // удаление товара из корзины
     deleteProduct({ commit, dispatch }, payload) {
         const cart = getActualCart();
-        const key = md5Key(payload)
+        const key = payload
 
         if (!cart[key]) {
             return
         }
 
-        if (cart[key].count > 1) {
-            cart[key].count--
-        }
-        else {
-            delete cart[key]
-        }
+        delete cart[key]
 
         localStorage.setItem('cart', JSON.stringify(cart))
         dispatch('initCart')
