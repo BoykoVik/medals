@@ -13,7 +13,7 @@ import {mapActions, mapState} from "vuex";
 export default {
     name: 'Cart',
     computed: {
-        ...mapState('Cart', ['count', 'hash']),
+        ...mapState('Cart', ['count']),
     },
     methods: {
         ...mapActions('Cart', ['initCart']),

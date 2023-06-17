@@ -7,7 +7,7 @@
             <img class="catalog-item-img" :src="this.image" :alt="this.imageAlt">
             <h3 class="catalog-item-title">{{ this.name }}</h3>
             <div class="catalog-item-section">
-                <p>{{ this.sectionName }}</p>
+                <p v-if="sectionName">{{ this.sectionName }}</p>
             </div>
 
             <div class="catalog-item-actions">
@@ -75,16 +75,14 @@ export default {
             required: true
         },
         sectionName: {
-            type: String,
-            required: true
+            default: undefined
         },
         image: {
             type: String,
             required: true
         },
         imageAlt: {
-            type: String,
-            required: true
+            default: undefined
         },
         parameters: {
             type: Array,
@@ -103,9 +101,12 @@ export default {
                 }
             }
 
-            // todo: добавление в корзину
-            this.parametersData = {}
+            this.pushProduct({
+                id: this.id,
+                parametersData: this.parametersData
+            })
             this.pushNotification('Товар добавлен в корзину')
+            this.parametersData = {}
         },
 
         pushToCartDialog() {
@@ -117,10 +118,13 @@ export default {
                 }
             }
 
-            // todo: добавление в корзину
             this.isShowModal = false
-            this.parametersData = {}
+            this.pushProduct({
+                id: this.id,
+                parametersData: this.parametersData
+            })
             this.pushNotification('Товар добавлен в корзину')
+            this.parametersData = {}
         }
     }
 }

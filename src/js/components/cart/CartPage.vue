@@ -6,15 +6,21 @@
         <div class="cart-content">
             <div class="cart-list">
                 <cart-item v-for="item of items"
-                           :key="item.id"
-                           :id="item.id"
+                           :key="item.key"
                            :title="item.name"
                            :description="item.description"
                            :url="item.url"
                            :image="item.image"
+                           :imageAlt="item.imageAlt"
                            :price="item.price"
+                           :sectionName="item.sectionName"
                            @deleteItem="deleteItem">
                 </cart-item>
+                <base-button @click="dropCart"
+                             class="cart-drop-btn"
+                >
+                    Очистить корзину
+                </base-button>
             </div>
 
             <div class="cart-result">
@@ -41,9 +47,10 @@
 
 <script>
 import CartItem from "./CartItem.vue";
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 import axios from "axios";
 import BaseButton from "../ui/BaseButton.vue";
+import api from "../../api/api";
 
 export default {
     name: 'CartPage',
@@ -56,34 +63,36 @@ export default {
             items: []
         }
     },
-    props: {
-        cartPositionsApi: {
-            type: String,
-            required: true
-        },
-        cartOrderApi: {
-            type: String,
-            required: true
-        }
-    },
     methods: {
-        fetchingPositions(ids) {
-            const fetching = async (ids) => {
-                return await axios.post(this.cartPositionsApi, {
-                    data: ids
-                })
+        ...mapActions('Cart', ['clearCart']),
+
+        fetchingItems(ids) {
+            if (!ids.length) {
+                return
             }
 
-            fetching(ids).then(response => {
-                this.items = response.data.products
+            api.fetchingCartItems(ids).then(response => {
+                for (let key in this.products) {
+                    const product = this.products[key]
+
+                    this.items.push({
+                        key,
+                        ...response.data.filter(i => i.id === product.id)[0],
+                    })
+                }
             }).catch(e => {
                 this.items = []
-                console.error('Ошибка загрузки товаров в корзине')
+                console.error(e)
             })
         },
 
-        deleteItem(id) {
-            this.items = this.items.filter(item => item.id !== id)
+        deleteItem(key) {
+            this.items = this.items.filter(item => item.key !== key)
+        },
+
+        dropCart() {
+            this.items.length = 0
+            this.clearCart()
         },
 
         doOrder() {
@@ -102,13 +111,17 @@ export default {
         ...mapState('Cart', ['ids', 'count', 'products']),
 
         resultPrice() {
+            if (!this.items.length) {
+                return 0
+            }
+
             return this.items.reduce((price, item) => {
-                return price + item.price * this.products[item.id]
+                return price + item.price * this.products[item.key].count
             }, 0)
         }
     },
     beforeMount() {
-        this.fetchingPositions(this.ids)
+        this.fetchingItems(this.ids)
     }
 }
 </script>
@@ -154,6 +167,8 @@ export default {
     }
 
     .cart-result {
+        position: sticky;
+        top: 120px;
         align-self: start;
 
         &-title {
@@ -177,5 +192,10 @@ export default {
         button {
             width: 100%;
         }
+    }
+
+    .cart-drop-btn {
+        margin-top: 1rem;
+        float: right;
     }
 </style>

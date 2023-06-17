@@ -10,6 +10,16 @@
         <div class="cart-item-second">
             <a class="cart-item-title" :href="url">{{ this.title}}</a>
             <p class="cart-item-description">{{ this.description }}</p>
+
+            <div v-if="sectionName" class="cart-item-section">
+                <p>{{ this.sectionName }}</p>
+            </div>
+
+            <div class="cart-item-parameters">
+                <div v-for="parameterLabel of parameterLabels" class="cart-item-parameters-item">
+                    <b>{{ parameterLabel.parameter }}</b>: {{ parameterLabel.value.toLowerCase() }}
+                </div>
+            </div>
         </div>
 
         <div class="cart-item-count">
@@ -55,6 +65,8 @@
 import BaseInputNumber from "../ui/BaseInputNumber.vue";
 import BaseButton from "../ui/BaseButton.vue";
 import {mapActions, mapState} from "vuex";
+import axios from "axios";
+import api from "../../api/api";
 
 export default {
     name: 'CartItem',
@@ -64,13 +76,11 @@ export default {
     },
     data() {
         return {
-            count: 1
+            count: 1,
+            parameterLabels: []
         }
     },
     props: {
-        id: {
-            required: true
-        },
         title: {
             type: String,
             required: true
@@ -88,41 +98,62 @@ export default {
         url: {
             type: String,
             required: true
-        }
+        },
+        sectionName: {
+            default: undefined
+        },
+        imageAlt: {
+            default: undefined
+        },
     },
     methods: {
         ...mapActions('Cart', ['changeCount', 'deleteProduct']),
 
+        initParameterLabels() {
+            const parametersData = this.products[this.$vnode.key].parametersData
+
+            for (let key in parametersData) {
+                const tuple = {
+                    parameter: key,
+                    value: parametersData[key],
+                }
+
+                api.fetchingParameterLabel(tuple).then(response => {
+                    this.parameterLabels.push(response.data)
+                }).catch(e => {
+                    console.error(e)
+                })
+            }
+        },
+
         incrementCount() {
             this.count++
-            this.updateCount(this.id, this.count)
+            this.changeCount({
+                key: this.$vnode.key,
+                count: this.count
+            })
         },
         decrementCount() {
             this.count--
-            this.updateCount(this.id, this.count)
+            this.changeCount({
+                key: this.$vnode.key,
+                count: this.count
+            })
         },
         onInput(value) {
-            this.updateCount(this.id, value)
+            this.changeCount({
+                key: this.$vnode.key,
+                count: value
+            })
         },
 
         deleteItem() {
-            this.deleteProduct(this.id)
-            this.$emit('deleteItem', this.id)
+            this.deleteProduct(this.$vnode.key)
+            this.$emit('deleteItem', this.$vnode.key)
         },
-        updateCount(id, count) {
-            this.changeCount({ id, count })
-        }
     },
     computed: {
         ...mapState('Cart', ['products']),
-
-        dd() {
-            console.log(this.products)
-            return this.products
-        }
-    },
-    beforeMount() {
-        this.count = this.products[this.id]
     },
     watch: {
         count: function(newValue, oldValue) {
@@ -130,6 +161,10 @@ export default {
                 this.count = oldValue
             }
         }
+    },
+    mounted() {
+        this.count = this.products[this.$vnode.key].count
+        this.initParameterLabels()
     }
 }
 </script>
@@ -155,7 +190,7 @@ export default {
 
     .cart-item-image {
         width: 120px;
-        height: 100px;
+        height: 120px;
         border-radius: $border-radius;
 
         object-fit: cover;
@@ -163,13 +198,44 @@ export default {
     }
 
     .cart-item-title {
+        font-weight: 500;
         color: $text;
         font-size: 1.2rem;
-        font-weight: 500;
     }
 
     .cart-item-description {
-        margin-top: 0.2rem;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .cart-item-section {
+        margin-top: 0.5rem;
+        p {
+            display: inline;
+            font-weight: 400;
+            padding: 0.2rem 0.4rem;
+            color: #7e7d7d;
+            font-size: 10px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+        }
+    }
+
+    .cart-item-parameters {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        &-item {
+            display: inline;
+            font-weight: 400;
+            padding: 0.3rem 0.6rem;
+            color: $primary;
+            font-size: 12px;
+            background-color: $primary-tag;
+            border-radius: 5px;
+        }
     }
 
     .cart-item-count {
