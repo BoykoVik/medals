@@ -12,7 +12,10 @@
     <div class="content">
         {% include "layout/header.html" %}
         {% include "layout/navigation.html" %}
-
+        {% include "layout/broat.html" %}
+        {% block broad %}
+        <li class="breadcrumb-item active">Товар какой-то</li>
+        {% endblock %}asdsad
         <!----------------------------------------------------------------------------------------------------------------------------->
         <div class="detail catalog">
             <div class="container">

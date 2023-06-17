@@ -15,9 +15,21 @@ class Categories(models.Model):
         verbose_name_plural = 'Категории'
         ordering = ['title']
 
+class Categorymedals(models.Model):
+    title = models.CharField(blank=False, max_length=80, verbose_name='Вид награды')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Вид награды'
+        verbose_name_plural = 'Виды наград'
+        ordering = ['title']
+
 # Модель товаров
 class Product(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, verbose_name='Категория', related_name="category")
+    medalcategory = models.ForeignKey(Categorymedals, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Вид награды', related_name="categorymedal")
     title = models.CharField(blank=False, max_length=80, verbose_name='Наименование товара')
     image = models.ImageField(blank=True, upload_to='products_imgs/', verbose_name='Главное изображение товара')
     price = models.IntegerField(blank=False, null=False, default=0, verbose_name='Цена')
@@ -26,7 +38,6 @@ class Product(models.Model):
     is_hit = models.BooleanField(default=False, verbose_name='Отображать в хитах продаж')
     is_sale = models.BooleanField(default=False, verbose_name='Отображать в распродажах')
 
-    
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
@@ -44,3 +55,4 @@ class ProductImage(models.Model):
         verbose_name_plural = 'Дополнительные изображения'
     def __str__(self):
         return str(self.image.url)
+    
