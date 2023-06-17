@@ -1,22 +1,22 @@
 <template>
     <div class="cart-item">
 
-        <div class="cart-item-first">
-            <a class="cart-item-title" :href="url">
-                <img class="cart-item-image" :src="image" alt="">
+        <div class="cart-item-img">
+            <a :href="url">
+                <img :src="image" :alt="imageAlt">
             </a>
         </div>
 
-        <div class="cart-item-second">
-            <a class="cart-item-title" :href="url">{{ this.title}}</a>
-            <p class="cart-item-description">{{ this.description }}</p>
+        <div class="cart-item-info">
+            <a class="cart-item-info-title" :href="url">{{ this.title}}</a>
+            <p class="cart-item-info-description">{{ this.description }}</p>
 
-            <div v-if="sectionName" class="cart-item-section">
+            <div v-if="sectionName" class="cart-item-info-section">
                 <p>{{ this.sectionName }}</p>
             </div>
 
-            <div class="cart-item-parameters">
-                <div v-for="parameterLabel of parameterLabels" class="cart-item-parameters-item">
+            <div class="cart-item-info-parameters">
+                <div v-for="parameterLabel of parameterLabels" class="cart-item-info-parameters-item">
                     <b>{{ parameterLabel.parameter }}</b>: {{ parameterLabel.value.toLowerCase() }}
                 </div>
             </div>
@@ -45,17 +45,17 @@
         </div>
 
         <div class="cart-item-actions">
-            <div class="cart-item-price">
-                <strong>{{ this.price * this.count }} ₽</strong>
-                <span v-if="count > 1">{{ this.price }} ₽ &#215; {{ this.count }}</span>
-            </div>
-
             <base-button
                 :style-type="'transparent'"
                 @click="deleteItem"
             >
                 <i class="fa-solid fa-trash"></i>
             </base-button>
+        </div>
+
+        <div class="cart-item-price">
+            <strong>{{ this.price * this.count }} ₽</strong>
+            <span v-if="count > 1">{{ this.price }} ₽ &#215; {{ this.count }}</span>
         </div>
 
     </div>
@@ -67,6 +67,7 @@ import BaseButton from "../ui/BaseButton.vue";
 import {mapActions, mapState} from "vuex";
 import axios from "axios";
 import api from "../../api/api";
+import session from "../../helpers/session";
 
 export default {
     name: 'CartItem',
@@ -118,8 +119,16 @@ export default {
                     value: parametersData[key],
                 }
 
+                // попытка достать значения из кэша сессии
+                const labels = session.getItemHash(tuple)
+                if (labels) {
+                    this.parameterLabels.push(labels)
+                    continue
+                }
+
                 api.fetchingParameterLabel(tuple).then(response => {
                     this.parameterLabels.push(response.data)
+                    session.setItemHash(tuple, response.data)
                 }).catch(e => {
                     console.error(e)
                 })
@@ -181,62 +190,102 @@ export default {
         display: grid;
         grid-gap: 1rem;
 
-        grid-template-columns: 120px 5fr 2fr 2fr;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "img img"
+            "info info"
+            "count count"
+            "price actions";
+
+        @include media-breakpoint-up($md) {
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-areas:
+                "img info price"
+                "img count actions";
+        }
 
         & + & {
             margin-top: 1rem;
         }
-    }
 
-    .cart-item-image {
-        width: 120px;
-        height: 120px;
-        border-radius: $border-radius;
-
-        object-fit: cover;
-        object-position: center;
-    }
-
-    .cart-item-title {
-        font-weight: 500;
-        color: $text;
-        font-size: 1.2rem;
-    }
-
-    .cart-item-description {
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
-    }
-
-    .cart-item-section {
-        margin-top: 0.5rem;
-        p {
-            display: inline;
-            font-weight: 400;
-            padding: 0.2rem 0.4rem;
-            color: #7e7d7d;
-            font-size: 10px;
-            background-color: #eaeaea;
-            border-radius: 5px;
+        &-img {
+            grid-area: img;
+        }
+        &-info {
+            grid-area: info;
+        }
+        &-count {
+            grid-area: count;
+        }
+        &-actions {
+            grid-area: actions;
+        }
+        &-price {
+            grid-area: price;
         }
     }
 
-    .cart-item-parameters {
-        margin-top: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
+    .cart-item-img {
+        img {
+            height: 300px;
+            width: 100%;
 
-        &-item {
-            display: inline;
-            font-weight: 400;
-            padding: 0.3rem 0.6rem;
-            color: $primary;
-            font-size: 12px;
-            background-color: $primary-tag;
-            border-radius: 5px;
+            @include media-breakpoint-up($md) {
+                width: 100%;
+                height: 190px;
+            }
+
+            border-radius: $border-radius;
+
+            object-fit: cover;
+            object-position: center;
         }
     }
+
+    .cart-item-info {
+        &-title {
+            font-weight: 500;
+            color: $text;
+            font-size: 1.2rem;
+        }
+
+        &-description {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        &-section {
+            margin-top: 0.5rem;
+            p {
+                display: inline;
+                font-weight: 400;
+                padding: 0.2rem 0.4rem;
+                color: #7e7d7d;
+                font-size: 10px;
+                background-color: #eaeaea;
+                border-radius: 5px;
+            }
+        }
+
+        &-parameters {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+
+            &-item {
+                display: inline;
+                font-weight: 400;
+                padding: 0.3rem 0.6rem;
+                color: $primary;
+                font-size: 12px;
+                background-color: $primary-tag;
+                border-radius: 5px;
+            }
+        }
+    }
+
+
 
     .cart-item-count {
         display: flex;
@@ -246,6 +295,11 @@ export default {
 
         input {
             text-align: center;
+            width: 80px;
+        }
+
+        @include media-breakpoint-up($md) {
+            align-self: end;
         }
     }
 
@@ -254,13 +308,20 @@ export default {
         align-items: flex-end;
         flex-direction: column;
         justify-content: space-between;
+
+        @include media-breakpoint-up($md) {
+            align-self: end;
+        }
     }
 
     .cart-item-price {
         display: flex;
-        align-items: flex-end;
         font-weight: 500;
         flex-direction: column;
+
+        @include media-breakpoint-up($md) {
+            align-items: flex-end;
+        }
 
         strong {
             font-size: 1.2rem;

@@ -156,22 +156,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-#  /api/cart/do-order:
-#    post:
-#      tags:
-#        - cart
-#      summary: Оформление заказа
-#      description: Передается JSON-объект с идентификаторами товаров, количеством и параметрами покупки
-#      operationId: doOrder
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/CartOrder"
-#      responses:
-#        '200':
-#          description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
+  /api/cart/do-order:
+    post:
+      tags:
+        - cart
+      summary: Оформление заказа
+      description: Передается JSON-объект с идентификаторами товаров, количеством и параметрами покупки
+      operationId: doOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartOrder"
+      responses:
+        '200':
+          description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
 
 components:
   schemas:
@@ -362,11 +362,26 @@ components:
 
     CartOrderItem:
       type: object
+      required:
+        - id
+        - count
       properties:
         id:
           type: integer
         count:
           type: integer
+        parameters:
+          type: object
+          required:
+            - parameter
+            - value
+          properties:
+            parameter:
+              type: string
+              example: 'type'
+            value:
+              type: integer
+              example: 1
     CartOrder:
       type: array
       items:
@@ -374,7 +389,18 @@ components:
       example:
         - id: 1
           count: 4
+          parameters:
+            - parameter: 'color'
+              value: 1
         - id: 2
           count: 25
+          parameters: []
         - id: 14
           count: 1
+          parameters:
+            - parameter: 'color'
+              value: 1
+            - parameter: 'base'
+              name: 5
+            - value: 'type'
+              parameter: 7

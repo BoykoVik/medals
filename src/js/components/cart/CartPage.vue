@@ -48,15 +48,17 @@
 <script>
 import CartItem from "./CartItem.vue";
 import {mapActions, mapState} from "vuex";
-import axios from "axios";
 import BaseButton from "../ui/BaseButton.vue";
 import api from "../../api/api";
+import Intersect from 'vue-intersect';
+
 
 export default {
     name: 'CartPage',
     components: {
         BaseButton,
-        CartItem
+        CartItem,
+        Intersect
     },
     data() {
         return {
@@ -96,15 +98,25 @@ export default {
         },
 
         doOrder() {
-            const fetching = async () => {
-                return axios.post(this.cartOrderApi, {
-                    data: this.products
-                })
-            }
+            const data = this.items.map(item => {
+                const count = this.products[item.key].count
+                const parameters = []
 
-            fetching().catch(error => {
-                console.error('Ошибка при формировании заказа', error)
+                for (let key in this.products[item.key].parametersData) {
+                    parameters.push({
+                        parameter: key,
+                        value: this.products[item.key].parametersData[key]
+                    })
+                }
+
+                return {
+                    id: item.id,
+                    count,
+                    parameters
+                }
             })
+
+            api.doOrder(data)
         }
     },
     computed: {
@@ -167,15 +179,28 @@ export default {
     }
 
     .cart-result {
+        background-color: $white;
         position: sticky;
-        top: 120px;
-        align-self: start;
+        bottom: 0;
+        @include shadow;
+
+        @include media-breakpoint-up($lg) {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+            @include shadow-off;
+        }
 
         &-title {
             font-weight: 500;
             font-size: 1.2rem;
             display: flex;
             justify-content: space-between;
+        }
+
+        &-intersect {
+            height: 1px;
+            padding: 0;
         }
     }
 

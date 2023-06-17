@@ -9,6 +9,7 @@ const API_PARAMETERS = baseUrl + '/api/parameters'
 const API_PARAMETERS_LABEL = baseUrl + '/api/parameters/label'
 const API_PRODUCT = baseUrl + '/api/product/'
 const API_CART_ITEMS = baseUrl + '/api/cart/items'
+const API_CART_DO_ORDER = baseUrl + '/api/cart/do-order'
 
 export default {
     fetchingParameter(parameterType) {
@@ -40,6 +41,8 @@ export default {
     },
 
     doOrder(data) {
-
+        return axios.post(API_CART_DO_ORDER, {
+            ...data
+        })
     }
 }

@@ -59,6 +59,7 @@
 		"bootstrap": "^5.3.0",
 		"inputmask": "^5.0.8",
 		"jquery": "^3.7.0",
-		"md5": "^2.3.0"
+		"md5": "^2.3.0",
+		"vue-intersect": "^1.1.6"
 	}
 }

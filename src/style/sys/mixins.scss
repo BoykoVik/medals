@@ -48,6 +48,12 @@ $xxl: 1400px;
     box-shadow: 0px 5px 10px 2px rgba(52, 52, 52, 0.45);
 }
 
+@mixin shadow-off() {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
 @mixin preloader($color, $size) {
     .loader {
         width: $size;
