@@ -6,45 +6,35 @@ from baseapp.models import Categories, Product, ProductImage
 # Create your views here.
 
 def products_new(request):
-    objects = Product.objects.all()
-    objects_serialized_data = []
-    for obj in objects:
-        objects_serialized_data.append({
-            'title': obj.title,
-            'image': obj.image.url,
-            'price': obj.price,
-        })
-    
-    return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
+    objects = Product.objects.filter(is_new = True)
+    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
     
 def products_hit(request):
-
-    return render(request, 'baseapp/home.html')
+    objects = Product.objects.filter(is_hit = True)
+    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
 def products_sale(request):
+    objects = Product.objects.filter(is_sale = True)
+    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
-    return render(request, 'baseapp/home.html')
-'''
-[
-    {
-        "model": "baseapp.product", "pk": 1, "fields": {
-            "title": "\u043f\u043b\u0430\u043d\u043a\u0430",
-            "image": "products_imgs/4e3h7t3s1bee5rj5ox5j36x7y0og102y.png"
-        }
-    },
-    {
-        "model": "baseapp.product", "pk": 2, "fields": {
-            "title": "\u0448\u043b\u044f\u043f\u0430",
-            "image": "products_imgs/eap46boyh6bxvrse7u6e9sqi96hvjt6t.png"
-            }
-    }
-]
 
+def serialise_data(objects):
     objects_serialized_data = []
+
     for obj in objects:
         objects_serialized_data.append({
-            'title': obj.title,
-            'image': obj.image,
-            'price': obj.price,
+            "id": obj.id,
+            "name": obj.title,
+            "description": obj.title,
+            "price": obj.price,
+            "url": f"detail/{obj.id}",
+            "image": obj.image.url,
+            "imageAlt": f"{obj.description} заказать Москва",
+            "parameters": [
+            "color",
+            "base"
+            ],
+            "sectionName": f"{obj.category}"
         })
-'''
+        print(obj.category)
+    return objects_serialized_data

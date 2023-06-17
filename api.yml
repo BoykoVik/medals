@@ -2,82 +2,17 @@ openapi: 3.0.3
 info:
   title: Магазин медалей
   description: OpenAPI спецификация
-  version: 0.0.1
+  version: 0.0.2
 
 paths:
   # ТОВАРЫ
-  /api/products{?sectionId}:
+  /api/products:
     get:
       tags:
-        - products
+        - Товары
       summary: Метод получения списка товаров
-      description: Получение всех товаров или для конкретного раздела.
+      description: Получение списка товаров для отображения в компоненте каталога.
       operationId: getProducts
-      parameters:
-        - name: sectionId
-          in: path
-          required: false
-          description: Идентификатор раздела
-          schema:
-            type: integer
-          example: 3
-      responses:
-        '200':
-          description: Успешный ответ с получением списка товаров
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Products"
-        default:
-          description: Любой другой ответ с ошибкой
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /api/products-news:
-    get:
-      tags:
-        - products
-      summary: Метод получения списка товаров для блока Новинки
-      operationId: getProductsNew
-      responses:
-        '200':
-          description: Успешный ответ с получением списка товаров
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Products"
-        default:
-          description: Любой другой ответ с ошибкой
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /api/products-hits:
-    get:
-      tags:
-        - products
-      summary: Метод получения списка товаров для блока Хиты продаж
-      operationId: getProductsHit
-      responses:
-        '200':
-          description: Успешный ответ с получением списка товаров
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Products"
-        default:
-          description: Любой другой ответ с ошибкой
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /api/products-sale:
-    get:
-      tags:
-        - products
-      summary: Метод получения списка товаров для блока Распродажа
-      operationId: getProductsSale
       responses:
         '200':
           description: Успешный ответ с получением списка товаров
@@ -92,10 +27,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /api/product/{id}:
+  /api/product/id:
     get:
       tags:
-        - products
+        - Товары
       summary: Метод получения конкретного товара
       operationId: getProduct
       parameters:
@@ -121,10 +56,10 @@ paths:
                 $ref: "#/components/schemas/Error"
 
   # ПАРАМЕТРЫ
-  /api/parameters/{parameterType}:
+  /api/parameters?{parameterType}:
     get:
       tags:
-        - parameters
+        - Параметры товаров
       summary: Метод получения списка значений параметра товара
       operationId: getParameters
       parameters:
@@ -148,55 +83,109 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /api/parameters/label?{parameterTuple}:
+    get:
+      tags:
+        - Параметры товаров
+      summary: Метод получения названий параметра и одного его значения
+      operationId: getParameterLabels
+      parameters:
+        - name: parameterTuple
+          in: path
+          required: true
+          description: Тип параметра
+          schema:
+            type: object
+            properties:
+              parameter:
+                type: string
+                example: 'type'
+              value:
+                type: integer
+                example: 3
+      responses:
+        '200':
+          description: Успешный ответ с получением списка значений параметра товара
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parameter:
+                    type: string
+                    example: 'Тип'
+                  value:
+                    type: string
+                    example: 'Зеленый'
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
+  # КОРЗИНА
+  /api/cart/items?{data}:
+    get:
+      tags:
+        - Корзина
+      summary: Метод получения списка всех товаров в корзине с текстовами обозначениями параметров товаров
+      operationId: getCartItems
+      parameters:
+        - in: path
+          name: data
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                example: [1, 2]
+          required: true
+          description: массив с идентификаторами товаров и параметрами товара (если они есть)
+      responses:
+        '200':
+          description: Успешный ответ с получением списка товаров
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartItemList"
+        default:
+          description: Любой другой ответ с ошибкой
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
-#  /api/cart/items:
-#    get:
-#      tags:
-#        - cart
-#      summary: Метод получения списка всех товаров в корзине
-#      description: Передается массив идентификаторов товаров, нужно вернуть только те товары, id которых есть в этом массиве
-#      operationId: getCartItems
-#      parameters:
-#        - name: data
-#          in: path
-#          required: true
-#          description: Массив идентификаторов товаров
-#          schema:
-#            type: array
-#      responses:
-#        '200':
-#          description: Успешный ответ с получением списка товаров
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/Products"
-#  /api/cart/do-order:
-#    post:
-#      tags:
-#        - cart
-#      summary: Оформление заказа
-#      description: Передается JSON-объект с идентификаторами товаров, количеством и параметрами покупки
-#      operationId: doOrder
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/CartOrder"
-#      responses:
-#        '200':
-#          description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
+  /api/cart/do-order:
+    post:
+      tags:
+        - cart
+      summary: Оформление заказа
+      description: Передается JSON-объект с идентификаторами товаров, количеством и параметрами покупки
+      operationId: doOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartOrder"
+      responses:
+        '200':
+          description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
 
 components:
   schemas:
+    # товары каталога
     Product:
       type: object
       required:
         - id
         - name
+        - description
         - price
+        - url
         - image
+        - parameters
       properties:
         id:
           type: integer
@@ -210,10 +199,13 @@ components:
         price:
           type: integer
           example: 60
+        url:
+          type: string
+          example: 'ссылка на детальную страницу'
         image:
           type: string
           example: 'https://some-url/image.jpg'
-        image_alt:
+        imageAlt:
           type: string
           example: 'планка'
         parameters:
@@ -229,38 +221,30 @@ components:
       example:
         - id: 1
           name: 'Планка'
+          description: 'Планка с орденами'
           price: 100
+          url: 'ссылка на детальную страницу'
           image: 'https://some-url/image.jpg'
-          image_alt: 'alt'
+          imageAlt: 'alt'
           parameters: ["color", "base"]
           sectionName: 'Планки'
         - id: 2
           name: 'Жетон'
+          description: 'Жетон какой-то'
           price: 200
           image: 'https://some-url/image2.jpg'
-          image_alt: 'alt image text'
+          url: 'ссылка на детальную страницу'
+          imageAlt: 'alt image text'
           parameters: [ "color" ]
           sectionName: 'Жетоны'
-    CartOrderItem:
-      type: object
-      properties:
-        id:
-          type: integer
-        count:
-          type: integer
-    CartOrder:
-      type: array
-      items:
-        $ref: "#/components/schemas/CartOrderItem"
-      example:
-        - id: 1
-          count: 4
-        - id: 2
-          count: 25
-        - id: 14
-          count: 1
+
+
+    # ошибки
     Error:
       type: object
+      required:
+        - code
+        - message
       properties:
         code:
           type: integer
@@ -268,8 +252,13 @@ components:
         message:
           type: string
           example: 'Ошибка загрузки'
+
+    # параметры товаров
     Parameter:
       type: object
+      required:
+        - id
+        - name
       properties:
         id:
           type: integer
@@ -290,9 +279,128 @@ components:
           name: 'Белый'
     ParametersList:
       type: object
+      required:
+        - label
+        - items
       properties:
         label:
           type: string
           example: 'Цвет подложки'
         items:
           $ref: "#/components/schemas/Parameters"
+    ParameterLabel:
+      type: object
+      required:
+        - parameter
+        - value
+      properties:
+        parameter:
+          type: string
+          example: 'Цвет'
+        value:
+          type: string
+          example: 'Синий'
+
+    # корзина
+    CartItem:
+      required:
+        - id
+        - name
+        - description
+        - price
+        - url
+        - image
+        - parameterLabels
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: 'Планка'
+            description:
+              type: string
+              example: 'Планка с ореданми'
+            price:
+              type: integer
+              example: 60
+            url:
+              type: string
+              example: 'ссылка на детальную страницу'
+            image:
+              type: string
+              example: 'https://some-url/image.jpg'
+            imageAlt:
+              type: string
+              example: 'планка'
+            sectionName:
+              type: string
+              example: 'Планки'
+    CartItemList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CartItem'
+      example:
+        - id: 1
+          name: 'Планка'
+          description: 'Планка с орденами'
+          price: 100
+          url: 'ссылка на детальную страницу'
+          image: 'https://some-url/image.jpg'
+          imageAlt: 'alt'
+          sectionName: 'Планки'
+        - id: 2
+          name: 'Жетон'
+          description: 'Жетон какой-то'
+          price: 200
+          image: 'https://some-url/image2.jpg'
+          url: 'ссылка на детальную страницу'
+          imageAlt: 'alt image text'
+          sectionName: 'Жетоны'
+
+    CartOrderItem:
+      type: object
+      required:
+        - id
+        - count
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+        parameters:
+          type: object
+          required:
+            - parameter
+            - value
+          properties:
+            parameter:
+              type: string
+              example: 'type'
+            value:
+              type: integer
+              example: 1
+    CartOrder:
+      type: array
+      items:
+        $ref: "#/components/schemas/CartOrderItem"
+      example:
+        - id: 1
+          count: 4
+          parameters:
+            - parameter: 'color'
+              value: 1
+        - id: 2
+          count: 25
+          parameters: []
+        - id: 14
+          count: 1
+          parameters:
+            - parameter: 'color'
+              value: 1
+            - parameter: 'base'
+              name: 5
+            - value: 'type'
+              parameter: 7

@@ -21,6 +21,11 @@ class Product(models.Model):
     title = models.CharField(blank=False, max_length=80, verbose_name='Наименование товара')
     image = models.ImageField(blank=True, upload_to='products_imgs/', verbose_name='Главное изображение товара')
     price = models.IntegerField(blank=False, null=False, default=0, verbose_name='Цена')
+    description = models.TextField(blank=True, null=True, verbose_name='Описание товара')
+    is_new = models.BooleanField(default=False, verbose_name='Отображать в новинках')
+    is_hit = models.BooleanField(default=False, verbose_name='Отображать в хитах продаж')
+    is_sale = models.BooleanField(default=False, verbose_name='Отображать в распродажах')
+
     
     class Meta:
         verbose_name = 'Товар'
