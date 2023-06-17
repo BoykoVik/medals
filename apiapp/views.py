@@ -17,6 +17,17 @@ def products_sale(request):
     objects = Product.objects.filter(is_sale = True)
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
+def products_list(request):
+    if 'category' in request.GET:
+        categoryId = request.GET['category']
+    else:
+        categoryId = '1'
+    if 'itemtype' in request.GET:
+        medaltypeId = request.GET['itemtype']
+    else:
+        medaltypeId = '1'
+    objects = Product.objects.filter(category = categoryId, medalcategory = medaltypeId).values_list('id')
+    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
 def serialise_data(objects):
     objects_serialized_data = []
