@@ -36,11 +36,11 @@ class Product(models.Model):
 
 # Модель дополнительных изображений товаров
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='товар', related_name="product")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='товар', related_name="imgs")
     image = models.ImageField(blank=True, upload_to='product_imgs/', verbose_name='Дополнительное изображение')
     
     class Meta:
         verbose_name = 'Дополнительное изображение'
         verbose_name_plural = 'Дополнительные изображения'
     def __str__(self):
-        return str(self.image)
+        return str(self.image.url)
