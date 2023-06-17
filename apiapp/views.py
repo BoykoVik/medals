@@ -27,7 +27,7 @@ def serialise_data(objects):
             "name": obj.title,
             "description": obj.title,
             "price": obj.price,
-            "url": f"detail/{obj.id}",
+            "url": f"detail?item={obj.id}",
             "image": obj.image.url,
             "imageAlt": f"{obj.description} заказать Москва",
             "parameters": [
@@ -36,5 +36,4 @@ def serialise_data(objects):
             ],
             "sectionName": f"{obj.category}"
         })
-        print(obj.category)
     return objects_serialized_data

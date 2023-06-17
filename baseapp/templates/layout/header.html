@@ -1,0 +1,60 @@
+{% load static %}
+<header class="header">
+    <div class="container">
+        <div class="row header-inner">
+            <div class="col-12 col-md-3">
+                <a href="/" class="header-logo">
+                    <img src="{% static 'baseapp/images/logo.jpg' %}" alt="">
+                </a>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-5">
+                <div class="header-callback">
+                    <div class="header-callback-phone">
+                        <a href="tel:+79652960909"><i class="fa-solid fa-phone"></i>8 (965) 296-09-09</a>
+                    </div>
+                    <div class="header-callback-link" data-bs-toggle="modal" data-bs-target="#callbackModal">
+                        Заказать обратный звонок
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 d-none d-md-block">
+                <div class="site-search" data-method="GET" data-url="search">
+                    <!-- API -->
+                    <form action="search" method="get">
+                        <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                        <a class="site-search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- модалка формы обратной связи -->
+    <div class="modal fade" id="callbackModal" tabindex="-1" aria-labelledby="callbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="callbackModalLabel">Заказать обратный звонок</h5>
+                    <button type="button" class="btn-outline" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <!-- API -->
+                <form action="" method="get" id="formCallback">
+                    <div class="modal-body">
+                        <label for="formCallbackPhone">Укажите Ваш номер телефона:</label>
+                        <input id="formCallbackPhone" name="phone_number" class="input" type="text" required>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Заказать обратный звонок">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>

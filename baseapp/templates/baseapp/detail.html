@@ -1,0 +1,214 @@
+{% extends "layout/base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "layout/headers.html" %}
+</head>
+<body>
+
+<div id="app" class="wrapper">
+    <notification></notification>
+
+    <div class="content">
+        <header class="header">
+            <div class="container">
+                <div class="row header-inner">
+                    <div class="col-12 col-md-3">
+                        <a href="/" class="header-logo">
+                            <img src="images/logo.jpg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-5">
+                        <div class="header-callback">
+                            <div class="header-callback-phone">
+                                <a href="tel:+79652960909"><i class="fa-solid fa-phone"></i>8 (965) 296-09-09</a>
+                            </div>
+                            <div class="header-callback-link" data-bs-toggle="modal" data-bs-target="#callbackModal">
+                                Заказать обратный звонок
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-none d-md-block">
+                        <div class="site-search" data-method="GET" data-url="search">
+                            <!-- API -->
+                            <form action="search" method="get">
+                                <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                                <a class="site-search-btn">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- модалка формы обратной связи -->
+            <div class="modal fade" id="callbackModal" tabindex="-1" aria-labelledby="callbackModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="callbackModalLabel">Заказать обратный звонок</h5>
+                            <button type="button" class="btn-outline" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <!-- API -->
+                        <form action="" method="get" id="formCallback">
+                            <div class="modal-body">
+                                <label for="formCallbackPhone">Укажите Ваш номер телефона:</label>
+                                <input id="formCallbackPhone" name="phone_number" class="input" type="text" required>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="Заказать обратный звонок">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="nav" class="nav">
+            <div class="container">
+                <div class="nav-inner">
+                    <div class="nav-wrapper">
+                        <!-- категории -->
+                        <div class="nav-categories">
+                            <div class="nav-categories-link">
+                                <i class="fa-solid fa-grip"></i>
+                                Каталог
+                            </div>
+
+                            <div class="nav-categories-list">
+                                <div class="container">
+                                    <div class="nav-categories-list-wrapper">
+                                        <!-- здесь перечислить категории -->
+                                        {% include "layout/nav_categogies.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- меню -->
+                        <a href="" class="nav-item nav-menu-link">
+                            <i class="fa-solid fa-bars"></i>
+                            Меню
+                        </a>
+
+                        <div id="nav-menu" class="nav-menu" data-is-opened="0">
+                            <div class="nav-menu-close fa-xl">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+
+                            <div class="site-search nav-search" data-method="GET" data-url="search">
+                                <!-- API -->
+                                <form action="search" method="get">
+                                    <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                                    <a class="site-search-btn">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </a>
+                                </form>
+                            </div>
+
+                            <a href="#" class="nav-link">О нас</a>
+                            <a href="" class="nav-link">Новости</a>
+                            <a href="" class="nav-link">Оплата</a>
+                            <a href="" class="nav-link">Доставка</a>
+                            <a href="" class="nav-link">Гарантии</a>
+                            <a href="" class="nav-link">Статьи и обзоры</a>
+                            <a href="" class="nav-link">Акции</a>
+                            <a href="" class="nav-link">Контакты</a>
+                        </div>
+                    </div>
+
+                    <!-- корзина -->
+                    <!-- API -->
+                    <a href="cart.html">
+                        <cart></cart>
+                    </a>
+                </div>
+            </div>
+
+            <!-- хлебные крошки -->
+            <div class="breadcrumb-wrapper">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="catalog.html">Орденские планки и колодки</a></li>
+                        <li class="breadcrumb-item active">Товар какой-то</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------------------------------------------------------------------------->
+        <div class="detail catalog">
+            <div class="container">
+                <div class="detail-body">
+                    <div class="row">
+
+                        <!-- писание -->
+                        <div class="col-12 col-md-6 order-1 order-md-0 detail-main">
+                            <div class="detail-subtitle">Жетон ВВС России</div>
+                            <div class="detail-price">120 ₽</div>
+                            <div class="detail-sep"></div>
+                            <div class="detail-section-list">
+                                <a href="catalog.html" class="detail-section">Жетоны</a>
+                            </div>
+                            <div class="detail-description">
+                                <strong>Описание:</strong><br>
+                                Описание товара.
+                            </div>
+
+                            <div class="detail-product">
+                                <product :id="1"></product>
+                            </div>
+                        </div>
+
+                        <!-- картинки -->
+                        <div class="col-12 col-md-6 order-0 order-md-1">
+                            <div class="detail-img--main">
+                                <!-- здесь основная картинка, она обязательно должна быть -->
+                                <a href="images/dkqb7zobqez8ocyx0pkgj4vjudvsl8ne.jpg" data-fancybox="gallery" data-caption="Подпись к фото 1">
+                                    <img src="images/dkqb7zobqez8ocyx0pkgj4vjudvsl8ne.jpg" />
+                                </a>
+                            </div>
+
+                            <div class="detail-img--second">
+                                <!-- здесь должны быть перечислены другие картинки, вообще этого блока может и не быть -->
+                                <a href="images/eap46boyh6bxvrse7u6e9sqi96hvjt6t.png" data-fancybox="gallery"
+                                   data-caption="Подпись к фото 3">
+                                    <img src="images/eap46boyh6bxvrse7u6e9sqi96hvjt6t.png" />
+                                </a>
+
+                                <a href="images/billy.jpg" data-fancybox="gallery" data-caption="Подпись к фото 4">
+                                    <img src="images/billy.jpg" />
+                                </a>
+
+                                <a href="images/photo_2023-05-07_21-26-20.jpg" data-fancybox="gallery" data-caption="Подпись к фото 4">
+                                    <img src="images/photo_2023-05-07_21-26-20.jpg" />
+                                </a>
+
+                                <a href="images/io7mtsl699hbfy701uy7poa5p7q865fm.jpg" data-fancybox="gallery" data-caption="Подпись к фото 4">
+                                    <img src="images/io7mtsl699hbfy701uy7poa5p7q865fm.jpg" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!----------------------------------------------------------------------------------------------------------------------------->
+
+    </div>
+
+    {% include "layout/footer.html" %}
+</div>
+
+<script defer src="bundle.js"></script></body>
+</html>

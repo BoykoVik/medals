@@ -1,0 +1,73 @@
+{% load static %}
+<div id="nav" class="nav">
+    <div class="container">
+        <div class="nav-inner">
+            <div class="nav-wrapper">
+                <!-- категории -->
+                <div class="nav-categories">
+                    <div class="nav-categories-link">
+                        <i class="fa-solid fa-grip"></i>
+                        Каталог
+                    </div>
+
+                    <div class="nav-categories-list">
+                        <div class="container">
+                            <div class="nav-categories-list-wrapper">
+                                <!-- здесь перечислить категории -->
+                                {% include "layout/nav_categogies.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- меню -->
+                <a href="" class="nav-item nav-menu-link">
+                    <i class="fa-solid fa-bars"></i>
+                    Меню
+                </a>
+
+                <div id="nav-menu" class="nav-menu" data-is-opened="0">
+                    <div class="nav-menu-close fa-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+
+                    <div class="site-search nav-search" data-method="GET" data-url="search">
+                        <!-- API -->
+                        <form action="search" method="get">
+                            <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
+                            <a class="site-search-btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                        </form>
+                    </div>
+
+                    <a href="#" class="nav-link">О нас</a>
+                    <a href="" class="nav-link">Новости</a>
+                    <a href="" class="nav-link">Оплата</a>
+                    <a href="" class="nav-link">Доставка</a>
+                    <a href="" class="nav-link">Гарантии</a>
+                    <a href="" class="nav-link">Статьи и обзоры</a>
+                    <a href="" class="nav-link">Акции</a>
+                    <a href="" class="nav-link">Контакты</a>
+                </div>
+
+            </div>
+
+            <!-- корзина -->
+            <!-- API -->
+            <a href="cart.html">
+                <cart></cart>
+            </a>
+            <notification></notification>
+        </div>
+    </div>
+
+    <!-- хлебюные крошки -->
+    <div class="breadcrumb-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="/">Главная</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
