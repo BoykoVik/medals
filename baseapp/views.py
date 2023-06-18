@@ -13,11 +13,9 @@ def detail(request):
     else:
         itemId = '1'
     product = get_object_or_404(Product, pk = itemId)
-    print(product)
     imgs = product.imgs.all()
-    print(imgs)
     broads = []
-    broads.append(f'<li class="breadcrumb-item"><a href="catalog.html">{product.category}</a></li>')
+    broads.append(f'<li class="breadcrumb-item"><a href="category?category={ product.category.id }">{product.category}</a></li>')
     broads.append(f'<li class="breadcrumb-item active">{product.title}</li>')
     return render(request, 'baseapp/detail.html', {
         'product': product,

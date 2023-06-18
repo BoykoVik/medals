@@ -1,7 +1,3 @@
 {% for category in categories %}
-    <a href="category?category={{ category.id }}" class="nav-category">{{ category.title }}</a>
+    <a href="category?category={{ category.id }}" class="nav-category">{{ category.title|capfirst  }}</a>
 {% endfor %}
-<a href="catalog.html" class="nav-category">Орденские планки и колодки</a>
-<a href="catalog.html" class="nav-category">Жетоны</a>
-<a href="catalog.html" class="nav-category">Сувенирные жетоны</a>
-<a href="catalog.html" class="nav-category">Лазерная гравировка</a>

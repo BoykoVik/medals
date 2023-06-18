@@ -22,11 +22,7 @@ def products_list(request):
         categoryId = request.GET['category']
     else:
         categoryId = '1'
-    if 'itemtype' in request.GET:
-        medaltypeId = request.GET['itemtype']
-    else:
-        medaltypeId = '1'
-    objects = Product.objects.filter(category = categoryId, medalcategory = medaltypeId).values_list('id')
+    objects = Product.objects.filter(category = categoryId)[:4]
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
 def serialise_data(objects):

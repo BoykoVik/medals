@@ -12,12 +12,11 @@
     <div class="content">
         {% include "layout/header.html" %}
         {% include "layout/navigation.html" %}
-        {% include "layout/broat.html" %}
         <!----------------------------------------------------------------------------------------------------------------------------->
         <div class="section catalog">
             <div class="container">
 
-                <div class="section-title catalog-title">Каталог орденских планок и колодок от магазина планки.москва </div>
+                <div class="section-title catalog-title">{{ category.title }} от магазина планки.москва </div>
 
                 <div class="catalog-sections">
                     <div class="catalog-sections-btn">
@@ -26,9 +25,6 @@
                     </div>
 
                     <div class="catalog-sections-list" data-is-active="0">
-                        <a href="catalog.html?content=ordena_ussr" class="catalog-sections-list-item">Ордена СССР</a>
-                        <a href="catalog.html?content=ordena_russia" class="catalog-sections-list-item">Ордена России</a>
-                        <a href="" class="catalog-sections-list-item">Медали СССР</a>
                         {% for type in medalstypes %}
                             <a href="category?category={{ category.id }}&itemtype={{ type.id }}" class="catalog-sections-list-item">{{ type.title }}</a>
                         {% endfor %}
@@ -38,7 +34,7 @@
                 <!-- API -->
                 <catalog
                     :show-actions="true"
-                    :products-api="'api/products-list?category={{ category.id }}&itemtype=1'"
+                    :products-api="'api/products-list?category={{ category.id }}'"
                 ></catalog>
             </div>
         </div>

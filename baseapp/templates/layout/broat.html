@@ -4,9 +4,9 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="/">Главная</a></li>
                 {% block broad %}
-                {% for broad in broads %}
-                    {{ broad|safe }}
-                {% endfor %}
+                    {% for broad in broads %}
+                        {{ broad|safe }}
+                    {% endfor %}
                 {% endblock %}
             </ol>
         </div>
