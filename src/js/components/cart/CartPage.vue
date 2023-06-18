@@ -28,6 +28,19 @@
                     Итого
                     <span>{{ resultPrice }} ₽</span>
                 </div>
+                <div class="cart-result-contacts">
+                    <label for="phone">Номер телефона</label>
+                    <base-input id="phone"
+                                v-model="phone"
+                                v-mask="'+7 (###) ### ## ##'"
+                    ></base-input>
+
+                    <label for="email">Электронная почта</label>
+                    <base-input id="email"
+                                v-model="email"
+                                type="email"
+                    ></base-input>
+                </div>
                 <div class="cart-result-count">
                     Товары, {{ this.count }} шт.
                 </div>
@@ -50,20 +63,27 @@ import CartItem from "./CartItem.vue";
 import {mapActions, mapState} from "vuex";
 import BaseButton from "../ui/BaseButton.vue";
 import api from "../../api/api";
+import BaseInput from "../ui/BaseInput.vue";
+import BaseInputPhoneNumber from "../ui/BaseInputPhoneNumber.vue";
 
 export default {
     name: 'CartPage',
     components: {
+        BaseInputPhoneNumber,
+        BaseInput,
         BaseButton,
         CartItem
     },
     data() {
         return {
-            items: []
+            items: [],
+            phone: '',
+            email: ''
         }
     },
     methods: {
         ...mapActions('Cart', ['clearCart']),
+        ...mapActions('Notification', ['pushNotification']),
 
         fetchingItems(ids) {
             if (!ids.length) {
@@ -95,7 +115,12 @@ export default {
         },
 
         doOrder() {
-            const data = this.items.map(item => {
+            if (!this.email || !this.phone || this.phone.length !== 18) {
+                this.pushNotification('Укажите номер телефона и адрес электронной почты')
+                return
+            }
+
+            const products = this.items.map(item => {
                 const count = this.products[item.key].count
                 const parameters = []
 
@@ -113,7 +138,11 @@ export default {
                 }
             })
 
-            api.doOrder(data)
+            api.doOrder({
+                phone: this.phone,
+                email: this.email,
+                products
+            })
         }
     },
     computed: {
@@ -177,15 +206,11 @@ export default {
 
     .cart-result {
         background-color: $white;
-        position: sticky;
-        bottom: 0;
-        @include shadow;
 
         @include media-breakpoint-up($lg) {
             position: sticky;
             top: 120px;
             align-self: start;
-            @include shadow-off;
         }
 
         &-title {
@@ -202,14 +227,27 @@ export default {
     }
 
     .cart-result-count {
-        margin-top: 0.3rem;
+        margin-top: 1rem;
         font-size: 0.8rem;
         color: #919191;
     }
 
+    .cart-result-contacts {
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+        }
+    }
+
     .cart-result-order {
         display: block;
-        margin-top: 1.5rem;
+        margin-top: 1rem;
 
         button {
             width: 100%;

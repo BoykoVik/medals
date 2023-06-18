@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.js'
 import Vuex from 'vuex'
 import store from "./store";
+import VueTheMask from 'vue-the-mask'
 
 import Catalog from "./components/catalog/Catalog.vue"
 import Cart from "./components/cart/Cart.vue";
@@ -15,6 +16,7 @@ Vue.component('product', Product)
 Vue.component('cart-page', CartPage)
 
 Vue.use(Vuex)
+Vue.use(VueTheMask)
 
 const app = new Vue({
     el: '#app',
