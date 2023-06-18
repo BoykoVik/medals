@@ -1,31 +1,42 @@
 <template>
-    <div class="catalog-item-wrapper">
-        <a class="catalog-item"
-           v-bind:key="this.id"
-           :href="this.url"
+    <div>
+        <div class="catalog-item"
+             :key="product.id"
         >
-            <img class="catalog-item-img" :src="this.image" :alt="this.imageAlt">
-            <h3 class="catalog-item-title">{{ this.name }}</h3>
-            <div class="catalog-item-section">
-                <p v-if="sectionName">{{ this.sectionName }}</p>
+            <div class="picture">
+                <a :href="product.url">
+                    <img :src="product.image"
+                         :alt="product.imageAlt">
+                </a>
             </div>
 
-            <div class="catalog-item-actions">
-                <p class="catalog-item-price">{{ this.price }} ₽</p>
-                <button @click.prevent="pushToCart"
-                        class="catalog-item-cart"
-                >
-                    <i class="fa-solid fa-cart-shopping"></i>В корзину
-                </button>
-            </div>
-        </a>
+            <div class="content">
+                <div>
+                    <h3 class="title">{{ product.name }}</h3>
+                    <div v-if="product.sectionName"
+                         class="section"
+                    >
+                        {{ product.sectionName }}
+                    </div>
+                </div>
 
-        <base-modal v-if="parameters.length"
+                <div class="actions">
+                    <p class="price">{{ product.price }} ₽</p>
+                    <button @click.prevent="pushToCart"
+                            class="cart"
+                    >
+                        <i class="fa-solid fa-cart-shopping"></i>В корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <base-modal v-if="product.parameters.length"
                     :show="isShowModal"
                     @hide="isShowModal = false"
         >
             <div class="catalog-item-dialog-label">Укажите параметры заказа</div>
-            <product-parameters :parameterTypes="parameters"
+            <product-parameters :parameterTypes="product.parameters"
                                 :parametersData.sync="parametersData"
             ></product-parameters>
             <base-button @click="pushToCartDialog"
@@ -54,47 +65,20 @@ export default {
         }
     },
     props: {
-        id: {
-            type: Number,
+        product: {
+            type: Object,
             required: true
         },
-        name: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        },
-        price: {
-            type: Number,
-            required: true
-        },
-        url: {
-            type: String,
-            required: true
-        },
-        sectionName: {
-            default: undefined
-        },
-        image: {
-            type: String,
-            required: true
-        },
-        imageAlt: {
-            default: undefined
-        },
-        parameters: {
-            type: Array,
-            required: true
-        }
     },
     methods: {
         ...mapActions('Cart', ['pushProduct']),
         ...mapActions('Notification', ['pushNotification', 'pushNotificationLight']),
 
+        /**
+         * Кнопка добавить в корзине на карточке товара
+         */
         pushToCart() {
-            for (let parameter of this.parameters) {
+            for (let parameter of this.product.parameters) {
                 if (this.parametersData[parameter] === undefined) {
                     this.isShowModal = true
                     return
@@ -102,15 +86,18 @@ export default {
             }
 
             this.pushProduct({
-                id: this.id,
+                id: this.product.id,
                 parametersData: this.parametersData
             })
             this.pushNotification('Товар добавлен в корзину')
             this.parametersData = {}
         },
 
+        /**
+         * Кнопка добавить в корзину в модалке
+         */
         pushToCartDialog() {
-            for (let parameter of this.parameters) {
+            for (let parameter of this.product.parameters) {
                 if (this.parametersData[parameter] === undefined) {
                     this.parametersData = {}
                     this.pushNotificationLight('Укажите все параметры товара')
@@ -120,7 +107,7 @@ export default {
 
             this.isShowModal = false
             this.pushProduct({
-                id: this.id,
+                id: this.product.id,
                 parametersData: this.parametersData
             })
             this.pushNotification('Товар добавлен в корзину')
@@ -135,53 +122,46 @@ export default {
     @import "../../../style/sys/mixins";
 
     .catalog-item-wrapper {
-        position: relative;
+
+    }
+
+    // карточка товара
+    .catalog-item {
+        width: 100%;
+        border: none;
+        background-color: $white;
+        border-radius: $border-radius;
 
         @include shadow;
         @include transition;
 
         &:hover {
             @include shadow-primary;
-
-            .catalog-item-parameters {
-                display: block;
-            }
         }
     }
 
-    // карточка товара
-    .catalog-item {
-        width: 100%;
-        padding: 1rem;
-        border: none;
-        background-color: $white;
-        border-radius: $border-radius;
+    .picture {
+        border-radius: $border-radius $border-radius 0 0;
 
-        display: grid;
-        grid-template-areas:
-                "img"
-                "img"
-                "title"
-                "section"
-                "actions";
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        // картинка
-        &-img {
-            grid-area: img;
-            border-radius: $border-radius;
+        img {
+            border-radius: $border-radius $border-radius 0 0;
 
             height: 250px;
             object-position: center;
             object-fit: cover;
             width: 100%;
         }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 1rem 1rem 1rem;
+        height: 170px;
 
         // название
-        &-title {
+        .title {
             grid-area: title;
             font-weight: 500;
             margin-top: 1rem;
@@ -195,42 +175,41 @@ export default {
         }
 
         // раздел
-        &-section {
+        .section {
             grid-area: section;
-            margin-top: 0.7rem;
+            margin-top: 0.5rem;
             margin-bottom: 2rem;
 
-            p {
-                display: inline;
-                font-weight: 400;
-                padding: 0.3rem 0.6rem;
-                color: #7e7d7d;
-                font-size: 12px;
-                background-color: #eaeaea;
-                border-radius: 20px;
-            }
+            display: inline-block;
+            font-weight: 400;
+            padding: 0.2rem 0.5rem;
+            color: #7e7d7d;
+            font-size: 11px;
+            background-color: #eaeaea;
+            border-radius: $border-radius;
+        }
+
+        // действия
+        .actions {
+            grid-area: actions;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-self: self-end;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px 0;
         }
 
         // цена
-        &-price {
+        .price {
             color: $primary;
             font-weight: 500;
             margin-bottom: 0;
         }
 
-        // действия
-        &-actions {
-            grid-area: actions;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 10px 0;
-        }
-
         // кнопка добавить в корзину
-        &-cart {
+        .cart {
             padding: 0.3rem 1rem;
             background-color: $primary;
             display: flex;

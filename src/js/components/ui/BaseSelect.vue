@@ -10,7 +10,12 @@
                 class="base-select"
         >
             <option class="select" disabled value="">Выберите из списка</option>
-            <option v-for="option in options" :value="option.id">{{ option.name }}</option>
+            <option v-for="option in optionsData"
+                    :value="option.value"
+                    :selected="option.selected"
+            >
+                {{ option.text }}
+            </option>
         </select>
     </div>
 
@@ -33,9 +38,17 @@ export default {
             type: String,
         }
     },
-    data() {
-        return {
-            selectedValue: this.value
+    computed: {
+        selectedValue() {
+            return this.value
+        },
+
+        optionsData() {
+            return this.options.map(option => ({
+                value: option.id,
+                text: option.name,
+                selected: option.id === this.selectedValue ? 'selected' : ''
+            }))
         }
     },
     watch: {

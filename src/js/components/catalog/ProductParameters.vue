@@ -2,7 +2,7 @@
     <div class="product-parameters">
         <div v-for="parameter of parameters" class="product-parameters-type">
             <base-select :id="parameter.type"
-                         :value="parametersData[parameter.type]"
+                         v-model="parametersData[parameter.type]"
                          :options="parameter.items"
                          :label="parameter.label"
                          class="product-parameter-type-select"
@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import BaseSelect from "../ui/BaseSelect.vue";
-import api from "../../api/api";
+import BaseSelect from "../ui/BaseSelect.vue"
+import api from "../../api/api"
+import session from "../../helpers/session"
 
 export default {
     name: 'ProductParameters',
@@ -37,15 +38,36 @@ export default {
     methods: {
         init() {
             this.parameterTypes.forEach(parameterType => {
-                api.fetchingParameter(parameterType).then(response => {
+                const key = {
+                    component: 'ProductParameters',
+                    type: parameterType
+                }
+
+                const cache = session.getItemHash(key)
+                if (cache) {
                     this.parameters.push({
                         type: parameterType,
-                        label: response.data.label,
-                        items: response.data.items
+                        label: cache.label,
+                        items: cache.items
                     })
-                }).catch(error => {
-                    console.error('Parameters loading error')
-                })
+                }
+                else {
+                    api.fetchingParameter(parameterType).then(response => {
+                        this.parameters.push({
+                            type: parameterType,
+                            label: response.data.label,
+                            items: response.data.items
+                        })
+
+                        session.setItemHash(key, {
+                            type: parameterType,
+                            label: response.data.label,
+                            items: response.data.items
+                        })
+                    }).catch(error => {
+                        console.error('Parameters loading error')
+                    })
+                }
             })
         },
 

@@ -13,20 +13,20 @@
         <!-- кнопки для управления размером сетки каталога -->
         <div class="catalog-actions-right">
             <base-button
-                @click="changeModeCompact"
+                @click="unsetModeExpand"
                 :class="{
-                    primary: catalogMode === 'compact',
-                    flat: catalogMode === 'expand',
+                    primary: !isModeExpand,
+                    flat: isModeExpand,
                 }"
             >
                 <i class="fa-solid fa-table-cells-large"></i>
             </base-button>
 
             <base-button
-                @click="changeModeExpand"
+                @click="setModeExpand"
                 :class="{
-                    primary: catalogMode === 'expand',
-                    flat: catalogMode === 'compact',
+                    primary: isModeExpand,
+                    flat: !isModeExpand,
                 }"
             >
                 <i class="fa-solid fa-table-cells"></i>
@@ -44,17 +44,17 @@ export default {
         BaseButton
     },
     props: {
-        catalogMode: {
-            type: String,
+        isModeExpand: {
+            type: Boolean,
             required: true
         }
     },
     methods: {
-        changeModeCompact() {
-            this.$emit('changeMode', 'compact')
+        unsetModeExpand() {
+            this.$emit('changeMode', false)
         },
-        changeModeExpand() {
-            this.$emit('changeMode', 'expand')
+        setModeExpand() {
+            this.$emit('changeMode', true)
         },
         inputSearch(event) {
             this.$emit('inputSearch', event.target.value)

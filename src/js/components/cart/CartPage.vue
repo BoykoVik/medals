@@ -50,15 +50,12 @@ import CartItem from "./CartItem.vue";
 import {mapActions, mapState} from "vuex";
 import BaseButton from "../ui/BaseButton.vue";
 import api from "../../api/api";
-import Intersect from 'vue-intersect';
-
 
 export default {
     name: 'CartPage',
     components: {
         BaseButton,
-        CartItem,
-        Intersect
+        CartItem
     },
     data() {
         return {

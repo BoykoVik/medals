@@ -12,6 +12,14 @@ const API_CART_ITEMS = baseUrl + '/api/cart/items'
 const API_CART_DO_ORDER = baseUrl + '/api/cart/do-order'
 
 export default {
+    fetchingProducts(url) {
+        return axios.get(url)
+    },
+
+    fetchingProduct(id) {
+        return axios.get(API_PRODUCT + id)
+    },
+
     fetchingParameter(parameterType) {
         return axios.get(API_PARAMETERS, {
             params: {
@@ -26,10 +34,6 @@ export default {
                 parameterTuple
             }
         })
-    },
-
-    fetchingProduct(id) {
-        return axios.get(API_PRODUCT + id)
     },
 
     fetchingCartItems(data) {
