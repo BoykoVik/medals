@@ -30,7 +30,39 @@ def categorylist(request):
         categoryId = '1'
     category = get_object_or_404(Categories, pk = categoryId)
     broads = []
+    broads.append(f'<li class="breadcrumb-item active">{category.title}</li>')
+    medalstypes = Categorymedals.objects.all()
+    return render(request, 'baseapp/catalog.html', {
+        'categories': categorytonav(),
+        'medalstypes': medalstypes,
+        'category': category,
+        'broads': broads})
 
+def categoryselected(request):
+    if 'category' in request.GET:
+        categoryId = request.GET['category']
+    else:
+        categoryId = '1'
+    if 'itemtype' in request.GET:
+        medaltypeId = request.GET['itemtype']
+    else:
+        medaltypeId = '1'
+    medalstypes = Categorymedals.objects.all()
+    category = get_object_or_404(Categories, pk = categoryId)
+    products = Product.objects.filter(category = category, medalcategory = medaltypeId)
+    return render(request, 'baseapp/catalog.html', {
+        'categories': categorytonav(),
+        'medalstypes': medalstypes,
+        'medaltypeId': medaltypeId,
+        'category': category,})
+
+
+def categorytonav():
+    categories = Categories.objects.all()
+    return categories
+
+
+    '''
     if 'itemtype' in request.GET:
         medaltypeId = request.GET['itemtype']
         medaltype = get_object_or_404(Categorymedals, pk = medaltypeId)
@@ -40,19 +72,5 @@ def categorylist(request):
     else:
         medaltypeId = '1'
         products = Product.objects.filter(category = category)
-        broads.append(f'<li class="breadcrumb-item active">{category.title}</li>')
-    medalstypes = Categorymedals.objects.all()
-    
-    return render(request, 'baseapp/catalog.html', {
-        'products': products,
-        'categories': categorytonav(),
-        'medalstypes': medalstypes,
-        'category': category,
-        'broads': broads})
-
-
-
-
-def categorytonav():
-    categories = Categories.objects.all()
-    return categories
+        
+    '''
