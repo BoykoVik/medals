@@ -1,83 +1,78 @@
 <template>
     <div class="product-parameters">
-        <div v-for="parameter of parameters" class="product-parameters-type">
-            <base-select :id="parameter.type"
-                         v-model="parametersData[parameter.type]"
-                         :options="parameter.items"
-                         :label="parameter.label"
-                         class="product-parameter-type-select"
-                         @input="selectParameter"
-            ></base-select>
-        </div>
+        <div class="product-parameters-title">Укажите параметры заказа</div>
+        <product-parameter-item v-for="parameter of parameters"
+                                :key="parameter.id"
+                                :name="parameter.name"
+                                :label="parameter.label"
+                                :items="parameter.items"
+                                class="product-parameters-item"
+        >
+        </product-parameter-item>
     </div>
 </template>
 
 <script>
-import BaseSelect from "../ui/BaseSelect.vue"
+import {mapActions, mapState} from "vuex";
+
+import ProductParameterItem from "./ProductParameterItem.vue";
+
 import api from "../../api/api"
 import session from "../../helpers/session"
 
 export default {
     name: 'ProductParameters',
-    components: {BaseSelect},
+    components: {ProductParameterItem},
     data() {
         return {
             parameters: []
         }
     },
     props: {
-        parameterTypes: {
+        parameterNames: {
             type: Array,
-            required: true
-        },
-        parametersData: {
-            type: Object,
             required: true
         }
     },
     methods: {
         init() {
-            this.parameterTypes.forEach(parameterType => {
+            this.parameterNames.forEach(parameterName => {
                 const key = {
                     component: 'ProductParameters',
-                    type: parameterType
+                    name: parameterName
                 }
 
                 const cache = session.getItemHash(key)
                 if (cache) {
                     this.parameters.push({
-                        type: parameterType,
+                        name: parameterName,
                         label: cache.label,
                         items: cache.items
                     })
                 }
                 else {
-                    api.fetchingParameter(parameterType).then(response => {
+                    api.fetchingParameter(parameterName).then(response => {
                         this.parameters.push({
-                            type: parameterType,
+                            name: parameterName,
                             label: response.data.label,
                             items: response.data.items
                         })
 
                         session.setItemHash(key, {
-                            type: parameterType,
+                            name: parameterName,
                             label: response.data.label,
                             items: response.data.items
                         })
-                    }).catch(error => {
+                    }).catch(() => {
                         console.error('Parameters loading error')
                     })
                 }
             })
         },
-
-        selectParameter(data) {
-            this.parametersData[data.id] = data.value
-        },
     },
     created() {
         this.init()
-    }
+    },
 }
 </script>
 
@@ -86,10 +81,15 @@ export default {
     @import "../../../style/sys/mixins";
 
     .product-parameters {
-        margin-top: 1rem;
+        margin-top: 1.5rem;
 
-        &-type {
+        &-item + &-item {
             margin-top: 1rem;
         }
+    }
+
+    .product-parameters-title {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
     }
 </style>

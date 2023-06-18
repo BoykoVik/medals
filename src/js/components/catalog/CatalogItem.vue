@@ -33,11 +33,9 @@
 
         <base-modal v-if="product.parameters.length"
                     :show="isShowModal"
-                    @hide="isShowModal = false"
+                    @hide="closeModal"
         >
-            <div class="catalog-item-dialog-label">Укажите параметры заказа</div>
-            <product-parameters :parameterTypes="product.parameters"
-                                :parametersData.sync="parametersData"
+            <product-parameters :parameterNames="product.parameters"
             ></product-parameters>
             <base-button @click="pushToCartDialog"
                          class="catalog-item-cart-dialog"
@@ -50,7 +48,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import BaseButton from "../ui/BaseButton.vue";
 import ProductParameters from "./ProductParameters.vue";
 import BaseModal from "../ui/BaseModal.vue";
@@ -60,29 +58,33 @@ export default {
     components: {BaseModal, ProductParameters, BaseButton},
     data() {
         return {
-            parametersData: {},
+            hasParameters: false,
             isShowModal: false
         }
     },
     props: {
-        product: {
-            type: Object,
+        id: {
+            type: Number,
             required: true
         },
     },
     methods: {
         ...mapActions('Cart', ['pushProduct']),
         ...mapActions('Notification', ['pushNotification', 'pushNotificationLight']),
+        ...mapActions('Product', ['initProduct', 'validate', 'destroy']),
 
         /**
          * Кнопка добавить в корзине на карточке товара
          */
         pushToCart() {
-            for (let parameter of this.product.parameters) {
-                if (this.parametersData[parameter] === undefined) {
-                    this.isShowModal = true
-                    return
-                }
+            // если есть параметры, то нужно открыть модалку
+            if (this.hasParameters) {
+                this.initProduct({
+                    product: this.getProduct(this.id)
+                })
+                this.isShowModal = true
+
+                return
             }
 
             this.pushProduct({
@@ -90,28 +92,46 @@ export default {
                 parametersData: this.parametersData
             })
             this.pushNotification('Товар добавлен в корзину')
-            this.parametersData = {}
         },
 
         /**
          * Кнопка добавить в корзину в модалке
          */
         pushToCartDialog() {
-            for (let parameter of this.product.parameters) {
-                if (this.parametersData[parameter] === undefined) {
-                    this.parametersData = {}
-                    this.pushNotificationLight('Укажите все параметры товара')
-                    return
-                }
-            }
+            this.validate()
+                .then(
+                    () => {
+                        this.pushProduct({
+                            id: this.id,
+                            parametersData: this.parametersData
+                        })
+                        this.isShowModal = false
+                        this.pushNotification('Товар добавлен в корзину')
+                        this.destroy()
 
+                    },
+                    () => {
+                        this.pushNotificationLight('Укажите все параметры товара')
+                    }
+                )
+        },
+
+        closeModal() {
             this.isShowModal = false
-            this.pushProduct({
-                id: this.product.id,
-                parametersData: this.parametersData
-            })
-            this.pushNotification('Товар добавлен в корзину')
-            this.parametersData = {}
+            this.destroy()
+        }
+    },
+    computed: {
+        ...mapState('Product', ['parametersData']),
+        ...mapGetters('Catalog', ['getProduct']),
+
+        product() {
+            return this.getProduct(this.id)
+        }
+    },
+    mounted() {
+        if (this.product.parameters.length) {
+            this.hasParameters = true
         }
     }
 }
@@ -227,11 +247,6 @@ export default {
                 background-color: darken($primary, 10%);
             }
         }
-    }
-
-    .catalog-item-dialog-label {
-        font-weight: 500;
-        margin-top: 0.5rem;
     }
 
     .catalog-item-cart-dialog {

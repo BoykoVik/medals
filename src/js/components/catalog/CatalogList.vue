@@ -1,13 +1,13 @@
 <template>
     <div class="catalog-list-wrapper">
         <!-- список товаров -->
-        <div v-if="products.length"
+        <div v-if="searchedProducts.length"
              class="catalog-list"
-             :class="{expand: isModeExpand}"
+             :class="{expand: isCatalogExpand}"
         >
-            <catalog-item v-for="product of products"
+            <catalog-item v-for="product of searchedProducts"
                           :key="product.id"
-                          :product="product"
+                          :id="product.id"
             ></catalog-item>
         </div>
         <div v-else class="catalog-list-plug">
@@ -15,7 +15,7 @@
         </div>
 
         <!-- показать все -->
-        <div v-if="limit && products.length"
+        <div v-if="limit && searchedProducts.length"
              @click="showAll"
              class="catalog-list-all"
         >
@@ -26,31 +26,32 @@
 
 <script>
 import CatalogItem from "./CatalogItem.vue";
+import {mapActions, mapState} from "vuex";
 
 export default {
     name: 'CatalogList',
     components: {CatalogItem},
-    props: {
-        products: {
-            type: Array,
-            required: true
-        },
-        showActions: {
-            type: Boolean,
-            default: true
-        },
-        limit: {
-            type: Number,
-            default: null,
-        },
-        isModeExpand: {
-            type: Boolean,
-            required: true
+    methods: {
+        ...mapActions('Catalog', ['setSearchQuery', 'disableLimit']),
+
+        showAll() {
+            this.disableLimit()
         }
     },
-    methods: {
-        showAll() {
-            this.$emit('showAll')
+    computed: {
+        ...mapState('Catalog', ['products', 'isCatalogExpand', 'searchQuery', 'limit']),
+
+        searchedProducts() {
+            let products = this.products.filter(product => {
+                const query = this.searchQuery.toLowerCase()
+                return product.name.toLowerCase().includes(query)
+            })
+
+            if (this.limit) {
+                products = products.slice(0, this.limit)
+            }
+
+            return products
         }
     }
 }

@@ -1,8 +1,6 @@
 <template>
     <div>
-        <label :for="id"
-               class="base-select-label"
-        >
+        <label :for="id" class="base-select-label">
             {{ label }}
         </label>
         <select :id="id"
@@ -39,8 +37,13 @@ export default {
         }
     },
     computed: {
-        selectedValue() {
-            return this.value
+        selectedValue: {
+            get() {
+                return this.value
+            },
+            set(selectedValue) {
+                this.$emit('input', selectedValue)
+            }
         },
 
         optionsData() {
@@ -56,10 +59,12 @@ export default {
             this.selectedValue = newValue
         },
         selectedValue(newValue) {
-            this.$emit('input', {
-                id: this.id,
-                value: newValue
-            })
+            if (newValue) {
+                this.$emit('input', {
+                    id: this.id,
+                    value: newValue
+                })
+            }
         }
     }
 }

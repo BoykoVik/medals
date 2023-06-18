@@ -1,18 +1,8 @@
 <template>
     <div v-if="!isLoading">
         <div v-if="!isError">
-            <catalog-actions v-if="showActions"
-                             :is-mode-expand="isModeExpand"
-                             @changeMode="changeMode"
-                             @inputSearch="inputSearch"
-            ></catalog-actions>
-
-            <catalog-list :products="searchedProducts"
-                          :limit="limitProducts"
-                          :show-actions="showActions"
-                          :is-mode-expand="isModeExpand"
-                          @showAll="limitProducts = null"
-            ></catalog-list>
+            <catalog-actions></catalog-actions>
+            <catalog-list></catalog-list>
         </div>
         <div v-else class="catalog-plug catalog-error">
             <i class="fa-solid fa-circle-exclamation fa-2xl"></i>
@@ -30,6 +20,7 @@ import CatalogList from "./CatalogList.vue";
 
 import api from "../../api/api";
 import error from "../../mixins/error";
+import {mapActions, mapState} from "vuex";
 
 export default {
     name: "Catalog",
@@ -40,10 +31,7 @@ export default {
     mixins: [error],
     data: () => {
         return {
-            products: [],
-            isModeExpand: true,
             searchQuery: '',
-            limitProducts: null,
             isLoading: false
         }
     },
@@ -62,39 +50,26 @@ export default {
         }
     },
     methods: {
-        changeMode(mode) {
-            this.isModeExpand = mode
-        },
-        inputSearch(query) {
-            this.searchQuery = query
-        }
-    },
-    computed: {
-        searchedProducts() {
-            let products = this.products.filter(product => {
-                const query = this.searchQuery.toLowerCase()
-                return product.name.toLowerCase().includes(query)
-            })
-
-            if (this.limitProducts) {
-                products = products.slice(0, this.limitProducts)
-            }
-
-            return products
-        }
+        ...mapActions('Catalog', ['initCatalog']),
     },
     created() {
         this.isLoading = true
 
         // загрузка товаров
         api.fetchingProducts(this.productsApi).then(response => {
-            this.products = response.data
             this.isError = false
             this.isLoading = false
 
-            if (this.products.length > this.limit) {
-                this.limitProducts = this.limit
+            let limitProducts = null
+            if (response.data.length > this.limit) {
+                limitProducts = this.limit
             }
+
+            this.initCatalog({
+                products: response.data,
+                limit: limitProducts,
+                showActions: this.showActions
+            })
         }).catch(error => {
             this.isError = true
             this.products = []
