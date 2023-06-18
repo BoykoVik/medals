@@ -1,5 +1,6 @@
 const path = require('path')
 const Dotenv = require('dotenv-webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
@@ -42,14 +43,17 @@ module.exports = {
             filename: "cart.html"
         }),
         new VueLoaderPlugin(),
-        new Dotenv()
+        new Dotenv(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+        }),
     ],
     module: {
         rules: [
             {
                 test: /\.scss$/i,
                 use: [
-                    "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader",
                     {
                         loader: "postcss-loader",
