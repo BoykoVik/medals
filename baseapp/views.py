@@ -56,7 +56,6 @@ def categoryselected(request):
         'medaltypeId': medaltypeId,
         'category': category,})
 
-
 def categorytonav():
     categories = Categories.objects.all()
     return categories
