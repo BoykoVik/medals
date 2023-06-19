@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    name: 'BaseInput',
+    name: 'BaseInputNumber',
     props: {
         value: {
             default: '',

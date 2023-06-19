@@ -1,17 +1,25 @@
 import axios from "axios";
 
-let baseUrl = ''
-if (process.env.NODE_ENV) {
-    baseUrl = 'http://medals.localhost'
+let BASE_URL = ''
+if (process.env.NODE_ENV === 'development') {
+    BASE_URL = 'http://medals.localhost'
 }
 
-const API_PARAMETERS = baseUrl + '/api/parameters'
-const API_PARAMETERS_LABEL = baseUrl + '/api/parameters/label'
-const API_PRODUCT = baseUrl + '/api/product/'
-const API_CART_ITEMS = baseUrl + '/api/cart/items'
-const API_CART_DO_ORDER = baseUrl + '/api/cart/do-order'
+const API_PARAMETERS = BASE_URL + '/api/parameters'
+const API_PARAMETERS_LABEL = BASE_URL + '/api/parameters/label'
+const API_PRODUCT = BASE_URL + '/api/product/'
+const API_CART_ITEMS = BASE_URL + '/api/cart/items'
+const API_CART_DO_ORDER = BASE_URL + '/api/cart/do-order'
 
 export default {
+    fetchingProducts(url) {
+        return axios.get(url)
+    },
+
+    fetchingProduct(id) {
+        return axios.get(API_PRODUCT + id)
+    },
+
     fetchingParameter(parameterType) {
         return axios.get(API_PARAMETERS, {
             params: {
@@ -26,10 +34,6 @@ export default {
                 parameterTuple
             }
         })
-    },
-
-    fetchingProduct(id) {
-        return axios.get(API_PRODUCT + id)
     },
 
     fetchingCartItems(data) {

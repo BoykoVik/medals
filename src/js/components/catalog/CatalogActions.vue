@@ -1,11 +1,10 @@
 <template>
-    <div class="catalog-actions">
+    <div v-if="showActions" class="catalog-actions">
         <div class="catalog-search">
             Поиск
-            <input
-                @input="inputSearch"
-                type="text"
-                placeholder="Введите текст для поиска"
+            <input @input="inputSearch"
+                   type="text"
+                   placeholder="Введите текст для поиска"
             />
             <a><i class="fa-solid fa-magnifying-glass"></i></a>
         </div>
@@ -13,20 +12,20 @@
         <!-- кнопки для управления размером сетки каталога -->
         <div class="catalog-actions-right">
             <base-button
-                @click="changeModeCompact"
+                @click="unsetModeExpand"
                 :class="{
-                    primary: catalogMode === 'compact',
-                    flat: catalogMode === 'expand',
+                    primary: !isCatalogExpand,
+                    flat: isCatalogExpand,
                 }"
             >
                 <i class="fa-solid fa-table-cells-large"></i>
             </base-button>
 
             <base-button
-                @click="changeModeExpand"
+                @click="setModeExpand"
                 :class="{
-                    primary: catalogMode === 'expand',
-                    flat: catalogMode === 'compact',
+                    primary: isCatalogExpand,
+                    flat: !isCatalogExpand,
                 }"
             >
                 <i class="fa-solid fa-table-cells"></i>
@@ -37,29 +36,35 @@
 
 <script>
 import BaseButton from "../ui/BaseButton.vue";
+import {mapActions, mapState} from "vuex";
 
 export default {
     name: "CatalogActions",
     components: {
         BaseButton
     },
-    props: {
-        catalogMode: {
-            type: String,
-            required: true
-        }
-    },
     methods: {
-        changeModeCompact() {
-            this.$emit('changeMode', 'compact')
+        ...mapActions('Catalog', ['setIsCatalogExpand', 'setSearchQuery']),
+
+        unsetModeExpand() {
+            this.setIsCatalogExpand({
+                flag: false
+            })
         },
-        changeModeExpand() {
-            this.$emit('changeMode', 'expand')
+        setModeExpand() {
+            this.setIsCatalogExpand({
+                flag: true
+            })
         },
         inputSearch(event) {
-            this.$emit('inputSearch', event.target.value)
+            this.setSearchQuery({
+                searchQuery: event.target.value
+            })
         }
     },
+    computed: {
+        ...mapState('Catalog', ['showActions', 'isCatalogExpand'])
+    }
 }
 </script>
 

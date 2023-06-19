@@ -383,24 +383,33 @@ components:
               type: integer
               example: 1
     CartOrder:
-      type: array
-      items:
-        $ref: "#/components/schemas/CartOrderItem"
-      example:
-        - id: 1
-          count: 4
-          parameters:
-            - parameter: 'color'
-              value: 1
-        - id: 2
-          count: 25
-          parameters: []
-        - id: 14
-          count: 1
-          parameters:
-            - parameter: 'color'
-              value: 1
-            - parameter: 'base'
-              name: 5
-            - value: 'type'
-              parameter: 7
+      type: object
+      properties:
+        phone:
+          type: string
+          example: '88005553535'
+        email:
+          type: string
+          example: 'billy_herrington@gachi.gov'
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartOrderItem"
+          example:
+            - id: 1
+              count: 4
+              parameters:
+                - parameter: 'color'
+                  value: 1
+            - id: 2
+              count: 25
+              parameters: []
+            - id: 14
+              count: 1
+              parameters:
+                - parameter: 'color'
+                  value: 1
+                - parameter: 'base'
+                  name: 5
+                - value: 'type'
+                  parameter: 7
