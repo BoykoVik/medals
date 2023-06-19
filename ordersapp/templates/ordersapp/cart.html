@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "layout/headers.html" %}
+</head>
+<body>
+
+<div id="app" class="wrapper">
+    <notification></notification>
+
+    <div class="content">
+        {% include "layout/header.html" %}
+        {% include "layout/navigation.html" %}
+        <!----------------------------------------------------------------------------------------------------------------------------->
+        <div class="section" style="margin-top: 5rem">
+            <div class="container">
+                <!-- API -->
+                <cart-page></cart-page>
+            </div>
+        </div>
+        <!----------------------------------------------------------------------------------------------------------------------------->
+
+    </div>
+
+    {% include "layout/footer.html" %}
+</div>
+
+<script defer src="{% static 'baseapp/js/bundle.js' %}"></script>
+</body>
+</html>
