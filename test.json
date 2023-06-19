@@ -1,0 +1,42 @@
+[
+    {
+        "id": 9,
+        "name": "123",
+        "price": 11,
+        "url": "detail?item=9",
+        "image": "/products_imgs/images.jpeg",
+        "imageAlt": " \u0437\u0430\u043a\u0430\u0437\u0430\u0442\u044c \u041c\u043e\u0441\u043a\u0432\u0430",
+        "parameters": [],
+        "sectionName": "YFfsdf"
+    },
+    {
+        "id": 8,
+        "name": "asd",
+        "price": 10,
+        "url": "detail?item=8",
+        "image": "/products_imgs/123.jpg",
+        "imageAlt": " \u0437\u0430\u043a\u0430\u0437\u0430\u0442\u044c \u041c\u043e\u0441\u043a\u0432\u0430",
+        "parameters": [],
+        "sectionName": "YFfsdf"
+    },
+    {
+        "id": 7,
+        "name": "\u041f\u0440\u043e\u0431\u0430",
+        "price": 10,
+        "url": "detail?item=7",
+        "image": "/products_imgs/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_%D0%BE%D1%82_2023-06-18_15-43-56_BlE2wNk.png",
+        "imageAlt": " \u0437\u0430\u043a\u0430\u0437\u0430\u0442\u044c \u041c\u043e\u0441\u043a\u0432\u0430",
+        "parameters": [],
+        "sectionName": "YFfsdf"
+    },
+    {
+        "id": 10,
+        "name": "\u0446\u0439\u0443\u0439\u0446",
+        "price": 1,
+        "url": "detail?item=10",
+        "image": "/products_imgs/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_%D0%BE%D1%82_2023-06-18_15-43-56_y8RBVtM.png",
+        "imageAlt": " \u0437\u0430\u043a\u0430\u0437\u0430\u0442\u044c \u041c\u043e\u0441\u043a\u0432\u0430",
+        "parameters": [],
+        "sectionName": "YFfsdf"
+    }
+]

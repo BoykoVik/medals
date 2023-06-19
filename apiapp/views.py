@@ -37,7 +37,23 @@ def products_list_selected(request):
     products = Product.objects.filter(category = categoryId, medalcategory = medaltypeId)
     return JsonResponse(serialise_data(products), safe=False, encoder=DjangoJSONEncoder)
 
-
+def cartitems(request):
+    items = request.GET.getlist('data[]')
+    objects_serialized_data = []
+    for itemId in items:
+        print(itemId)
+        product = get_object_or_404(Product, pk = itemId)
+        objects_serialized_data.append({
+            "id": product.id,
+            "name": product.title,
+            "price": product.price,
+            "url": f"detail?item={product.id}",
+            "image": product.image.url,
+            "imageAlt": f"{product.description} заказать Москва",
+            "parameters": [],
+            "sectionName": f"{product.category}"
+        })
+    return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 
 def serialise_data(objects):
@@ -52,10 +68,7 @@ def serialise_data(objects):
             "url": f"detail?item={obj.id}",
             "image": obj.image.url,
             "imageAlt": f"{obj.description} заказать Москва",
-            "parameters": [
-            "color",
-            "base"
-            ],
+            "parameters": [],
             "sectionName": f"{obj.category}"
         })
     return objects_serialized_data

@@ -15,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("title", "category",)
     inlines = (ProductImageInline,)
     search_fields = ("title",)
-    list_filter = ("title", "category",)
+    list_filter = ("medalcategory",)
 
 @admin.register(Categorymedals)
 class CategorymedalsAdmin(admin.ModelAdmin):

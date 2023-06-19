@@ -6,15 +6,15 @@ import os
 
 # Модель категорий
 class Categories(models.Model):
-    title = models.CharField(blank=False, max_length=80, verbose_name='Наименование категории')
-    image = models.ImageField(blank=True, upload_to='categories/', verbose_name='Главное изображение категории')
+    title = models.CharField(blank=False, max_length=80, verbose_name='Наименование вида товара')
+    image = models.ImageField(blank=True, upload_to='categories/', verbose_name='Главное изображение вида товара')
     
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Вид товара'
+        verbose_name_plural = 'Виды товаров'
         ordering = ['title']
 
 class Categorymedals(models.Model):
@@ -34,7 +34,7 @@ class Product(models.Model):
     medalcategory = models.ForeignKey(Categorymedals, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Вид награды', related_name="categorymedal")
     title = models.CharField(blank=False, max_length=80, verbose_name='Наименование товара')
     image = models.ImageField(blank=True, upload_to='products_imgs/', verbose_name='Главное изображение товара')
-    price = models.IntegerField(blank=False, null=False, default=0, verbose_name='Цена')
+    price = models.IntegerField(blank=False, null=False, default=100, verbose_name='Цена')
     description = models.TextField(blank=True, null=True, verbose_name='Описание товара')
     is_new = models.BooleanField(default=False, verbose_name='Отображать в новинках')
     is_hit = models.BooleanField(default=False, verbose_name='Отображать в хитах продаж')
@@ -52,7 +52,7 @@ class Product(models.Model):
         img = Image.open(self.image.path)
         directory = os.getcwd()
         mask = Image.open('mask.png')
-        mask_crop = mask.crop((0, 0, img.height, img.width))
+        mask_crop = mask.crop((0, 0, img.width, img.height))
         img.paste(mask_crop, (0, 0), mask_crop)
         img.save(self.image.path)
 
@@ -73,7 +73,7 @@ class ProductImage(models.Model):
         img = Image.open(self.image.path)
         directory = os.getcwd()
         mask = Image.open('mask.png')
-        mask_crop = mask.crop((0, 0, img.height, img.width))
+        mask_crop = mask.crop((0, 0, img.width, img.height))
         img.paste(mask_crop, (0, 0), mask_crop)
         img.save(self.image.path)
     
