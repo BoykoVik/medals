@@ -30,7 +30,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -45,7 +44,8 @@
                     </button>
                 </div>
                 <!-- API -->
-                <form action="" method="get" id="formCallback">
+                <form action="{% url 'baseapp:add_request' %}" method="get" id="formCallback">
+                    {% csrf_token %}
                     <div class="modal-body">
                         <label for="formCallbackPhone">Укажите Ваш номер телефона:</label>
                         <input id="formCallbackPhone" name="phone_number" class="input" type="text" required>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categories, Product, ProductImage, Categorymedals
+from .models import Categories, Product, ProductImage, Categorymedals, Callrequest
 # Register your models here.
 
 class ProductImageInline(admin.TabularInline):
@@ -21,3 +21,8 @@ class ProductAdmin(admin.ModelAdmin):
 class CategorymedalsAdmin(admin.ModelAdmin):
     list_display = ("title",)
     search_fields = ("title",)
+
+@admin.register(Callrequest)
+class CallrequestAdmin(admin.ModelAdmin):
+    list_display = ("number", "dateandtame",)
+    search_fields = ("dateandtame",)

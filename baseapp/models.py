@@ -64,7 +64,7 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = 'Дополнительное изображение'
         verbose_name_plural = 'Дополнительные изображения'
-        
+
     def __str__(self):
         return str(self.image.url)
     
@@ -77,3 +77,14 @@ class ProductImage(models.Model):
         img.paste(mask_crop, (0, 0), mask_crop)
         img.save(self.image.path)
     
+
+class Callrequest(models.Model):
+    number = models.CharField(blank=False, null=False, max_length=80, verbose_name='Номер телефона')
+    dateandtame = models.DateTimeField(blank=False, null=False, verbose_name='Дата и время')
+
+    class Meta:
+        verbose_name = 'Заказ обратного звонка'
+        verbose_name_plural = 'Заказы обратного звонка'
+
+    def __str__(self):
+        return str(self.number)

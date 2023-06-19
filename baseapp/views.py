@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Product, ProductImage, Categories, Categorymedals
+from datetime import datetime
+from .models import Product, ProductImage, Categories, Categorymedals, Callrequest
 
 # Create your views here.
 def index(request):
@@ -56,20 +57,14 @@ def categoryselected(request):
         'medaltypeId': medaltypeId,
         'category': category,})
 
+def add_request(request):
+    if request.method == 'GET':
+        req = Callrequest()
+        req.number = request.GET['phone_number']
+        req.dateandtame = datetime.now()
+        req.save()
+    return index(request)
+
 def categorytonav():
     categories = Categories.objects.all()
     return categories
-
-
-    '''
-    if 'itemtype' in request.GET:
-        medaltypeId = request.GET['itemtype']
-        medaltype = get_object_or_404(Categorymedals, pk = medaltypeId)
-        products = Product.objects.filter(category = category, medalcategory = medaltype)
-        broads.append(f'<li class="breadcrumb-item">{category.title}</li>')
-        broads.append(f'<li class="breadcrumb-item active">{medaltype.title}</li>')
-    else:
-        medaltypeId = '1'
-        products = Product.objects.filter(category = category)
-        
-    '''
