@@ -26,14 +26,14 @@ class Categorymedals(models.Model):
     class Meta:
         verbose_name = 'Вид награды'
         verbose_name_plural = 'Виды наград'
-        ordering = ['title']
+        ordering = ['-id']
 
 # Модель товаров
 class Product(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, verbose_name='Категория', related_name="category")
     medalcategory = models.ForeignKey(Categorymedals, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Вид награды', related_name="categorymedal")
-    title = models.CharField(blank=False, max_length=80, verbose_name='Наименование товара')
-    image = models.ImageField(blank=True, upload_to='products_imgs/', verbose_name='Главное изображение товара')
+    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование товара')
+    image = models.ImageField(blank=False, null=False, upload_to='products_imgs/', verbose_name='Главное изображение товара')
     price = models.IntegerField(blank=False, null=False, default=100, verbose_name='Цена')
     description = models.TextField(blank=True, null=True, verbose_name='Описание товара')
     is_new = models.BooleanField(default=False, verbose_name='Отображать в новинках')
