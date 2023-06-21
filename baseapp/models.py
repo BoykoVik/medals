@@ -6,7 +6,7 @@ import os
 
 # Модель категорий
 class Categories(models.Model):
-    title = models.CharField(blank=False, max_length=80, verbose_name='Наименование вида товара')
+    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование вида товара')
     image = models.ImageField(blank=True, upload_to='categories/', verbose_name='Главное изображение вида товара')
     
     def __str__(self):
@@ -18,7 +18,7 @@ class Categories(models.Model):
         ordering = ['title']
 
 class Categorymedals(models.Model):
-    title = models.CharField(blank=False, max_length=80, verbose_name='Вид награды')
+    title = models.CharField(blank=False, max_length=180, verbose_name='Вид награды')
 
     def __str__(self):
         return self.title
