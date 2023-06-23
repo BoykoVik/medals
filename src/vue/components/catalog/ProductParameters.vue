@@ -49,8 +49,7 @@ export default {
                         label: cache.label,
                         items: cache.items
                     })
-                }
-                else {
+                } else {
                     api.fetchingParameter(parameterName).then(response => {
                         this.parameters.push({
                             name: parameterName,
@@ -77,19 +76,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import "../../../style/sys/vars";
-    @import "../../../style/sys/mixins";
+@import "../../../style/sys/vars";
+@import "../../../style/sys/mixins";
 
-    .product-parameters {
-        margin-top: 1.5rem;
+.product-parameters {
+    margin-top: 1.5rem;
 
-        &-item + &-item {
-            margin-top: 1rem;
-        }
+    &-item + &-item {
+        margin-top: 1rem;
     }
+}
 
-    .product-parameters-title {
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-    }
+.product-parameters-title {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
 </style>

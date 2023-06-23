@@ -70,8 +70,7 @@ export default {
 
                 if (error?.response?.message) {
                     this.errorMessage = error.response.data.message
-                }
-                else {
+                } else {
                     this.errorMessage = this.errorDefaultMessage
                 }
             })
@@ -104,57 +103,57 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import "../../../style/sys/vars";
-    @import "../../../style/sys/mixins";
+@import "../../../style/sys/vars";
+@import "../../../style/sys/mixins";
 
-    .product {
-        padding: 1rem;
-        border-radius: $border-radius;
-        border: 1px solid #e7e7e7;
+.product {
+    padding: 1rem;
+    border-radius: $border-radius;
+    border: 1px solid #e7e7e7;
+}
+
+.product-title {
+    color: $gray;
+    font-size: 14px;
+}
+
+.product-cart {
+    margin-top: 2rem;
+
+    i {
+        margin-right: 0.5rem;
     }
+}
 
-    .product-title {
-        color: $gray;
-        font-size: 14px;
-    }
+// заглушка при ошибке
+.product-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background-color: $gray-plug;
+    border-radius: $border-radius;
+    color: #ffacac;
+    font-size: 18px;
+    margin-top: 2rem;
+    gap: 1rem;
 
-    .product-cart {
-        margin-top: 2rem;
+    @include select-off;
+}
 
-        i {
-            margin-right: 0.5rem;
-        }
-    }
+// заглушка прелоадер
+.product-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background-color: $gray-plug;
+    border-radius: $border-radius;
+    color: $gray-dark;
+    font-size: 18px;
+    margin-top: 2rem;
 
-    // заглушка при ошибке
-    .product-error {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 150px;
-        background-color: $gray-plug;
-        border-radius: $border-radius;
-        color: #ffacac;
-        font-size: 18px;
-        margin-top: 2rem;
-        gap: 1rem;
-
-        @include select-off;
-    }
-
-    // заглушка прелоадер
-    .product-loader {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 150px;
-        background-color: $gray-plug;
-        border-radius: $border-radius;
-        color: $gray-dark;
-        font-size: 18px;
-        margin-top: 2rem;
-
-        @include select-off;
-        @include preloader($gray-dark, 48px);
-    }
+    @include select-off;
+    @include preloader($gray-dark, 48px);
+}
 </style>

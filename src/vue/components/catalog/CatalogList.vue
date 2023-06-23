@@ -58,69 +58,69 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import "../../../style/sys/vars";
-    @import "../../../style/sys/mixins";
+@import "../../../style/sys/vars";
+@import "../../../style/sys/mixins";
 
-    // список товаров
-    .catalog-list {
-        margin-top: 2rem;
-        display: grid;
-        gap: 1.5rem;
+// список товаров
+.catalog-list {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1.5rem;
 
-        grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
 
-        @include media-breakpoint-up($sm) {
-            grid-template-columns: repeat(1, 1fr);
+    @include media-breakpoint-up($sm) {
+        grid-template-columns: repeat(1, 1fr);
 
-            &.expand {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @include media-breakpoint-up($md) {
+        &.expand {
             grid-template-columns: repeat(2, 1fr);
-
-            &.expand {
-                grid-template-columns: repeat(3, 1fr);
-            }
         }
+    }
 
-        @include media-breakpoint-up($lg) {
+    @include media-breakpoint-up($md) {
+        grid-template-columns: repeat(2, 1fr);
+
+        &.expand {
             grid-template-columns: repeat(3, 1fr);
-
-            &.expand {
-                grid-template-columns: repeat(4, 1fr);
-            }
         }
     }
 
-    // показать все
-    .catalog-list-all {
-        display: block;
-        text-align: center;
-        color: $primary;
-        margin-top: 2rem;
+    @include media-breakpoint-up($lg) {
+        grid-template-columns: repeat(3, 1fr);
 
-        @include transition;
-
-        &:hover {
-            cursor: pointer;
-            color: darken($primary, 10%);
+        &.expand {
+            grid-template-columns: repeat(4, 1fr);
         }
     }
+}
 
-    // заглушка списка
-    .catalog-list-plug {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 150px;
-        background-color: $gray-plug;
-        border-radius: $border-radius;
-        color: $gray-dark;
-        font-size: 18px;
-        margin-top: 2rem;
+// показать все
+.catalog-list-all {
+    display: block;
+    text-align: center;
+    color: $primary;
+    margin-top: 2rem;
 
-        @include select-off;
+    @include transition;
+
+    &:hover {
+        cursor: pointer;
+        color: darken($primary, 10%);
     }
+}
+
+// заглушка списка
+.catalog-list-plug {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    background-color: $gray-plug;
+    border-radius: $border-radius;
+    color: $gray-dark;
+    font-size: 18px;
+    margin-top: 2rem;
+
+    @include select-off;
+}
 </style>
