@@ -4,6 +4,8 @@ from .models import Product, ProductImage, Categories, Categorymedals, Callreque
 
 # Create your views here.
 def index(request):
+    keywords = 'Орденские планки колодки крепления заказать купить Москва, купить Медали России'
+    description = 'Мы предлагаем широкий ассортимент орденских планок и колодок'
     return render(request, 'baseapp/home.html', {
         'categories': categorytonav(),
     })
@@ -18,6 +20,8 @@ def detail(request):
     broads = []
     broads.append(f'<li class="breadcrumb-item"><a href="category?category={ product.category.id }">{product.category}</a></li>')
     broads.append(f'<li class="breadcrumb-item active">{product.title}</li>')
+    keywords = f'{product.title}, купить {product.title}, заказать планку {product.title}, купить планку {product.title}, {product.title} на офисную форму'
+    description = f'В магазине планки.москва Вы можете заказать орденскую планку или колодку {product.title} на различных видах креплений и подложке'
     return render(request, 'baseapp/detail.html', {
         'product': product,
         'categories': categorytonav(),
@@ -33,6 +37,8 @@ def categorylist(request):
     broads = []
     broads.append(f'<li class="breadcrumb-item active">{category.title}</li>')
     medalstypes = Categorymedals.objects.all()
+    keywords = f'{category.title}, заказать {category.title} в Москве'
+    description = f'В магазине планки.москва Вы можете заказать {category.title}'
     return render(request, 'baseapp/catalog.html', {
         'categories': categorytonav(),
         'medalstypes': medalstypes,
@@ -50,7 +56,8 @@ def categoryselected(request):
         medaltypeId = '1'
     medalstypes = Categorymedals.objects.all()
     category = get_object_or_404(Categories, pk = categoryId)
-    products = Product.objects.filter(category = category, medalcategory = medaltypeId)
+    keywords = f'{category.title}, заказать {category.title} в Москве'
+    description = f'В магазине планки.москва Вы можете заказать {category.title}'
     return render(request, 'baseapp/catalog.html', {
         'categories': categorytonav(),
         'medalstypes': medalstypes,
