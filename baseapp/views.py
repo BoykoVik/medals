@@ -8,6 +8,8 @@ def index(request):
     description = 'Мы предлагаем широкий ассортимент орденских планок и колодок'
     return render(request, 'baseapp/home.html', {
         'categories': categorytonav(),
+        'keywords': keywords,
+        'description': description,
     })
 
 def detail(request):
@@ -26,7 +28,10 @@ def detail(request):
         'product': product,
         'categories': categorytonav(),
         'imgs': imgs,
-        'broads': broads})
+        'broads': broads,
+        'keywords': keywords,
+        'description': description,
+        })
 
 def categorylist(request):
     if 'category' in request.GET:
@@ -43,7 +48,10 @@ def categorylist(request):
         'categories': categorytonav(),
         'medalstypes': medalstypes,
         'category': category,
-        'broads': broads})
+        'broads': broads,
+        'keywords': keywords,
+        'description': description,
+        })
 
 def categoryselected(request):
     if 'category' in request.GET:
@@ -62,7 +70,10 @@ def categoryselected(request):
         'categories': categorytonav(),
         'medalstypes': medalstypes,
         'medaltypeId': medaltypeId,
-        'category': category,})
+        'category': category,
+        'keywords': keywords,
+        'description': description,
+        })
 
 def add_request(request):
     if request.method == 'GET':
