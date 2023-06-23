@@ -8,7 +8,7 @@
         </div>
 
         <div class="cart-item-info">
-            <a class="cart-item-info-title" :href="url">{{ this.title}}</a>
+            <a class="cart-item-info-title" :href="url">{{ this.title }}</a>
             <p class="cart-item-info-description">{{ this.description }}</p>
 
             <div v-if="sectionName" class="cart-item-info-section">
@@ -165,7 +165,7 @@ export default {
         ...mapState('Cart', ['products']),
     },
     watch: {
-        count: function(newValue, oldValue) {
+        count: function (newValue, oldValue) {
             if (isNaN(newValue) || parseFloat(newValue) < 1) {
                 this.count = oldValue
             }
@@ -179,160 +179,164 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import "../../../style/sys/vars";
-    @import "../../../style/sys/mixins";
+@import "../../../style/sys/vars";
+@import "../../../style/sys/mixins";
 
-    .cart-item {
-        padding: 1rem;
-        border: 1px solid #e5e5e5;
-        border-radius: $border-radius;
+.cart-item {
+    padding: 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: $border-radius;
 
-        display: grid;
-        grid-gap: 1rem;
+    display: grid;
+    grid-gap: 1rem;
 
-        grid-template-columns: 1fr;
-        grid-template-areas:
+    grid-template-columns: 1fr;
+    grid-template-areas:
             "img img"
             "info info"
             "count count"
             "price actions";
 
-        @include media-breakpoint-up($md) {
-            grid-template-columns: 1fr 2fr 1fr;
-            grid-template-areas:
+    @include media-breakpoint-up($md) {
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-areas:
                 "img info price"
                 "img count actions";
-        }
-
-        & + & {
-            margin-top: 1rem;
-        }
-
-        &-img {
-            grid-area: img;
-        }
-        &-info {
-            grid-area: info;
-        }
-        &-count {
-            grid-area: count;
-        }
-        &-actions {
-            grid-area: actions;
-        }
-        &-price {
-            grid-area: price;
-        }
     }
 
-    .cart-item-img {
-        img {
-            height: 300px;
+    & + & {
+        margin-top: 1rem;
+    }
+
+    &-img {
+        grid-area: img;
+    }
+
+    &-info {
+        grid-area: info;
+    }
+
+    &-count {
+        grid-area: count;
+    }
+
+    &-actions {
+        grid-area: actions;
+    }
+
+    &-price {
+        grid-area: price;
+    }
+}
+
+.cart-item-img {
+    img {
+        height: 300px;
+        width: 100%;
+
+        @include media-breakpoint-up($md) {
             width: 100%;
-
-            @include media-breakpoint-up($md) {
-                width: 100%;
-                height: 190px;
-            }
-
-            border-radius: $border-radius;
-
-            object-fit: cover;
-            object-position: center;
+            height: 190px;
         }
+
+        border-radius: $border-radius;
+
+        object-fit: cover;
+        object-position: center;
     }
+}
 
-    .cart-item-info {
-        &-title {
-            font-weight: 500;
-            color: $text;
-            font-size: 1.2rem;
-        }
-
-        &-description {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        &-section {
-            margin-top: 0.5rem;
-            p {
-                display: inline;
-                font-weight: 400;
-                padding: 0.2rem 0.4rem;
-                color: #7e7d7d;
-                font-size: 10px;
-                background-color: #eaeaea;
-                border-radius: 5px;
-            }
-        }
-
-        &-parameters {
-            margin-top: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-
-            &-item {
-                display: inline;
-                font-weight: 400;
-                padding: 0.3rem 0.6rem;
-                color: $primary;
-                font-size: 12px;
-                background-color: $primary-tag;
-                border-radius: 5px;
-            }
-        }
-    }
-
-
-
-    .cart-item-count {
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 0.5rem;
-
-        input {
-            text-align: center;
-            width: 80px;
-        }
-
-        @include media-breakpoint-up($md) {
-            align-self: end;
-        }
-    }
-
-    .cart-item-actions {
-        display: flex;
-        align-items: flex-end;
-        flex-direction: column;
-        justify-content: space-between;
-
-        @include media-breakpoint-up($md) {
-            align-self: end;
-        }
-    }
-
-    .cart-item-price {
-        display: flex;
+.cart-item-info {
+    &-title {
         font-weight: 500;
-        flex-direction: column;
-
-        @include media-breakpoint-up($md) {
-            align-items: flex-end;
-        }
-
-        strong {
-            font-size: 1.2rem;
-        }
-
-        span {
-            margin-top: 0.2rem;
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: #868686;
-        }
-
+        color: $text;
+        font-size: 1.2rem;
     }
+
+    &-description {
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    &-section {
+        margin-top: 0.5rem;
+
+        p {
+            display: inline;
+            font-weight: 400;
+            padding: 0.2rem 0.4rem;
+            color: #7e7d7d;
+            font-size: 10px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+        }
+    }
+
+    &-parameters {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        &-item {
+            display: inline;
+            font-weight: 400;
+            padding: 0.3rem 0.6rem;
+            color: $primary;
+            font-size: 12px;
+            background-color: $primary-tag;
+            border-radius: 5px;
+        }
+    }
+}
+
+
+.cart-item-count {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    input {
+        text-align: center;
+        width: 80px;
+    }
+
+    @include media-breakpoint-up($md) {
+        align-self: end;
+    }
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include media-breakpoint-up($md) {
+        align-self: end;
+    }
+}
+
+.cart-item-price {
+    display: flex;
+    font-weight: 500;
+    flex-direction: column;
+
+    @include media-breakpoint-up($md) {
+        align-items: flex-end;
+    }
+
+    strong {
+        font-size: 1.2rem;
+    }
+
+    span {
+        margin-top: 0.2rem;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #868686;
+    }
+
+}
 </style>

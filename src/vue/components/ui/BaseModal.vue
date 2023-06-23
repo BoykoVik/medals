@@ -41,51 +41,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../../style/sys/vars";
-    @import "../../../style/sys/mixins";
+@import "../../../style/sys/vars";
+@import "../../../style/sys/mixins";
 
-    .dialog {
-        z-index: 1001;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.65);
+.dialog {
+    z-index: 1001;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.65);
 
-        display: none;
+    display: none;
 
-        &.active {
-            display: flex;
-        }
+    &.active {
+        display: flex;
     }
+}
 
-    .dialog-inner {
-        width: 100%;
-        margin-inline: 15px;
-        margin-top: auto;
-        margin-bottom: auto;
+.dialog-inner {
+    width: 100%;
+    margin-inline: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.dialog-wrapper {
+    margin: auto;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+
+    @include media-breakpoint-up($sm) {
+        width: 400px;
     }
+}
 
-    .dialog-wrapper {
-        margin: auto;
-        background-color: white;
-        border-radius: 5px;
-        position: relative;
-        width: 100%;
+.dialog-hide {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
-        @include media-breakpoint-up($sm) {
-            width: 400px;
-        }
-    }
-
-    .dialog-hide {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-    .dialog-content {
-        padding: 2rem;
-    }
+.dialog-content {
+    padding: 2rem;
+}
 </style>

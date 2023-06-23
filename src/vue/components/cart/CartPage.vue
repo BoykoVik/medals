@@ -165,8 +165,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../../style/sys/vars";
-    @import "../../../style/sys/mixins";
+@import "../../../style/sys/vars";
+@import "../../../style/sys/mixins";
 
     .cart-page-label {
         font-size: 1.5rem;

@@ -9,10 +9,20 @@ CATALOG_SRC = path.resolve(__dirname, 'src')
 CATALOG_PROD = path.resolve(__dirname, 'prod')
 
 module.exports = {
-    entry: path.resolve(CATALOG_SRC, "index.js"),
+    entry: {
+        main: {
+            import: path.resolve(CATALOG_SRC, "index.js"),
+            dependOn: 'shared',
+        },
+        vue: {
+            import: path.resolve(CATALOG_SRC, "vue", "vue.js"),
+            dependOn: 'shared',
+        },
+        shared: 'lodash',
+    },
     output: {
         path: CATALOG_PROD,
-        filename: 'bundle.js',
+        filename: '[name].js',
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -45,7 +55,9 @@ module.exports = {
         new VueLoaderPlugin(),
         new Dotenv(),
         new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
+            filename: '[name].css',
+            chunkFilename: '[id].css',
+            ignoreOrder: false,
         }),
     ],
     module: {
