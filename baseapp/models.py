@@ -39,6 +39,7 @@ class Product(models.Model):
     is_new = models.BooleanField(default=False, verbose_name='Отображать в новинках')
     is_hit = models.BooleanField(default=False, verbose_name='Отображать в хитах продаж')
     is_sale = models.BooleanField(default=False, verbose_name='Отображать в распродажах')
+    needparameters = models.BooleanField(default=True, verbose_name='Запрашивать тип планки')
 
     class Meta:
         verbose_name = 'Товар'
@@ -92,22 +93,11 @@ class Callrequest(models.Model):
 # Модель параметров товаров
 class Parameters(models.Model):
     title = models.CharField(blank=False, max_length=180, verbose_name='Наименование параметра')
-
+    backcolor = models.BooleanField(default=False, verbose_name='Требуется запрос цвета подложки')
     class Meta:
-        verbose_name = 'Параметр товара'
-        verbose_name_plural = 'Параметры товара'
+        verbose_name = 'Тип планки'
+        verbose_name_plural = 'Типы Планок'
 
     def __str__(self):
         return str(self.title)
     
-# Модель видов параметров
-class Parameterstypes(models.Model):
-    parameter = models.ForeignKey(Parameters, on_delete=models.CASCADE, verbose_name='параметр товара', related_name="param")
-    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование параметра')
-
-    class Meta:
-        verbose_name = 'Вад вараметра товара'
-        verbose_name_plural = 'Виды параметров товара'
-
-    def __str__(self):
-        return str(self.title)
