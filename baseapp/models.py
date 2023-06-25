@@ -88,3 +88,26 @@ class Callrequest(models.Model):
 
     def __str__(self):
         return str(self.number)
+    
+# Модель параметров товаров
+class Parameters(models.Model):
+    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование параметра')
+
+    class Meta:
+        verbose_name = 'Параметр товара'
+        verbose_name_plural = 'Параметры товара'
+
+    def __str__(self):
+        return str(self.title)
+    
+# Модель видов параметров
+class Parameterstypes(models.Model):
+    parameter = models.ForeignKey(Parameters, on_delete=models.CASCADE, verbose_name='параметр товара', related_name="param")
+    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование параметра')
+
+    class Meta:
+        verbose_name = 'Вад вараметра товара'
+        verbose_name_plural = 'Виды параметров товара'
+
+    def __str__(self):
+        return str(self.title)

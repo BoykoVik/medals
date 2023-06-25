@@ -55,6 +55,21 @@ def cartitems(request):
         })
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
+def getparameters(request):
+    parameterType = request.GET['parameterType']
+    print(parameterType)
+    objects = Product.objects.filter(is_sale = True)
+    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
+
+
+
+
+
+
+
+
+
+
 
 def serialise_data(objects):
     objects_serialized_data = []
@@ -68,7 +83,10 @@ def serialise_data(objects):
             "url": f"detail?item={obj.id}",
             "image": obj.image.url,
             "imageAlt": f"{obj.description} заказать Москва",
-            "parameters": [],
+            "parameters": [
+                "вес",
+                "толщина"
+            ],
             "sectionName": f"{obj.category}"
         })
     return objects_serialized_data
