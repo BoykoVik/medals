@@ -104,6 +104,26 @@ def getparameterlabel(request):#название параметра и одно 
         }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
+def productdetail(request, id):
+    objects_serialized_data = []
+    
+    product = get_object_or_404(Product, pk = id)
+    answer =  {
+        "id": 1,
+        "name": product.title,
+        "description": product.description,
+        "price": product.price,
+        "url": f"detail?item={product.id}",
+        "image": product.image.url,
+        "imageAlt": "планка",
+        "parameters": [
+            "bracing",
+            "back"
+        ],
+        "sectionName": "Планки"
+        }
+    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
+
 
 
 

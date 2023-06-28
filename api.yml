@@ -27,7 +27,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /api/product/id:
+  /api/product/{id}:
     get:
       tags:
         - Товары
@@ -56,7 +56,7 @@ paths:
                 $ref: "#/components/schemas/Error"
 
   # ПАРАМЕТРЫ
-  /api/parameters?{parameterType}:
+  /api/parameters{parameterType}:
     get:
       tags:
         - Параметры товаров
@@ -83,7 +83,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /api/parameters/label?{parameterTuple}:
+  /api/parameters/label{parameterTuple}:
     get:
       tags:
         - Параметры товаров
@@ -125,7 +125,7 @@ paths:
                 $ref: "#/components/schemas/Error"
 
   # КОРЗИНА
-  /api/cart/items?{data}:
+  /api/cart/items{data}:
     get:
       tags:
         - Корзина
@@ -139,6 +139,8 @@ paths:
             properties:
               data:
                 type: array
+                items:
+                  type: integer
                 example: [1, 2]
           required: true
           description: массив с идентификаторами товаров и параметрами товара (если они есть)
@@ -210,6 +212,8 @@ components:
           example: 'планка'
         parameters:
           type: array
+          items:
+            type: string
           example: ["color", "base"]
         sectionName:
           type: string
@@ -383,24 +387,33 @@ components:
               type: integer
               example: 1
     CartOrder:
-      type: array
-      items:
-        $ref: "#/components/schemas/CartOrderItem"
-      example:
-        - id: 1
-          count: 4
-          parameters:
-            - parameter: 'color'
-              value: 1
-        - id: 2
-          count: 25
-          parameters: []
-        - id: 14
-          count: 1
-          parameters:
-            - parameter: 'color'
-              value: 1
-            - parameter: 'base'
-              name: 5
-            - value: 'type'
-              parameter: 7
+      type: object
+      properties:
+        phone:
+          type: string
+          example: '88005553535'
+        email:
+          type: string
+          example: 'billy_herrington@gachi.gov'
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartOrderItem"
+          example:
+            - id: 1
+              count: 4
+              parameters:
+                - parameter: 'color'
+                  value: 1
+            - id: 2
+              count: 25
+              parameters: []
+            - id: 14
+              count: 1
+              parameters:
+                - parameter: 'color'
+                  value: 1
+                - parameter: 'base'
+                  name: 5
+                - value: 'type'
+                  parameter: 7
