@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
-from baseapp.models import Categories, Product, ProductImage
+from baseapp.models import Categories, Product, ProductImage, Parameters
 # Create your views here.
 
 def products_new(request):
@@ -43,6 +43,8 @@ def cartitems(request):
     for itemId in items:
         print(itemId)
         product = get_object_or_404(Product, pk = itemId)
+        if product.needparameters:
+            parametres = 111
         objects_serialized_data.append({
             "id": product.id,
             "name": product.title,
@@ -56,8 +58,34 @@ def cartitems(request):
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 def getparameters(request):
+    '''
     parameterType = request.GET['parameterType']
     print(parameterType)
+    objects = Product.objects.filter(is_sale = True)
+    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
+    '''
+    parameterType = request.GET['parameterType']
+    print(parameterType)
+    if parameterType == 'bracing':
+        parametres = Parameters.objects.all()
+        objects_serialized_data = []
+        items = []
+        for obj in parametres:
+            items.append({
+                "id": obj.id,
+                "name": obj.title,
+            })
+    objects_serialized_data.append({
+        "label": 'вид крепления',
+        "items": items
+    })
+    #print(objects_serialized_data)
+    return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
+
+
+def getparameterlabel(request):
+    parameterTuple = request.GET['parameterTuple']
+    print(parameterTuple)
     objects = Product.objects.filter(is_sale = True)
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
@@ -67,15 +95,14 @@ def getparameters(request):
 
 
 
-
-
-
-
 def serialise_data(objects):
     objects_serialized_data = []
-
+    parametres = list(Parameters.objects.all().values('title').values_list('title', flat=True))
     for obj in objects:
-        objects_serialized_data.append({
+        
+        if obj.needparameters:
+            print('qwewqeqwewq')
+            objects_serialized_data.append({
             "id": obj.id,
             "name": obj.title,
             "description": obj.title,
@@ -84,9 +111,21 @@ def serialise_data(objects):
             "image": obj.image.url,
             "imageAlt": f"{obj.description} заказать Москва",
             "parameters": [
-                "вес",
-                "толщина"
+                "bracing"
             ],
             "sectionName": f"{obj.category}"
         })
+        else:
+            objects_serialized_data.append({
+            "id": obj.id,
+            "name": obj.title,
+            "description": obj.title,
+            "price": obj.price,
+            "url": f"detail?item={obj.id}",
+            "image": obj.image.url,
+            "imageAlt": f"{obj.description} заказать Москва",
+            "parameters": [],
+            "sectionName": f"{obj.category}"
+            })
+    #print(objects_serialized_data)
     return objects_serialized_data
