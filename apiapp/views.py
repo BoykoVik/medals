@@ -57,7 +57,7 @@ def cartitems(request):
         })
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
-def getparameters(request):
+def getparameters(request):#список значений параметра товара
     '''
     parameterType = request.GET['parameterType']
     print(parameterType)
@@ -80,13 +80,15 @@ def getparameters(request):
         "items": items
     })
     print(objects_serialized_data)
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!ПОЛУЧИЛ ЗАПРОС СО ЗНАЧЕНИЕМ ТОВАРА, ОТДАЛ НАЗВАНИЕ И ПАРАМЕТРЫ')
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 
-def getparameterlabel(request):
+def getparameterlabel(request):#название параметра и одно его значение
     parameterTuple = request.GET['parameterTuple']
-    #print(parameterTuple)
+    print(parameterTuple)
+    print(',,,,????????????????,,,,,,,,,,,')
+    #ниже заглушка
     objects = Product.objects.filter(is_sale = True)
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
@@ -98,11 +100,10 @@ def getparameterlabel(request):
 
 def serialise_data(objects):
     objects_serialized_data = []
-    parametres = list(Parameters.objects.all().values('title').values_list('title', flat=True))
+    #parametres = list(Parameters.objects.all().values('title').values_list('title', flat=True))
     for obj in objects:
         
         if obj.needparameters:
-            print('qwewqeqwewq')
             objects_serialized_data.append({
             "id": obj.id,
             "name": obj.title,
