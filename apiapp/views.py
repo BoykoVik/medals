@@ -41,7 +41,6 @@ def cartitems(request):
     items = request.GET.getlist('data[]')
     objects_serialized_data = []
     for itemId in items:
-        print(itemId)
         product = get_object_or_404(Product, pk = itemId)
         if product.needparameters:
             parametres = 111
@@ -58,29 +57,31 @@ def cartitems(request):
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 def getparameters(request):#список значений параметра товара
-    '''
     parameterType = request.GET['parameterType']
-    print(parameterType)
-    objects = Product.objects.filter(is_sale = True)
-    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
-    '''
-    parameterType = request.GET['parameterType']
-    print(parameterType)
     objects_serialized_data = []
     items = []
-    parametres = Parameters.objects.all()
-    for obj in parametres:
-        items.append({
-            "id": obj.id,
-            "name": obj.title,
-        })
+    label = ''
+    if parameterType == 'bracing':
+        parametres = Parameters.objects.all()
+        label = 'Вид крепления'
+        for obj in parametres:
+            items.append({
+                "id": obj.id,
+                "name": obj.title,
+            })
+    if parameterType == 'back':
+        label = 'Цвет основы'
+        colors = getcolors()
+        for col in colors:
+            items.append({
+                "id": str(colors.index(col) + 1),
+                "name": col,
+            })
         
     objects_serialized_data = {
-        "label": 'вид крепления',
+        "label": label,
         "items": items
     }
-    print(objects_serialized_data)
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!ПОЛУЧИЛ ЗАПРОС СО ЗНАЧЕНИЕМ ТОВАРА, ОТДАЛ НАЗВАНИЕ И ПАРАМЕТРЫ')
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 
@@ -89,14 +90,33 @@ def getparameterlabel(request):#название параметра и одно 
     valueTuple = request.GET.get('parameterTuple[value]')
     print(parameterTuple)
     print(valueTuple)
-    #ниже заглушка
-    objects = Product.objects.filter(is_sale = True)
-    return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
+    if parameterTuple == 'back':
+        colors = getcolors()
+        answer = {
+            "parameter": "Цвет основы",
+            "value": colors[int(valueTuple) + 1]
+        }
+    if parameterTuple == 'bracing':
+        parametr = get_object_or_404(Parameters, pk = str(valueTuple))
+        answer = {
+            "parameter": 'Вид крепления',
+            "value": parametr.title
+        }
+    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 
 
 
-
+def getcolors():
+    return  (
+            'Черная',
+            'Оливковая',
+            'Серая',
+            'Синяя',
+            'Морская волна (парадная)',
+            'Серая (парадная)',
+            'Белая (парадная)',
+            )
 
 
 def serialise_data(objects):
