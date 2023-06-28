@@ -108,20 +108,33 @@ def productdetail(request, id):
     objects_serialized_data = []
     
     product = get_object_or_404(Product, pk = id)
-    answer =  {
-        "id": 1,
-        "name": product.title,
-        "description": product.description,
-        "price": product.price,
-        "url": f"detail?item={product.id}",
-        "image": product.image.url,
-        "imageAlt": "планка",
-        "parameters": [
-            "bracing",
-            "back"
-        ],
-        "sectionName": "Планки"
-        }
+    if product.needparameters:
+        answer =  {
+            "id": 1,
+            "name": product.title,
+            "description": product.description,
+            "price": product.price,
+            "url": f"detail?item={product.id}",
+            "image": product.image.url,
+            "imageAlt": "планка",
+            "parameters": [
+                "bracing",
+                "back"
+            ],
+            "sectionName": "Планки"
+            }
+    else:
+         answer =  {
+            "id": 1,
+            "name": product.title,
+            "description": product.description,
+            "price": product.price,
+            "url": f"detail?item={product.id}",
+            "image": product.image.url,
+            "imageAlt": "планка",
+            "parameters": [],
+            "sectionName": "Планки"
+            }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 
