@@ -75,19 +75,20 @@ def getparameters(request):#список значений параметра т�
             "name": obj.title,
         })
         
-    objects_serialized_data.append({
+    objects_serialized_data = {
         "label": 'вид крепления',
         "items": items
-    })
+    }
     print(objects_serialized_data)
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!ПОЛУЧИЛ ЗАПРОС СО ЗНАЧЕНИЕМ ТОВАРА, ОТДАЛ НАЗВАНИЕ И ПАРАМЕТРЫ')
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 
 def getparameterlabel(request):#название параметра и одно его значение
-    parameterTuple = request.GET['parameterTuple']
+    parameterTuple = request.GET.get('parameterTuple[parameter]')
+    valueTuple = request.GET.get('parameterTuple[value]')
     print(parameterTuple)
-    print(',,,,????????????????,,,,,,,,,,,')
+    print(valueTuple)
     #ниже заглушка
     objects = Product.objects.filter(is_sale = True)
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
