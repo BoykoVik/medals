@@ -68,14 +68,13 @@ def getparameters(request):
     print(parameterType)
     objects_serialized_data = []
     items = []
-    if parameterType == 'bracing':
-        parametres = Parameters.objects.all()
-        for obj in parametres:
-            items.append({
-                "id": obj.id,
-                "name": obj.title,
-            })
-            
+    parametres = Parameters.objects.all()
+    for obj in parametres:
+        items.append({
+            "id": obj.id,
+            "name": obj.title,
+        })
+        
     objects_serialized_data.append({
         "label": 'вид крепления',
         "items": items
