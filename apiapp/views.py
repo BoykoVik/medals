@@ -66,26 +66,28 @@ def getparameters(request):
     '''
     parameterType = request.GET['parameterType']
     print(parameterType)
+    objects_serialized_data = []
+    items = []
     if parameterType == 'bracing':
         parametres = Parameters.objects.all()
-        objects_serialized_data = []
-        items = []
         for obj in parametres:
             items.append({
                 "id": obj.id,
                 "name": obj.title,
             })
+            
     objects_serialized_data.append({
         "label": 'вид крепления',
         "items": items
     })
-    #print(objects_serialized_data)
+    print(objects_serialized_data)
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 
 def getparameterlabel(request):
     parameterTuple = request.GET['parameterTuple']
-    print(parameterTuple)
+    #print(parameterTuple)
     objects = Product.objects.filter(is_sale = True)
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
@@ -111,7 +113,8 @@ def serialise_data(objects):
             "image": obj.image.url,
             "imageAlt": f"{obj.description} заказать Москва",
             "parameters": [
-                "bracing"
+                "bracing",
+                "back"
             ],
             "sectionName": f"{obj.category}"
         })
