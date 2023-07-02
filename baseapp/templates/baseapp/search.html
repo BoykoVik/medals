@@ -33,7 +33,10 @@
                     
                     <div class="catalog-list-wrapper">
                         <div class="catalog-list expand">
-
+                            {% for product in products %}
+                                {{ product }}
+                                <br>
+                            {% endfor %}
 
                                 <div data-v-c55c4c4c="" class="catalog-item">
                                     <div data-v-c55c4c4c="" class="picture"><a data-v-c55c4c4c="" href="detail?item=533"><img
