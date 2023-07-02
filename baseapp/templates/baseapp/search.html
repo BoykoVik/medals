@@ -15,43 +15,27 @@
             {% include "layout/header.html" %}
             {% include "layout/navigation.html" %}
             <!----------------------------------------------------------------------------------------------------------------------------->
-            <div class="section catalog">
+            <div class="section catalog catalog-search">
                 <div class="container">
-                    <div data-v-641df9ca="" data-v-0635f4db="" class="catalog-actions">
-                        <div data-v-641df9ca="" class="catalog-search">
-                            Поиск
-                            <input data-v-641df9ca="" type="text" placeholder="Введите текст для поиска"> <a
-                                data-v-641df9ca=""><i data-v-641df9ca="" class="fa-solid fa-magnifying-glass"></i></a>
-                        </div>
-                        <div data-v-641df9ca="" class="catalog-actions-right"><button data-v-da17ae38=""
-                                data-v-641df9ca="" class="base-btn primary flat"><i data-v-641df9ca=""
-                                    data-v-da17ae38="" class="fa-solid fa-table-cells-large"></i></button> <button
-                                data-v-da17ae38="" data-v-641df9ca="" class="base-btn primary primary"><i
-                                    data-v-641df9ca="" data-v-da17ae38="" class="fa-solid fa-table-cells"></i></button>
-                        </div>
-                    </div>
                     
+                    <h2 class="catalog-search-title">Результаты поиска</h2>
                     <div class="catalog-list-wrapper">
                         <div class="catalog-list expand">
-                            {% for product in products %}
-                                {{ product }}
-                                <br>
-                            {% endfor %}
 
+                            {% for product in products %}
                                 <div data-v-c55c4c4c="" class="catalog-item">
-                                    <div data-v-c55c4c4c="" class="picture"><a data-v-c55c4c4c="" href="detail?item=533"><img
+                                    <div data-v-c55c4c4c="" class="picture"><a data-v-c55c4c4c="" href="{{ product.id }}"><img
                                                 data-v-c55c4c4c=""
-                                                src="/media/products_imgs/f7b3fgd64317tk9ktwwjqkd1kbc9re0c.png"
+                                                src="{{ product.image.url }}"
                                                 alt=" заказать Москва"></a></div>
                                     <div data-v-c55c4c4c="" class="content">
                                         <div data-v-c55c4c4c="">
-                                            <h3 data-v-c55c4c4c="" class="title">Медаль За отличие при выполнении специальных
-                                                заданий</h3>
+                                            <h3 data-v-c55c4c4c="" class="title">{{ product.title }}</h3>
                                         </div>
                                         <div data-v-c55c4c4c="" class="actions">
                                             <div data-v-c55c4c4c="" class="actions-info">
-                                                <div data-v-c55c4c4c="" class="price">100 ₽</div>
-                                                <div data-v-c55c4c4c="" class="section">
+                                                <div data-v-c55c4c4c="" class="price">{{ product.price }} ₽</div>
+                                                <div data-v-c55c4c4c="" class="catalog-item-section">
                                                     орденские планки и колодки
                                                 </div>
                                             </div> <button data-v-c55c4c4c="" class="cart"><i data-v-c55c4c4c=""
@@ -60,6 +44,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            {% endfor %}
 
                         </div>
                     </div>
