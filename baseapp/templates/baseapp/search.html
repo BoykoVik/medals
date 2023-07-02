@@ -18,16 +18,22 @@
             <div class="section catalog catalog-search">
                 <div class="container">
                     
-                    <h2 class="catalog-search-title">Результаты поиска</h2>
+                    <h2 class="catalog-search-title">
+                        {% if products %}
+                            Результаты поиска
+                        {% else %}
+                            Ничего не найдено
+                        {% endif %}
+                    </h2>
                     <div class="catalog-list-wrapper">
                         <div class="catalog-list expand">
 
                             {% for product in products %}
                                 <div data-v-c55c4c4c="" class="catalog-item">
-                                    <div data-v-c55c4c4c="" class="picture"><a data-v-c55c4c4c="" href="{{ product.id }}"><img
+                                    <div data-v-c55c4c4c="" class="picture"><a data-v-c55c4c4c="" href="detail?item={{ product.id }}"><img
                                                 data-v-c55c4c4c=""
                                                 src="{{ product.image.url }}"
-                                                alt=" заказать Москва"></a></div>
+                                                alt="{{ product.title }} заказать Москва"></a></div>
                                     <div data-v-c55c4c4c="" class="content">
                                         <div data-v-c55c4c4c="">
                                             <h3 data-v-c55c4c4c="" class="title">{{ product.title }}</h3>
@@ -36,7 +42,7 @@
                                             <div data-v-c55c4c4c="" class="actions-info">
                                                 <div data-v-c55c4c4c="" class="price">{{ product.price }} ₽</div>
                                                 <div data-v-c55c4c4c="" class="catalog-item-section">
-                                                    орденские планки и колодки
+                                                    {{ product.category }}
                                                 </div>
                                             </div> <button data-v-c55c4c4c="" class="cart"><i data-v-c55c4c4c=""
                                                     class="fa-solid fa-cart-shopping"></i>В корзину
