@@ -13,53 +13,6 @@
 
             {% include "layout/services.html" %}
 
-            <section class="section tabs">
-                <div class="container">
-                    <div class="tabs-panel">
-                        <div class="tabs-panel-item tabs-panel-item--news" data-target="news" data-is-active="1">
-                            <i class="fa-solid fa-bolt"></i>
-                            Новинки
-                        </div>
-
-                        <div class="tabs-panel-item" data-target="hit" data-is-active="0">
-                            Хиты продаж
-                        </div>
-
-                        <div class="tabs-panel-item tabs-panel-item--sale" data-target="sale" data-is-active="0">
-                            <i class="fa-brands fa-hotjar"></i>
-                            Распродажа
-                        </div>
-                    </div>
-
-                    <div class="tabs-content">
-                        <div class="tabs-content-item" data-target="news" data-is-active="1">
-                            <!-- API -->
-                            <catalog :products-api="'api/products-new'"
-                                        :limit="4"
-                                        :show-actions="false">
-                            </catalog>
-
-                        </div>
-
-                        <div class="tabs-content-item" data-target="hit" data-is-active="0">
-                            <!-- API -->
-                            <catalog :products-api="'api/products-hit'"
-                                        :limit="4"
-                                        :show-actions="false">
-                            </catalog>
-                        </div>
-
-                        <div class="tabs-content-item" data-target="sale" data-is-active="0">
-                            <!-- API -->
-                            <catalog :products-api="'api/products-sale'"
-                                        :limit="4"
-                                        :show-actions="false">
-                            </catalog>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section class="section works">
                 <div class="container">
                     <h2 class="section-title">Примеры работ</h2>
