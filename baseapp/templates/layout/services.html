@@ -5,60 +5,17 @@
 
         <!-- ссылки дублируются в каждой карточке в названии (это нужно для мобильной версии) -->
         <div class="row" style="gap: 20px 0;">
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="service-item">
-                    <h3 class="service-item-title"><a href="">Изготовление орденских планок</a></h3>
-                    <img class="service-item-img" src="{% static 'baseapp/images/io7mtsl699hbfy701uy7poa5p7q865fm.jpg' %}"/>
-                    <a class="service-item-link" href="">
-                        Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
-                    </a>
+            {% for category in categories %}
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="service-item">
+                        <h3 class="service-item-title"><a href="{% url 'baseapp:categorylist' %}?category={{ category.id }}">{{ category.title|capfirst }}</a></h3>
+                        <img class="service-item-img" src="{{ category.image.url }}"/>
+                        <a class="service-item-link" href="{% url 'baseapp:categorylist' %}?category={{ category.id }}">
+                            Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="service-item">
-                    <h3 class="service-item-title"><a href="">Изготовление орденских колодок</a></h3>
-                    <img class="service-item-img" src="{% static 'baseapp/images/photo_2023-05-07_21-26-20.jpg' %}"/>
-                    <a class="service-item-link" href="">
-                        Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="service-item">
-                    <h3 class="service-item-title"><a href="">Изготовление жетонов</a></h3>
-                    <img class="service-item-img" src="{% static 'baseapp/images/eap46boyh6bxvrse7u6e9sqi96hvjt6t.png' %}"/>
-                    <a class="service-item-link" href="">
-                        Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="service-item">
-                    <h3 class="service-item-title"><a href="">Изготовление сувенирных жетонов</a></h3>
-                    <img class="service-item-img" src="{% static 'baseapp/images/4gdabgfq3jpuq2i7zauwf5w38th1yc25.jpg' %}"/>
-                    <a class="service-item-link" href="">
-                        Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="service-item">
-                    <h3 class="service-item-title"><a href="">Лазерная гравировка</a></h3>
-                    <img class="service-item-img" src="{% static 'baseapp/images/photo_2023-05-02_15-58-41.jpg' %}"/>
-                    <a class="service-item-link" href="">
-                        Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <div class="service-item">
-                    <h3 class="service-item-title"><a href="">Расходные материалы</a></h3>
-                    <img class="service-item-img" src="{% static 'baseapp/images/slide03.jpg' %}"/>
-                    <a class="service-item-link" href="">
-                        Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
-                    </a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
