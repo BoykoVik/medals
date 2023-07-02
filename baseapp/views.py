@@ -85,8 +85,8 @@ def add_request(request):
     return index(request)
 
 def searchprod(request):
-    search_query = request.GET.get('query','')
-    products = Product.objects.filter(Q(title__icontains=search_query))
+    search_query = request.GET.get('query')
+    products = Product.objects.filter(Q(title__iregex=search_query))
     return render(request, 'baseapp/search.html', {
         'categories': categorytonav(),
         'products': products
