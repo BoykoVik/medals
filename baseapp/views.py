@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime
 from .models import Product, ProductImage, Categories, Categorymedals, Callrequest
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -82,6 +83,15 @@ def add_request(request):
         req.dateandtame = datetime.now()
         req.save()
     return index(request)
+
+def searchprod(request):
+    products = []
+    search_query = request.GET.get('query','')
+    books = Product.objects.filter(Q(title__icontains=search_query))
+    return render(request, 'baseapp/search.html', {
+        'categories': categorytonav(),
+        'products': products
+        })
 
 def categorytonav():
     categories = Categories.objects.all()

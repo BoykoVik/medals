@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "layout/headers.html" %}
+</head>
+
+<body>
+    {% csrf_token %}
+    <div id="app" class="wrapper">
+        <notification></notification>
+
+        <div class="content">
+            {% include "layout/header.html" %}
+            {% include "layout/navigation.html" %}
+            <!----------------------------------------------------------------------------------------------------------------------------->
+            <div class="section catalog">
+                <div class="container">
+                    <div data-v-641df9ca="" data-v-0635f4db="" class="catalog-actions">
+                        <div data-v-641df9ca="" class="catalog-search">
+                            Поиск
+                            <input data-v-641df9ca="" type="text" placeholder="Введите текст для поиска"> <a
+                                data-v-641df9ca=""><i data-v-641df9ca="" class="fa-solid fa-magnifying-glass"></i></a>
+                        </div>
+                        <div data-v-641df9ca="" class="catalog-actions-right"><button data-v-da17ae38=""
+                                data-v-641df9ca="" class="base-btn primary flat"><i data-v-641df9ca=""
+                                    data-v-da17ae38="" class="fa-solid fa-table-cells-large"></i></button> <button
+                                data-v-da17ae38="" data-v-641df9ca="" class="base-btn primary primary"><i
+                                    data-v-641df9ca="" data-v-da17ae38="" class="fa-solid fa-table-cells"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="catalog-list-wrapper">
+                        <div class="catalog-list expand">
+
+
+                                <div data-v-c55c4c4c="" class="catalog-item">
+                                    <div data-v-c55c4c4c="" class="picture"><a data-v-c55c4c4c="" href="detail?item=533"><img
+                                                data-v-c55c4c4c=""
+                                                src="/media/products_imgs/f7b3fgd64317tk9ktwwjqkd1kbc9re0c.png"
+                                                alt=" заказать Москва"></a></div>
+                                    <div data-v-c55c4c4c="" class="content">
+                                        <div data-v-c55c4c4c="">
+                                            <h3 data-v-c55c4c4c="" class="title">Медаль За отличие при выполнении специальных
+                                                заданий</h3>
+                                        </div>
+                                        <div data-v-c55c4c4c="" class="actions">
+                                            <div data-v-c55c4c4c="" class="actions-info">
+                                                <div data-v-c55c4c4c="" class="price">100 ₽</div>
+                                                <div data-v-c55c4c4c="" class="section">
+                                                    орденские планки и колодки
+                                                </div>
+                                            </div> <button data-v-c55c4c4c="" class="cart"><i data-v-c55c4c4c=""
+                                                    class="fa-solid fa-cart-shopping"></i>В корзину
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <!----------------------------------------------------------------------------------------------------------------------------->
+
+        </div>
+
+        {% include "layout/footer.html" %}
+    </div>
+
+    <script type="application/javascript" defer src="{% static 'baseapp/js/bundle.js' %}"></script>
+    <script type="application/javascript" src="//code.jivo.ru/widget/vr84HCIabX" async></script>
+</body>
+
+</html>
