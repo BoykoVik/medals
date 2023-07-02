@@ -1,7 +1,6 @@
 from django.db import models
 from PIL import Image
 
-import os
 # Create your models here.
 
 # Модель категорий
@@ -51,7 +50,6 @@ class Product(models.Model):
     def save(self):
         super().save()
         img = Image.open(self.image.path)
-        directory = os.getcwd()
         mask = Image.open('mask.png')
         mask_crop = mask.crop((0, 0, img.width, img.height))
         img.paste(mask_crop, (0, 0), mask_crop)
