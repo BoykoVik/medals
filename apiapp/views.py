@@ -70,25 +70,6 @@ def getparameters(request):#список значений параметра т�
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 
-def getparameterlabel(request):#название параметра и одно его значение
-    parameterTuple = request.GET.get('parameterTuple[parameter]')
-    valueTuple = request.GET.get('parameterTuple[value]')
-    print(parameterTuple)
-    print(valueTuple)
-    if parameterTuple == 'back':
-        colors = getcolors()
-        answer = {
-            "parameter": "Цвет основы",
-            "value": colors[int(valueTuple) + 1]
-        }
-    if parameterTuple == 'bracing':
-        parametr = get_object_or_404(Parameters, pk = str(valueTuple))
-        answer = {
-            "parameter": 'Вид крепления',
-            "value": parametr.title
-        }
-    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
-
 def productdetail(request, id):#api/product/<int:id>
     product = get_object_or_404(Product, pk = id)
     parameters = []

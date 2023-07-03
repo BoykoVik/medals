@@ -8,6 +8,5 @@ urlpatterns = [
     path('products-list-selected', views.products_list_selected, name='products-list-selected'),
     path('cart/items', views.cartitems, name='cartitems'),
     path('product/<int:id>', views.productdetail, name='productdetail'),
-    path('parameters/label', views.getparameterlabel, name='getparameterlabel'),#название параметра и одно его значение
     path('parameters', views.getparameters, name='getparameters'),#список значений параметра товара
 ]
