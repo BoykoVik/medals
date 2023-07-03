@@ -2,9 +2,10 @@ from django.db import models
 from PIL import Image
 
 # Create your models here.
-INPUTS = [
-    ('1', 'Вводимый'),
-    ('2', 'Выбор'),
+INPUTKIND = [
+    ('1', 'checkbox'),
+    ('2', 'input'),
+    ('3', 'select'),
     ]
 # Модель категорий
 class Categories(models.Model):
@@ -30,43 +31,18 @@ class Categorymedals(models.Model):
         verbose_name_plural = 'Виды наград'
         ordering = ['-id']
 
-
-
-
-# Модель параметров товаров
 class Parameters(models.Model):
-    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование параметра')
-    inputtype = models.CharField(blank=False, max_length=20, choices = INPUTS, verbose_name='Вид ввода')
-    label = models.CharField(blank=False, max_length=180, verbose_name='Выводимый текст')
-    image = models.ImageField(blank=True, null=True, upload_to='imgs/', verbose_name='Изображение параметра')
-    class Meta:
-        verbose_name = 'Параметр'
-        verbose_name_plural = 'Параметры'
-
+    title = models.CharField(blank=False, max_length=180, verbose_name='Вид параметра')
+    inputtype = models.CharField(blank=True, max_length=20, choices = INPUTKIND, verbose_name='Тип ввода')
+    label = models.CharField(blank=False, max_length=180, verbose_name='Подпись')
     def __str__(self):
-        return str(self.title)
+        return self.title
 
-class Depends(models.Model):
-    parametre = models.ManyToManyField(Parameters, verbose_name='Зависимость')
     class Meta:
-        verbose_name = 'Зависимость'
-        verbose_name_plural = 'Зависимости'
+        verbose_name = 'Вид параметра'
+        verbose_name_plural = 'Виды параметров'
+        ordering = ['-id']
 
-    def __str__(self):
-        return str(self.parametre)
-
-# Модель подпараметров товаров
-class Subparameters(models.Model):
-    parameter = models.ForeignKey(Parameters, on_delete=models.CASCADE, verbose_name='Параметр')
-    label = models.CharField(blank=False, max_length=180, verbose_name='Выводимый текст')
-    image = models.ImageField(blank=False, null=False, upload_to='imgs/', verbose_name='Изображение подпараметра')
-    class Meta:
-        verbose_name = 'Параметр'
-        verbose_name_plural = 'Параметры'
-
-    def __str__(self):
-        return str(self.label)
-    
 # Модель товаров
 class Product(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, verbose_name='Категория', related_name="category")
@@ -75,7 +51,7 @@ class Product(models.Model):
     image = models.ImageField(blank=False, null=False, upload_to='products_imgs/', verbose_name='Главное изображение товара')
     price = models.IntegerField(blank=False, null=False, default=100, verbose_name='Цена')
     description = models.TextField(blank=True, null=True, verbose_name='Описание товара')
-    parametre = models.ManyToManyField(Parameters, verbose_name='Параметры товара')
+    parameters = models.ForeignKey(Parameters, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Параметр', related_name="parameter")
 
     class Meta:
         verbose_name = 'Товар'
@@ -124,5 +100,4 @@ class Callrequest(models.Model):
     def __str__(self):
         return str(self.number)
     
-
     
