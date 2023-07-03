@@ -111,7 +111,7 @@ def productdetail(request, id):#api/product/<int:id>
             "items": items
             }
         colors = {
-            "name": "base",
+            "name": "color",
             "type": "select",
             "label": "Цвет",
             "items": [
