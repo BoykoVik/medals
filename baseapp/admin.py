@@ -5,8 +5,12 @@ from .models import Categories, Product, ProductImage, Categorymedals, Callreque
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
 
+
+
 class SubparametersInline(admin.TabularInline):
     model = Subparameters
+    
+
 
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):

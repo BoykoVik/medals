@@ -36,7 +36,7 @@ class Categorymedals(models.Model):
 # Модель параметров товаров
 class Parameters(models.Model):
     title = models.CharField(blank=False, max_length=180, verbose_name='Наименование параметра')
-    inputtype = models.CharField(blank=False, max_length=20, default='1', choices = INPUTS, verbose_name='Вид ввода')
+    inputtype = models.CharField(blank=False, max_length=20, choices = INPUTS, verbose_name='Вид ввода')
     label = models.CharField(blank=False, max_length=180, verbose_name='Выводимый текст')
     image = models.ImageField(blank=True, null=True, upload_to='imgs/', verbose_name='Изображение параметра')
     class Meta:
@@ -46,10 +46,19 @@ class Parameters(models.Model):
     def __str__(self):
         return str(self.title)
 
+class Depends(models.Model):
+    parametre = models.ManyToManyField(Parameters, verbose_name='Зависимость')
+    class Meta:
+        verbose_name = 'Зависимость'
+        verbose_name_plural = 'Зависимости'
+
+    def __str__(self):
+        return str(self.parametre)
+
 # Модель подпараметров товаров
 class Subparameters(models.Model):
     parameter = models.ForeignKey(Parameters, on_delete=models.CASCADE, verbose_name='Параметр')
-    label = models.CharField(blank=False, default='1', max_length=180, verbose_name='Выводимый текст')
+    label = models.CharField(blank=False, max_length=180, verbose_name='Выводимый текст')
     image = models.ImageField(blank=False, null=False, upload_to='imgs/', verbose_name='Изображение подпараметра')
     class Meta:
         verbose_name = 'Параметр'
