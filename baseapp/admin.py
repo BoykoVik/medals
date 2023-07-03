@@ -1,9 +1,12 @@
 from django.contrib import admin
-from .models import Categories, Product, ProductImage, Categorymedals, Callrequest, Parameters
+from .models import Categories, Product, ProductImage, Categorymedals, Callrequest, Parameters, Subparameters
 # Register your models here.
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
+
+class SubparametersInline(admin.TabularInline):
+    model = Subparameters
 
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):
@@ -15,7 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("title", "category",)
     inlines = (ProductImageInline,)
     search_fields = ("title",)
-    list_filter = ("medalcategory",)
+    list_filter = ("category",)
 
 @admin.register(Categorymedals)
 class CategorymedalsAdmin(admin.ModelAdmin):
@@ -31,3 +34,4 @@ class CallrequestAdmin(admin.ModelAdmin):
 class ParametersAdmin(admin.ModelAdmin):
     list_display = ("title",)
     search_fields = ("title",)
+    inlines = (SubparametersInline,)

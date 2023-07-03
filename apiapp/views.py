@@ -30,8 +30,6 @@ def cartitems(request):
     objects_serialized_data = []
     for itemId in items:
         product = get_object_or_404(Product, pk = itemId)
-        if product.needparameters:
-            parametres = 111
         objects_serialized_data.append({
             "id": product.id,
             "name": product.title,
@@ -39,7 +37,6 @@ def cartitems(request):
             "url": f"detail?item={product.id}",
             "image": product.image.url,
             "imageAlt": f"{product.description} заказать Москва",
-            "parameters": [],
             "sectionName": f"{product.category}"
         })
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)

@@ -14,7 +14,7 @@ paths:
       description: Получение списка товаров для отображения в компоненте каталога.
       operationId: getProducts
       responses:
-        '200':
+        "200":
           description: Успешный ответ с получением списка товаров
           content:
             application/json:
@@ -41,7 +41,7 @@ paths:
             type: integer
           example: 1
       responses:
-        '200':
+        "200":
           description: Успешный ответ с получением конкретного товара
           content:
             application/json:
@@ -67,14 +67,14 @@ paths:
           required: true
           description: Тип параметра
           schema:
-            $ref: '#/components/schemas/ParameterTupleRequest'
+            $ref: "#/components/schemas/ParameterTupleRequest"
       responses:
-        '200':
+        "200":
           description: Успешный ответ с получением списка значений параметра товара
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ParameterTupleResponse'
+                $ref: "#/components/schemas/ParameterTupleResponse"
         default:
           description: Любой другой ответ с ошибкой
           content:
@@ -103,7 +103,7 @@ paths:
           required: true
           description: массив с идентификаторами товаров и параметрами товара (если они есть)
       responses:
-        '200':
+        "200":
           description: Успешный ответ с получением списка товаров
           content:
             application/json:
@@ -129,7 +129,7 @@ paths:
             schema:
               $ref: "#/components/schemas/CartOrder"
       responses:
-        '200':
+        "200":
           description: Клиентская часть не ждет ответа, предполагается, что будет редирект на страницу с оплатой
 
 components:
@@ -151,49 +151,49 @@ components:
           example: 1
         name:
           type: string
-          example: 'Планка'
+          example: "Планка"
         description:
           type: string
-          example: 'Планка с ореданми'
+          example: "Планка с ореданми"
         price:
           type: integer
           example: 60
         url:
           type: string
-          example: 'ссылка на детальную страницу'
+          example: "ссылка на детальную страницу"
         image:
           type: string
-          example: 'https://some-url/image.jpg'
+          example: "https://some-url/image.jpg"
         imageAlt:
           type: string
-          example: 'планка'
+          example: "планка"
         sectionName:
           type: string
-          example: 'Планки'
+          example: "Планки"
         parameters:
-          $ref: '#/components/schemas/Parameters'
+          $ref: "#/components/schemas/Parameters"
 
     Products:
       type: array
       items:
-        $ref: '#/components/schemas/Product'
+        $ref: "#/components/schemas/Product"
       example:
         - id: 1
-          name: 'Планка'
-          description: 'Планка с орденами'
+          name: "Планка"
+          description: "Планка с орденами"
           price: 100
-          url: 'ссылка на детальную страницу'
-          image: 'https://some-url/image.jpg'
-          imageAlt: 'alt'
-          sectionName: 'Планки'
+          url: "ссылка на детальную страницу"
+          image: "https://some-url/image.jpg"
+          imageAlt: "alt"
+          sectionName: "Планки"
         - id: 2
-          name: 'Жетон'
-          description: 'Жетон какой-то'
+          name: "Жетон"
+          description: "Жетон какой-то"
           price: 200
-          image: 'https://some-url/image2.jpg'
-          url: 'ссылка на детальную страницу'
-          imageAlt: 'alt image text'
-          sectionName: 'Жетоны'
+          image: "https://some-url/image2.jpg"
+          url: "ссылка на детальную страницу"
+          imageAlt: "alt image text"
+          sectionName: "Жетоны"
 
     # параметры товаров
     Items:
@@ -207,33 +207,33 @@ components:
           example: 1
         label:
           type: string
-          example: 'Синий'
+          example: "Синий"
         image:
           type: string
-          example: '/upload/image.png'
+          example: "/upload/image.png"
     ItemsCheckbox:
       type: array
       items:
         $ref: "#/components/schemas/Items"
       example:
         - id: 1
-          label: 'На липучке'
-          image: '/upload/image_1.png'
+          label: "На липучке"
+          image: "/upload/image_1.png"
         - id: 2
-          label: 'Без липучки'
-          image: '/upload/image_2.png'
+          label: "Без липучки"
+          image: "/upload/image_2.png"
         - id: 14
-          label: 'Другой какой-то тип'
-          image: '/upload/image_14.png'
+          label: "Другой какой-то тип"
+          image: "/upload/image_14.png"
     ItemsSelect:
       type: array
       items:
         $ref: "#/components/schemas/Items"
       example:
         - id: 1
-          label: 'Зеленый'
+          label: "Зеленый"
         - id: 2
-          label: 'Черный'
+          label: "Черный"
     ParameterInput:
       type: object
       required:
@@ -248,7 +248,7 @@ components:
           example: "input"
         label:
           type: string
-          example: 'Номер, который нужно ввести'
+          example: "Номер, который нужно ввести"
         depends:
           type: object
           example: null
@@ -266,7 +266,7 @@ components:
           example: "checkbox"
         label:
           type: string
-          example: 'Основа'
+          example: "Основа"
         depends:
           type: object
           example: null
@@ -286,7 +286,7 @@ components:
           example: "checkbox"
         label:
           type: string
-          example: 'Основа'
+          example: "Основа"
         depends:
           type: object
           example:
@@ -297,10 +297,9 @@ components:
       type: array
       items:
         anyOf:
-          - $ref: '#/components/schemas/ParameterInput'
-          - $ref: '#/components/schemas/ParameterCheckbox'
-          - $ref: '#/components/schemas/ParameterSelect'
-
+          - $ref: "#/components/schemas/ParameterInput"
+          - $ref: "#/components/schemas/ParameterCheckbox"
+          - $ref: "#/components/schemas/ParameterSelect"
 
     # кортежи для параметров
     ParameterTupleRequest:
@@ -346,46 +345,46 @@ components:
               example: 1
             name:
               type: string
-              example: 'Планка'
+              example: "Планка"
             description:
               type: string
-              example: 'Планка с ореданми'
+              example: "Планка с ореданми"
             price:
               type: integer
               example: 60
             url:
               type: string
-              example: 'ссылка на детальную страницу'
+              example: "ссылка на детальную страницу"
             image:
               type: string
-              example: 'https://some-url/image.jpg'
+              example: "https://some-url/image.jpg"
             imageAlt:
               type: string
-              example: 'планка'
+              example: "планка"
             sectionName:
               type: string
-              example: 'Планки'
+              example: "Планки"
     CartItemList:
       type: array
       items:
-        $ref: '#/components/schemas/CartItem'
+        $ref: "#/components/schemas/CartItem"
       example:
         - id: 1
-          name: 'Планка'
-          description: 'Планка с орденами'
+          name: "Планка"
+          description: "Планка с орденами"
           price: 100
-          url: 'ссылка на детальную страницу'
-          image: 'https://some-url/image.jpg'
-          imageAlt: 'alt'
-          sectionName: 'Планки'
+          url: "ссылка на детальную страницу"
+          image: "https://some-url/image.jpg"
+          imageAlt: "alt"
+          sectionName: "Планки"
         - id: 2
-          name: 'Жетон'
-          description: 'Жетон какой-то'
+          name: "Жетон"
+          description: "Жетон какой-то"
           price: 200
-          image: 'https://some-url/image2.jpg'
-          url: 'ссылка на детальную страницу'
-          imageAlt: 'alt image text'
-          sectionName: 'Жетоны'
+          image: "https://some-url/image2.jpg"
+          url: "ссылка на детальную страницу"
+          imageAlt: "alt image text"
+          sectionName: "Жетоны"
 
     # заказ
     CartOrderItem:
@@ -406,7 +405,7 @@ components:
           properties:
             parameter:
               type: string
-              example: 'type'
+              example: "type"
             value:
               type: integer
               example: 1
@@ -415,10 +414,10 @@ components:
       properties:
         phone:
           type: string
-          example: '88005553535'
+          example: "88005553535"
         email:
           type: string
-          example: 'billy_herrington@gachi.gov'
+          example: "billy_herrington@gachi.gov"
         products:
           type: array
           items:
@@ -427,7 +426,7 @@ components:
             - id: 1
               count: 4
               parameters:
-                - parameter: 'color'
+                - parameter: "color"
                   value: 1
             - id: 2
               count: 25
@@ -435,11 +434,11 @@ components:
             - id: 14
               count: 1
               parameters:
-                - parameter: 'color'
+                - parameter: "color"
                   value: 1
-                - parameter: 'base'
+                - parameter: "base"
                   name: 5
-                - value: 'type'
+                - value: "type"
                   parameter: 7
 
     # ошибки
@@ -454,4 +453,4 @@ components:
           example: 422
         message:
           type: string
-          example: 'Ошибка загрузки'
+          example: "Ошибка загрузки"
