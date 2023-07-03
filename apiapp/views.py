@@ -95,21 +95,6 @@ def getparameterlabel(request):#название параметра и одно 
 def productdetail(request, id):    
     product = get_object_or_404(Product, pk = id)
     if product.needparameters:
-        answer =  {
-            "id": 1,
-            "name": product.title,
-            "description": product.description,
-            "price": product.price,
-            "url": f"detail?item={product.id}",
-            "image": product.image.url,
-            "imageAlt": "планка",
-            "parameters": [
-                "bracing",
-                "back"
-            ],
-            "sectionName": "Планки"
-            }
-    else:
          answer =  {
             "id": 1,
             "name": product.title,
@@ -118,8 +103,59 @@ def productdetail(request, id):
             "url": f"detail?item={product.id}",
             "image": product.image.url,
             "imageAlt": "планка",
-            "parameters": [],
-            "sectionName": "Планки"
+            "sectionName": "Планки",
+            "parameters": [
+                {
+                "name": "number",
+                "type": "input",
+                "label": "Номер, который нужно ввести",
+                "depends": 'null'
+                },
+                {
+                "name": "base",
+                "type": "checkbox",
+                "label": "Основа",
+                "depends": 'null',
+                "items": [
+                    {
+                    "id": 1,
+                    "label": "На липучке",
+                    "image": "/upload/image_1.png"
+                    },
+                    {
+                    "id": 2,
+                    "label": "Без липучки",
+                    "image": "/upload/image_2.png"
+                    },
+                    {
+                    "id": 14,
+                    "label": "Другой какой-то тип",
+                    "image": "/upload/image_14.png"
+                    }
+                ]
+                },
+                {
+                "name": "base",
+                "type": "checkbox",
+                "label": "Основа",
+                "depends": {
+                    "base": [
+                    1,
+                    2
+                    ]
+                },
+                "items": [
+                    {
+                    "id": 1,
+                    "label": "Зеленый"
+                    },
+                    {
+                    "id": 2,
+                    "label": "Черный"
+                    }
+                ]
+                }
+            ]
             }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
@@ -141,34 +177,16 @@ def getcolors():
 def serialise_data(objects):
     objects_serialized_data = []
     #parametres = list(Parameters.objects.all().values('title').values_list('title', flat=True))
-    for obj in objects:
-        
-        if obj.needparameters:
-            objects_serialized_data.append({
-            "id": obj.id,
-            "name": obj.title,
-            "description": obj.title,
-            "price": obj.price,
-            "url": f"detail?item={obj.id}",
-            "image": obj.image.url,
-            "imageAlt": f"{obj.description} заказать Москва",
-            "parameters": [
-                "bracing",
-                "back"
-            ],
-            "sectionName": f"{obj.category}"
-        })
-        else:
-            objects_serialized_data.append({
-            "id": obj.id,
-            "name": obj.title,
-            "description": obj.title,
-            "price": obj.price,
-            "url": f"detail?item={obj.id}",
-            "image": obj.image.url,
-            "imageAlt": f"{obj.description} заказать Москва",
-            "parameters": [],
-            "sectionName": f"{obj.category}"
-            })
+    for obj in objects:   
+        objects_serialized_data.append({
+        "id": obj.id,
+        "name": obj.title,
+        "description": obj.title,
+        "price": obj.price,
+        "url": f"detail?item={obj.id}",
+        "image": obj.image.url,
+        "imageAlt": f"{obj.title} заказать Москва",
+        "sectionName": f"{obj.category}"
+    })
     #print(objects_serialized_data)
     return objects_serialized_data
