@@ -118,11 +118,11 @@ def productdetail(request, id):#api/product/<int:id>
                 },
                 {
                 "id": 6,
-                "label": "Морская волна (парадная)"
+                "label": "Серая (парадная)"
                 },
                 {
                 "id": 7,
-                "label": "Морская волна (парадная)"
+                "label": "Белая (парадная)"
                 }
             ]
             }
