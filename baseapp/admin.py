@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categories, Product, ProductImage, Categorymedals, Callrequest, Parameters
+from .models import Categories, Product, ProductImage, Categorymedals, Callrequest, Parameters, Bases
 # Register your models here.
 
 class ProductImageInline(admin.TabularInline):
@@ -31,3 +31,7 @@ class CallrequestAdmin(admin.ModelAdmin):
 @admin.register(Parameters)
 class ParametersAdmin(admin.ModelAdmin):
     list_display = ("title", "label",)
+
+@admin.register(Bases)
+class BasesAdmin(admin.ModelAdmin):
+    list_display = ("title", "requireColor",)

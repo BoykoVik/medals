@@ -100,4 +100,16 @@ class Callrequest(models.Model):
     def __str__(self):
         return str(self.number)
     
+
     
+class Bases(models.Model):
+    title = models.CharField(blank=False, max_length=180, verbose_name='Наименование основы(крепления)')
+    image = models.ImageField(blank=True, upload_to='categories/', verbose_name='Изображение крепления')
+    requireColor = models.BooleanField(default=False, verbose_name="Нужен ли выбор цвета")
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Вид крепления'
+        verbose_name_plural = 'Виды креплений'
+        ordering = ['title']

@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
-from baseapp.models import Categories, Product, ProductImage, Parameters
+from baseapp.models import Categories, Product, ProductImage, Parameters, Bases
 # Create your views here.
 
 def products_list(request):
@@ -89,71 +89,83 @@ def getparameterlabel(request):#название параметра и одно 
         }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
-def productdetail(request, id):    
+def productdetail(request, id):#api/product/<int:id>
     product = get_object_or_404(Product, pk = id)
-    if product.needparameters:
-         answer =  {
-            "id": 1,
-            "name": product.title,
-            "description": product.description,
-            "price": product.price,
-            "url": f"detail?item={product.id}",
-            "image": product.image.url,
-            "imageAlt": "планка",
-            "sectionName": "Планки",
-            "parameters": [
+    parameters = []
+    
+    if product.parameters.id == 4:
+        print(product.parameters.id)
+        items = []
+        bases = Bases.objects.all()
+        for obj in bases:
+            items.append({
+                "id": obj.id,
+                "label": obj.title,
+                "image": obj.image.url,
+                "requireColor": obj.requireColor
+            })
+        base = {
+            "name": "base",
+            "type": "checkbox",
+            "label": "Основа",
+            "items": items
+            }
+        colors = {
+            "name": "base",
+            "type": "select",
+            "label": "Цвет",
+            "items": [
                 {
-                "name": "number",
-                "type": "input",
-                "label": "Номер, который нужно ввести",
-                "depends": 'null'
+                "id": 1,
+                "label": "Черная"
                 },
                 {
-                "name": "base",
-                "type": "checkbox",
-                "label": "Основа",
-                "depends": 'null',
-                "items": [
-                    {
-                    "id": 1,
-                    "label": "На липучке",
-                    "image": "/upload/image_1.png"
-                    },
-                    {
-                    "id": 2,
-                    "label": "Без липучки",
-                    "image": "/upload/image_2.png"
-                    },
-                    {
-                    "id": 14,
-                    "label": "Другой какой-то тип",
-                    "image": "/upload/image_14.png"
-                    }
-                ]
+                "id": 2,
+                "label": "Оливковая"
                 },
                 {
-                "name": "base",
-                "type": "checkbox",
-                "label": "Основа",
-                "depends": {
-                    "base": [
-                    1,
-                    2
-                    ]
+                "id": 3,
+                "label": "Серая"
                 },
-                "items": [
-                    {
-                    "id": 1,
-                    "label": "Зеленый"
-                    },
-                    {
-                    "id": 2,
-                    "label": "Черный"
-                    }
-                ]
+                {
+                "id": 4,
+                "label": "Синяя"
+                },
+                {
+                "id": 5,
+                "label": "Морская волна (парадная)"
+                },
+                {
+                "id": 6,
+                "label": "Морская волна (парадная)"
+                },
+                {
+                "id": 7,
+                "label": "Морская волна (парадная)"
                 }
             ]
             }
+        
+        parameters.append(base)
+        parameters.append(colors)
+    if product.parameters.id == 5:
+        base =     {
+        "name": "number",
+        "type": "input",
+        "label": "Номер жетона"
+        }
+        parameters.append(base)
+    answer =  {
+    "id": product.id,
+    "name": product.title,
+    "description": product.description,
+    "price": product.price,
+    "url": f"detail?item={product.id}",
+    "image": product.image.url,
+    "imageAlt": f"{product.title} купить в Москве",
+    "sectionName": f"{product.category}",
+    "parameters": parameters
+    }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 
