@@ -20,10 +20,10 @@ def createorder(request):
     objects_serialized_data = []
     data = json.loads(request.body)
     order = Orders()
-    order.phone = phone = data.get('phone')
+    order.phone = data.get('phone')
     order.email = data.get('email')
     order.save()
-    msgForTg = f'Новый заказ\nномер заказа: {order.id}\nДата: {order.date}\n'
+    msgForTg = f'Новый заказ\nномер заказа: {order.id}\nДата: {order.date}\nтелефон: {order.phone}\n'
     sumOfOrder = 0
     products = data.get('products')
     
