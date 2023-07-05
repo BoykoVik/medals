@@ -7,8 +7,11 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from yookassa import Configuration, Payment
 import uuid
-secret_key = 'test_W0I_a_az5cM2BC4cOwCxYbxlfwM0xPmBKD7i0TXNVuk'
-shopId = 227435
+import keys
+from rest_framework.decorators import api_view
+from django.http import JsonResponse, HttpResponse
+secret_key = keys.secret_key
+shopId = keys.shopId
 # Create your views here.
 def createorder(request):
     objects_serialized_data = []
@@ -58,36 +61,22 @@ def createorder(request):
     Configuration.secret_key = secret_key
     
     idempotence_key = str(uuid.uuid4())
-    '''
     payment = Payment.create({
         "amount": {
             "value": f'{sumOfOrder}.00',
             "currency": "RUB"
         },
+        "payment_method_data": {
+            "type": "bank_card"
+        },
         "confirmation": {
             "type": "redirect",
             "return_url": "http://ck97689.tw1.ru/"
         },
-        "capture": True,
-        "description": "Заказ планки.москва",
+        "description": f"Заказ №{order.id}",
         "metadata": {
         "order_id": f"{order.id}"
         }
-    })
-    '''
-    payment = Payment.create({
-        "amount": {
-        "value": f'{sumOfOrder}.00',
-        "currency": "RUB"
-        },
-        "payment_method_data": {
-        "type": "bank_card"
-        },
-        "confirmation": {
-        "type": "redirect",
-        "return_url": "http://ck97689.tw1.ru/"
-        },
-        "description": f"Заказ №{order.id}"
     }, idempotence_key)
 
     confirmation_url = payment.confirmation.confirmation_url
@@ -96,3 +85,18 @@ def createorder(request):
         'paylink': confirmation_url
     }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
+
+@api_view(['GET', 'POST'])
+def paymentstate(request):
+    parameterType = request.data
+    payid = request.data['id']
+    statuspay = request.data['status']
+    print(parameterType)
+    print(payid)
+    print(statuspay)
+    answer = {
+        'paylink': 'confirmation_url'
+    }
+    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
+
+        

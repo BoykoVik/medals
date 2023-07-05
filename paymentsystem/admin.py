@@ -12,7 +12,7 @@ class ObtainsAdmin(admin.ModelAdmin):
 
 @admin.register(Orders)
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ("date", "sumcost", "phone", "is_paid",)
+    list_display = ("id", "date", "sumcost", "phone", "is_paid",)
     list_filter = ("phone", "is_paid",)
     search_fields = ("phone", "date",)
     inlines =(ObtainsInline,)

@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('baseapp.urls', namespace='baseapp')),
     path('cart/', include('ordersapp.urls', namespace='cart')),
     path('api/', include('apiapp.urls', namespace='apiapp')),
+    path('payment/', include('paymentsystem.urls', namespace='payment')),
 ]
 
 if settings.DEBUG:# не кешировать
