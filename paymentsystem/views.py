@@ -1,11 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Obtains, Orders
 from baseapp.models import Product, Bases
 from apiapp.views import getcolors
 import json
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
-
+from yookassa import Configuration, Payment
+import uuid
+secret_key = 'test_W0I_a_az5cM2BC4cOwCxYbxlfwM0xPmBKD7i0TXNVuk'
+shopId = 227435
 # Create your views here.
 def createorder(request):
     objects_serialized_data = []
@@ -29,7 +32,6 @@ def createorder(request):
         obtain.product = prod
         obtain.count = count
         obtain.about = ''
-        #obtain.save()
         parameters = product.get('parameters')
         if (parameters):
             for param in parameters:
@@ -50,5 +52,47 @@ def createorder(request):
     order.sumcost = sumOfOrder
     order.save()
     msgForTg = msgForTg + f'\nСумма заказа: {sumOfOrder}'
-    print(msgForTg)
-    return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
+    
+
+    Configuration.account_id = shopId
+    Configuration.secret_key = secret_key
+    
+    idempotence_key = str(uuid.uuid4())
+    '''
+    payment = Payment.create({
+        "amount": {
+            "value": f'{sumOfOrder}.00',
+            "currency": "RUB"
+        },
+        "confirmation": {
+            "type": "redirect",
+            "return_url": "http://ck97689.tw1.ru/"
+        },
+        "capture": True,
+        "description": "Заказ планки.москва",
+        "metadata": {
+        "order_id": f"{order.id}"
+        }
+    })
+    '''
+    payment = Payment.create({
+        "amount": {
+        "value": f'{sumOfOrder}.00',
+        "currency": "RUB"
+        },
+        "payment_method_data": {
+        "type": "bank_card"
+        },
+        "confirmation": {
+        "type": "redirect",
+        "return_url": "http://ck97689.tw1.ru/"
+        },
+        "description": f"Заказ №{order.id}"
+    }, idempotence_key)
+
+    confirmation_url = payment.confirmation.confirmation_url
+    print(confirmation_url)
+    answer = {
+        'paylink': confirmation_url
+    }
+    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)

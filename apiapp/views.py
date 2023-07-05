@@ -175,5 +175,4 @@ def serialise_data(objects):
         "imageAlt": f"{obj.title} заказать Москва",
         "sectionName": f"{obj.category}"
     })
-    #print(objects_serialized_data)
     return objects_serialized_data
