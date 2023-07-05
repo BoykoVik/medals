@@ -1,13 +1,13 @@
 from django.urls import path
-from . import views
-
+from .views import products_list, products_list_selected, cartitems, productdetail, getparameters
+from paymentsystem.views import createorder
 app_name = 'apiapp'
 
 urlpatterns = [
-    path('products-list', views.products_list, name='products-list'),
-    path('products-list-selected', views.products_list_selected, name='products-list-selected'),
-    path('cart/items', views.cartitems, name='cartitems'),
-    path('cart/do-order', views.do_order, name='do-order'),
-    path('product/<int:id>', views.productdetail, name='productdetail'),
-    path('parameters', views.getparameters, name='getparameters'),#список значений параметра товара
+    path('products-list', products_list, name='products-list'),
+    path('products-list-selected', products_list_selected, name='products-list-selected'),
+    path('cart/items', cartitems, name='cartitems'),
+    path('cart/do-order', createorder, name='do-order'),
+    path('product/<int:id>', productdetail, name='productdetail'),
+    path('parameters', getparameters, name='getparameters'),#список значений параметра товара
 ]

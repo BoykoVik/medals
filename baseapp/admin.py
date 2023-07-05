@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categories, Product, ProductImage, Categorymedals, Callrequest, Parameters, Bases, Obtains, Orders
+from .models import Categories, Product, ProductImage, Categorymedals, Callrequest, Parameters, Bases
 # Register your models here.
 
 class ProductImageInline(admin.TabularInline):
@@ -36,18 +36,5 @@ class ParametersAdmin(admin.ModelAdmin):
 class BasesAdmin(admin.ModelAdmin):
     list_display = ("title", "requireColor",)
 
-class ObtainsInline(admin.StackedInline):
-    model = Obtains
 
-@admin.register(Obtains)
-class ObtainsAdmin(admin.ModelAdmin):
-    list_display = ("order", "count",)
-    list_filter = ("order",)
-    search_fields = ("order",)
 
-@admin.register(Orders)
-class OrdersAdmin(admin.ModelAdmin):
-    list_display = ("date", "sumcost", "phone", "is_paid",)
-    list_filter = ("phone", "is_paid",)
-    search_fields = ("phone", "date",)
-    inlines =(ObtainsInline,)

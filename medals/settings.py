@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'baseapp.apps.BaseappConfig',
     'apiapp.apps.ApiappConfig',
     'ordersapp.apps.OrdersappConfig',
+    'paymentsystem.apps.PaymentsystemConfig',
 ]
 
 MIDDLEWARE = [
