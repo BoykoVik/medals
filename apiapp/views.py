@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
+import json
 from django.core import serializers
 from baseapp.models import Categories, Product, ProductImage, Parameters, Bases
 # Create your views here.
@@ -69,73 +70,72 @@ def getparameters(request):#список значений параметра т�
     }
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
-
 def productdetail(request, id):#api/product/<int:id>
     product = get_object_or_404(Product, pk = id)
     parameters = []
-    
-    if product.parameters.id == 4:
-        print(product.parameters.id)
-        items = []
-        bases = Bases.objects.all()
-        for obj in bases:
-            items.append({
-                "id": obj.id,
-                "label": obj.title,
-                "image": obj.image.url,
-                "requireColor": obj.requireColor
-            })
-        base = {
-            "name": "base",
-            "type": "checkbox",
-            "label": "Основа",
-            "items": items
-            }
-        colors = {
-            "name": "color",
-            "type": "select",
-            "label": "Цвет",
-            "items": [
-                {
-                "id": 1,
-                "label": "Черная"
-                },
-                {
-                "id": 2,
-                "label": "Оливковая"
-                },
-                {
-                "id": 3,
-                "label": "Серая"
-                },
-                {
-                "id": 4,
-                "label": "Синяя"
-                },
-                {
-                "id": 5,
-                "label": "Морская волна (парадная)"
-                },
-                {
-                "id": 6,
-                "label": "Серая (парадная)"
-                },
-                {
-                "id": 7,
-                "label": "Белая (парадная)"
+    if product.parameters:
+        if product.parameters.id == 4:
+            print(product.parameters.id)
+            items = []
+            bases = Bases.objects.all()
+            for obj in bases:
+                items.append({
+                    "id": obj.id,
+                    "label": obj.title,
+                    "image": obj.image.url,
+                    "requireColor": obj.requireColor
+                })
+            base = {
+                "name": "base",
+                "type": "checkbox",
+                "label": "Основа",
+                "items": items
                 }
-            ]
+            colors = {
+                "name": "color",
+                "type": "select",
+                "label": "Цвет",
+                "items": [
+                    {
+                    "id": 1,
+                    "label": "Черная"
+                    },
+                    {
+                    "id": 2,
+                    "label": "Оливковая"
+                    },
+                    {
+                    "id": 3,
+                    "label": "Серая"
+                    },
+                    {
+                    "id": 4,
+                    "label": "Синяя"
+                    },
+                    {
+                    "id": 5,
+                    "label": "Морская волна (парадная)"
+                    },
+                    {
+                    "id": 6,
+                    "label": "Серая (парадная)"
+                    },
+                    {
+                    "id": 7,
+                    "label": "Белая (парадная)"
+                    }
+                ]
+                }
+            
+            parameters.append(base)
+            parameters.append(colors)
+        if product.parameters.id == 5:
+            base =     {
+            "name": "number",
+            "type": "input",
+            "label": "Номер жетона"
             }
-        
-        parameters.append(base)
-        parameters.append(colors)
-    if product.parameters.id == 5:
-        base =     {
-        "name": "number",
-        "type": "input",
-        "label": "Номер жетона"
-        }
-        parameters.append(base)
+            parameters.append(base)
     answer =  {
     "id": product.id,
     "name": product.title,
@@ -147,10 +147,25 @@ def productdetail(request, id):#api/product/<int:id>
     "sectionName": f"{product.category}",
     "parameters": parameters
     }
+    print(answer)
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 
+def do_order(request):#api/cart/do-order
+    objects_serialized_data = []
+    data = json.loads(request.body)
+    phone = data.get('phone')
+    email = data.get('email')
+    products = data.get('products')
+    for product in products:
+        productId = product.get('id')
+        count = product.get('count')
+        print(productId)
+        print(count)
+        parameters = product.get('parameters')
+        print(parameters)
 
+    return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 def getcolors():
     return  (
