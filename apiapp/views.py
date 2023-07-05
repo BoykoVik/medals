@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.core import serializers
-from baseapp.models import Categories, Product, ProductImage, Parameters, Bases
+from baseapp.models import Categories, Product, ProductImage, Parameters, Bases, Orders, Obtains
 # Create your views here.
 
 def products_list(request):
@@ -154,17 +154,26 @@ def productdetail(request, id):#api/product/<int:id>
 def do_order(request):#api/cart/do-order
     objects_serialized_data = []
     data = json.loads(request.body)
-    phone = data.get('phone')
-    email = data.get('email')
+    order = Orders()
+    order.phone = phone = data.get('phone')
+    order.email = data.get('email')
+    order.save()
+    orderId = order.id
+    msgForTg = ''
     products = data.get('products')
+    
     for product in products:
         productId = product.get('id')
         count = product.get('count')
-        print(productId)
-        print(count)
+        obtain = Obtains()
+        obtain.order = order.id
+        obtain.product = productId
+        obtain.count = count
+        #print(productId)
+        #print(count)
         parameters = product.get('parameters')
-        print(parameters)
-
+        #print(parameters)
+    #print(getcolors()[2])
     return JsonResponse(objects_serialized_data, safe=False, encoder=DjangoJSONEncoder)
 
 def getcolors():
