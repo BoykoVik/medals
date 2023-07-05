@@ -10,6 +10,9 @@ import uuid
 import keys
 from rest_framework.decorators import api_view
 from django.http import JsonResponse, HttpResponse
+import urllib.request
+import urllib.parse
+
 secret_key = keys.secret_key
 shopId = keys.shopId
 # Create your views here.
@@ -56,10 +59,17 @@ def createorder(request):
     order.save()
     msgForTg = msgForTg + f'\nСумма заказа: {sumOfOrder}'
     
-
+    url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
+    admins = ('628257666',)
+    for admin in admins:
+        data = {'chat_id': admin, 'text': msgForTg + '\nперейдите в юкассу для списания средств.', 'parse_mode': 'HTML'}
+        url_values = urllib.parse.urlencode(data)
+        full_url = url + '?' + url_values
+        data = urllib.request.urlopen(full_url)
+    
     Configuration.account_id = shopId
     Configuration.secret_key = secret_key
-    
+
     idempotence_key = str(uuid.uuid4())
     payment = Payment.create({
         "amount": {
@@ -71,7 +81,7 @@ def createorder(request):
         },
         "confirmation": {
             "type": "redirect",
-            "return_url": "http://ck97689.tw1.ru/"
+            "return_url": f"http://127.0.0.1:8000/paymentsusses?order={order.id}"
         },
         "description": f"Заказ №{order.id}",
         "metadata": {
@@ -80,7 +90,6 @@ def createorder(request):
     }, idempotence_key)
 
     confirmation_url = payment.confirmation.confirmation_url
-    print(confirmation_url)
     answer = {
         'paylink': confirmation_url
     }
@@ -98,5 +107,3 @@ def paymentstate(request):
         'paylink': 'confirmation_url'
     }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
-
-        

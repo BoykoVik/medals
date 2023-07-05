@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime
 from .models import Product, ProductImage, Categories, Categorymedals, Callrequest
+from paymentsystem.models import Orders
 from django.db.models import Q
 
 # Create your views here.
@@ -95,3 +96,10 @@ def searchprod(request):
 def categorytonav():
     categories = Categories.objects.all()
     return categories
+
+def paysus(request):
+    order = get_object_or_404(Orders, pk = request.GET['order'])
+    return render(request, 'baseapp/paysus.html', {
+        'categories': categorytonav(),
+        'order': order
+        })

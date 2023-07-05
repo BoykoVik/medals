@@ -10,4 +10,5 @@ urlpatterns = [
     path('categoryselected', views.categoryselected, name='categoryselected'),
     path('add_request', views.add_request, name='add_request'),
     path('searchprod', views.searchprod, name='searchprod'),
+    path('paymentsusses', views.paysus, name='paysus'),
 ]

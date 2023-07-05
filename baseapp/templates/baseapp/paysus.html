@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "layout/headers.html" %}
+</head>
+<body>
+    {% csrf_token %}
+<div id="app" class="wrapper">
+    <notification></notification>
+        {% include "layout/header.html" %}
+        {% include "layout/navigation.html" %}
+        <!----------------------------------------------------------------------------------------------------------------------------->
+        <div class="detail catalog">
+            <div class="container">
+                <h1>Ваш заказ № {{ order.id }} на сумму {{ order.sumcost }} в ожидании подтверждения.</h1>
+            </div>
+        </div>
+        <!----------------------------------------------------------------------------------------------------------------------------->
+
+    {% include "layout/footer.html" %}
+</div>
+
+<script type="application/javascript" defer src="{% static 'baseapp/js/bundle.js' %}"></script>
+<script type="application/javascript" src="//code.jivo.ru/widget/vr84HCIabX" async></script>
+</body>
+</html>
