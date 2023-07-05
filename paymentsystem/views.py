@@ -23,7 +23,7 @@ def createorder(request):
     order.phone = data.get('phone')
     order.email = data.get('email')
     order.save()
-    msgForTg = f'Новый заказ\nномер заказа: {order.id}\nДата: {order.date}\nтелефон: {order.phone}\n'
+    msgForTg = f'Новый заказ\nномер заказа: {order.id}\nДата: {order.date}\nтелефон: {order.phone}\n__________\n'
     sumOfOrder = 0
     products = data.get('products')
     
@@ -33,10 +33,13 @@ def createorder(request):
         obtain = Obtains()
         obtain.order = order
         prod = get_object_or_404(Product, pk = productId)#ТОВАР
-        msgForTg = msgForTg + f'\n{prod.title}'
         sumOfOrder = sumOfOrder + (prod.price * count)
         obtain.product = prod
         obtain.count = count
+        msgForTg = msgForTg + f'\n{prod.title}\n\n{prod.category}\n'
+        if prod.medalcategory:
+            msgForTg = msgForTg + f'\n{prod.medalcategory}\n'
+        msgForTg = msgForTg + f'\nколичество: {count}'
         obtain.about = ''
         parameters = product.get('parameters')
         if (parameters):
@@ -54,7 +57,7 @@ def createorder(request):
                     msgForTg = msgForTg + f'\nНомер: {value}'
                     obtain.about = str(obtain.about) + f'\nНомер: {value}'
         obtain.save()
-        msgForTg = msgForTg + '\n'
+        msgForTg = msgForTg + '\n__________'
     order.sumcost = sumOfOrder
     order.save()
     msgForTg = msgForTg + f'\nСумма заказа: {sumOfOrder}'
