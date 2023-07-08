@@ -114,3 +114,14 @@ class Bases(models.Model):
         verbose_name_plural = 'Виды креплений'
         ordering = ['title']
 
+class Examples(models.Model):
+    title = models.CharField(blank=False, max_length=180, verbose_name='Заголовок')
+    about = models.TextField(blank=False, max_length=180, verbose_name='Описание')
+    image = models.ImageField(blank=True, upload_to='examples/', verbose_name='Изображение')
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Пример работы'
+        verbose_name_plural = 'Примеры работ'
+        ordering = ['title']

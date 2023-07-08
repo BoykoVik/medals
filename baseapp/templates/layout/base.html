@@ -20,32 +20,15 @@
                     <div id="carouselExampleControls" class="carousel slide works-slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
 
-                            <!-- сюда вставлять вкладки с примерами работ -->
+                            {% for example in examples %}
                             <div class="carousel-item active works-item">
-                                <img src="{% static 'baseapp/images/prim2.jpg' %}" class="d-block w-100 works-item-img" alt="...">
+                                <img src="{{ example.image.url }}" class="d-block w-100 works-item-img" alt="{{ example.about }} заказать в Москве">
                                 <div class="works-item-content">
-                                    <h3 class="works-item-title">Лазерная гравирока</h3>
-                                    <p class="works-item-text">Описание</p>
-                                    <a href="" class="works-item-link">Подробно</a>
+                                    <h3 class="works-item-title">{{ example.title }}</h3>
+                                    <p class="works-item-text">{{ example.about }}</p>
                                 </div>
                             </div>
-                            <div class="carousel-item works-item">
-                                <img src="{% static 'baseapp/images/io7mtsl699hbfy701uy7poa5p7q865fm.jpg' %}" class="d-block w-100 works-item-img" alt="...">
-                                <div class="works-item-content">
-                                    <h3 class="works-item-title">Лазерная гравирока</h3>
-                                    <p class="works-item-text">Описание</p>
-                                    <a href="" class="works-item-link">Подробно</a>
-                                </div>
-                            </div>
-                            <div class="carousel-item works-item">
-                                <img src="{% static 'baseapp/images/ph0l6x9v3p5i1bgey5us42aptzy7hox5.jpg' %}" class="d-block w-100 works-item-img" alt="...">
-                                <div class="works-item-content">
-                                    <h3 class="works-item-title">Лазерная гравирока</h3>
-                                    <p class="works-item-text"></p>
-                                    <a href="" class="works-item-link">Подробно</a>
-                                </div>
-                            </div>
-                            <!------->
+                            {% endfor %}
 
                         </div>
                         <button class="carousel-control-prev works-control works-control-prev" type="button"
@@ -107,10 +90,6 @@
                                     Время работы: Пн-Сб,  С 10:00 До 20:00
                                 </a>
 
-                                <a href="" class="contacts-list-item">
-                                    <i class="fa-solid fa-map fa-xl"></i>
-                                    Как к нам добраться?
-                                </a>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime
-from .models import Product, ProductImage, Categories, Categorymedals, Callrequest
+from .models import Product, ProductImage, Categories, Categorymedals, Callrequest, Examples
 from paymentsystem.models import Orders
 from django.db.models import Q
 import urllib.request
@@ -10,10 +10,12 @@ import urllib.parse
 def index(request):
     keywords = 'Орденские планки колодки крепления заказать купить Москва, купить Медали России'
     description = 'Мы предлагаем широкий ассортимент орденских планок и колодок'
+    examples = Examples.objects.all()
     return render(request, 'baseapp/home.html', {
         'categories': categorytonav(),
         'keywords': keywords,
         'description': description,
+        'examples': examples,
     })
 
 def detail(request):
