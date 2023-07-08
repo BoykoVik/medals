@@ -2,4 +2,3 @@ yookassa
 uuid
 djangorestframework
 django-cors-headers
-install aiogram
