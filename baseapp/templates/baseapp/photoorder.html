@@ -29,7 +29,9 @@
                         <section class="section order">
                             <div class="container">
                                 <h2 class="info-title">Загрузите фотографию</h2>
-                                <form method="post" action="{% url 'payment:categorylist' %}" enctype="multipart/form-data">
+
+                                <form method="post" action="{% url 'payment:photoordersave' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
                                     <div class="order-wrapper">
 
                                         <div class="order-form-group">
@@ -53,6 +55,7 @@
                                         <input class="btn submit" type="submit" value="Оформить заказ">
                                     </div>
                                 </form>
+                                
                             </div>
                         </section>
                     </div>

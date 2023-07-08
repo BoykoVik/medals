@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Obtains, Orders
+from .models import Obtains, Orders, Photoorder
 from baseapp.models import Product, Bases
 from apiapp.views import getcolors
 import json
@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse, HttpResponse
 import urllib.request
 import urllib.parse
+from django.core.files.storage import FileSystemStorage
 
 secret_key = keys.secret_key
 shopId = keys.shopId
@@ -103,13 +104,24 @@ def paymentstate(request):
     parameterType = request.data
     payid = request.data['id']
     statuspay = request.data['status']
-    print(parameterType)
-    print(payid)
-    print(statuspay)
     answer = {
         'paylink': 'confirmation_url'
     }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 def photoordersave(request):
-    pass
+    order = Orders()
+    order.email = request.POST.get('email')
+    order.phone = request.POST.get('phone')
+    order.save()
+    task = Photoorder()
+    task.phone = request.POST.get('phone')
+    task.email = request.POST.get('email')
+    task.image = request.FILES.get('image')
+    task.order = order
+    task.save()
+    print(task.image)
+    answer = {
+        'paylink': 'asd'
+    }
+    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)

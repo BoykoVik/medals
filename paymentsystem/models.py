@@ -14,7 +14,7 @@ class Orders(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
-        ordering = ['date']
+        ordering = ['-id']
 
 class Obtains(models.Model):#КУПЛЕННЫЕ ТОВАРЫ
     order = models.ForeignKey(Orders, null=True, on_delete=models.CASCADE, verbose_name='Заказ')
