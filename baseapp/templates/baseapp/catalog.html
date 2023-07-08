@@ -26,7 +26,7 @@
 
                     <div class="catalog-sections-list" data-is-active="0">
                         {% for type in medalstypes %}
-                            <a href="categoryselected?category={{ category.id }}&itemtype={{ type.id }}" class="catalog-sections-list-item">{{ type.title }}</a>
+                            <a href="../categoryselected?category={{ category.id }}&itemtype={{ type.id }}" class="catalog-sections-list-item">{{ type.title }}</a>
                         {% endfor %}
                         
                     </div>
@@ -36,7 +36,7 @@
                 <catalog
                     :show-actions="true"
                     {% if medaltypeId %}
-                        :products-api="'{% url 'apiapp:products-list' %}?category={{ category.id }}&itemtype={{ medaltypeId }}'"
+                        :products-api="'{% url 'apiapp:products-list-selected' %}?category={{ category.id }}&itemtype={{ medaltypeId }}'"
                     {% else %}
                         :products-api="'{% url 'apiapp:products-list' %}?category={{ category.id }}'"
                     {% endif %}

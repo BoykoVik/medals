@@ -7,4 +7,5 @@ def cart(request):
     return render(request, 'ordersapp/cart.html', {
         'categories': categorytonav(),
         'broads': broads,
+        'product': 'Корзина',
     })

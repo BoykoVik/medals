@@ -67,6 +67,8 @@ def categoryselected(request):
     category = get_object_or_404(Categories, pk = categoryId)
     keywords = f'{category.title}, заказать {category.title} в Москве'
     description = f'В магазине планки.москва Вы можете заказать {category.title}'
+    broads = []
+    broads.append(f'<li class="breadcrumb-item active">{category.title}</li>')
     return render(request, 'baseapp/catalog.html', {
         'categories': categorytonav(),
         'medalstypes': medalstypes,
@@ -74,6 +76,7 @@ def categoryselected(request):
         'category': category,
         'keywords': keywords,
         'description': description,
+        'broads': broads,
         })
 
 def add_request(request):

@@ -4,7 +4,14 @@
 <meta name="keywords" content="{{ keywords }}" />
 <meta name="description" content="{{ description }}" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Главная</title>
+<title>{% if product %}
+            {{ product.title }}
+        {% elif category %}
+            {{ category.title }}
+        {% else %}
+            Главная
+        {% endif %}
+</title>
 
 <link rel="shortcut icon" href="{% static 'baseapp/images/favicon.png' %}" type="image/png">
 
