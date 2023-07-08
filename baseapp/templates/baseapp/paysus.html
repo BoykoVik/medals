@@ -11,11 +11,22 @@
         {% include "layout/header.html" %}
         {% include "layout/navigation.html" %}
         <!----------------------------------------------------------------------------------------------------------------------------->
-        <div class="detail catalog">
-            <div class="container">
-                <h1>Ваш заказ № {{ order.id }} на сумму {{ order.sumcost }} в ожидании подтверждения.</h1>
-            </div>
-        </div>
+        <section class="section info">
+                <div class="container">
+                    <h2 class="info-title">Ваш заказ № {{ order.id }}</h2>
+                    <div class="info-subtitle">на сумму {{ order.sumcost }} р.</div>
+                    <div class="info-paragraph">в ожидании подтверждения.</div>
+                    <div class="info-icon">
+                        <i class="fa-solid fa-check fa-xl"></i>
+                        <div>Денежные средства зарезервированы до подтверждения заказа</div>
+                    </div>
+                    <br>
+                    <div class="info-paragraph">после проверки заказа мы свяжемся с Вами.</div>
+                    <div class="info-paragraph">для дополнительной информации о статусе заказа Вы можете связаться с нами по номеру
+                        <a href="tel:+79652960909">8 (965) 296-09-09</a>
+                    </div>
+                </div>
+            </section>
         <!----------------------------------------------------------------------------------------------------------------------------->
 
     {% include "layout/footer.html" %}
