@@ -6,11 +6,12 @@ from baseapp.models import Product, Parameters, Bases
 # Create your views here.
 
 def products_list(request):
-    if 'category' in request.GET:
-        categoryId = request.GET['category']
+    categoryId = request.GET['category']
+    print(categoryId)
+    if categoryId == '4':
+        objects = Product.objects.filter(category = categoryId)[:8]
     else:
-        categoryId = '1'
-    objects = Product.objects.filter(category = categoryId)[:8]
+        objects = Product.objects.filter(category = categoryId)
     return JsonResponse(serialise_data(objects), safe=False, encoder=DjangoJSONEncoder)
 
 def products_list_selected(request):

@@ -3,6 +3,8 @@ from datetime import datetime
 from .models import Product, ProductImage, Categories, Categorymedals, Callrequest
 from paymentsystem.models import Orders
 from django.db.models import Q
+import urllib.request
+import urllib.parse
 
 # Create your views here.
 def index(request):
@@ -80,9 +82,20 @@ def categoryselected(request):
 def add_request(request):
     if request.method == 'GET':
         req = Callrequest()
-        req.number = request.GET['phone_number']
-        req.dateandtame = datetime.now()
+        num = str(request.GET['phone_number'])
+        req.number = num
         req.save()
+
+        url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
+        admins = ('628257666',)
+        trans_table = {ord(' ') : None, ord('-') : None, ord('(') : None, ord(')') : None}
+        num = num.translate(trans_table)
+        msgForTg = f'Заказан обратный звонок на номер {num}'
+        for admin in admins:
+            data = {'chat_id': admin, 'text': msgForTg, 'parse_mode': 'HTML'}
+            url_values = urllib.parse.urlencode(data)
+            full_url = url + '?' + url_values
+            data = urllib.request.urlopen(full_url)
     return index(request)
 
 def searchprod(request):

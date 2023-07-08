@@ -91,7 +91,7 @@ class ProductImage(models.Model):
 
 class Callrequest(models.Model):
     number = models.CharField(blank=False, null=False, max_length=80, verbose_name='Номер телефона')
-    dateandtame = models.DateTimeField(blank=False, null=False, verbose_name='Дата и время')
+    dateandtame = models.DateTimeField(blank=False, null=False, auto_now_add=True, verbose_name='Дата и время')
 
     class Meta:
         verbose_name = 'Заказ обратного звонка'
