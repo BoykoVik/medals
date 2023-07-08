@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'django.contrib.sitemaps',
     'baseapp.apps.BaseappConfig',
     'apiapp.apps.ApiappConfig',
     'ordersapp.apps.OrdersappConfig',

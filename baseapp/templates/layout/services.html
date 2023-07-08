@@ -8,9 +8,9 @@
             {% for category in categories %}
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="service-item">
-                        <h3 class="service-item-title"><a href="{% url 'baseapp:categorylist' %}?category={{ category.id }}">{{ category.title|capfirst }}</a></h3>
+                        <h3 class="service-item-title"><a href="{% url 'baseapp:categorylist' id=category.id %}">{{ category.title|capfirst }}</a></h3>
                         <img class="service-item-img" src="{{ category.image.url }}"/>
-                        <a class="service-item-link" href="{% url 'baseapp:categorylist' %}?category={{ category.id }}">
+                        <a class="service-item-link" href="{% url 'baseapp:categorylist' id=category.id %}">
                             Подробнее<i class="fa-solid fa-square-arrow-up-right"></i>
                         </a>
                     </div>

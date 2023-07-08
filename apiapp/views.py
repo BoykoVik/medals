@@ -7,7 +7,6 @@ from baseapp.models import Product, Parameters, Bases
 
 def products_list(request):
     categoryId = request.GET['category']
-    print(categoryId)
     if categoryId == '4':
         objects = Product.objects.filter(category = categoryId)[:8]
     else:
@@ -35,7 +34,7 @@ def cartitems(request):
             "id": product.id,
             "name": product.title,
             "price": product.price,
-            "url": f"detail?item={product.id}",
+            "url": f"../detail/{product.id}",
             "image": product.image.url,
             "imageAlt": f"{product.description} заказать Москва",
             "sectionName": f"{product.category}"
@@ -75,7 +74,6 @@ def productdetail(request, id):#api/product/<int:id>
     parameters = []
     if product.parameters:
         if product.parameters.id == 4:
-            print(product.parameters.id)
             items = []
             bases = Bases.objects.all()
             for obj in bases:
@@ -147,7 +145,6 @@ def productdetail(request, id):#api/product/<int:id>
     "sectionName": f"{product.category}",
     "parameters": parameters
     }
-    print(answer)
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 def getcolors():
@@ -171,7 +168,7 @@ def serialise_data(objects):
         "name": obj.title,
         "description": obj.title,
         "price": obj.price,
-        "url": f"detail?item={obj.id}",
+        "url": f"../detail/{obj.id}",
         "image": obj.image.url,
         "imageAlt": f"{obj.title} заказать Москва",
         "sectionName": f"{obj.category}"

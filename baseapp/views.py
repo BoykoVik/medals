@@ -5,6 +5,7 @@ from paymentsystem.models import Orders
 from django.db.models import Q
 import urllib.request
 import urllib.parse
+from django.views.generic import TemplateView
 
 # Create your views here.
 def index(request):
@@ -18,15 +19,12 @@ def index(request):
         'examples': examples,
     })
 
-def detail(request):
-    if 'item' in request.GET:
-        itemId = request.GET['item']
-    else:
-        itemId = '1'
+def detail(request, id):
+    itemId = id
     product = get_object_or_404(Product, pk = itemId)
     imgs = product.imgs.all()
     broads = []
-    broads.append(f'<li class="breadcrumb-item"><a href="category?category={ product.category.id }">{product.category}</a></li>')
+    broads.append(f'<li class="breadcrumb-item"><a href="../category/{ product.category.id }">{product.category}</a></li>')
     broads.append(f'<li class="breadcrumb-item active">{product.title}</li>')
     keywords = f'{product.title}, купить {product.title}, заказать планку {product.title}, купить планку {product.title}, {product.title} на офисную форму'
     description = f'В магазине планки.москва Вы можете заказать орденскую планку или колодку {product.title} на различных видах креплений и подложке'
@@ -39,11 +37,8 @@ def detail(request):
         'description': description,
         })
 
-def categorylist(request):
-    if 'category' in request.GET:
-        categoryId = request.GET['category']
-    else:
-        categoryId = '1'
+def categorylist(request, id):
+    categoryId = id
     category = get_object_or_404(Categories, pk = categoryId)
     broads = []
     broads.append(f'<li class="breadcrumb-item active">{category.title}</li>')
@@ -126,3 +121,7 @@ def paysus(request):
         'categories': categorytonav(),
         'order': order
         })
+
+class RobotsTxtView(TemplateView):
+    template_name = 'robots.txt'
+    content_type = 'text/plain'
