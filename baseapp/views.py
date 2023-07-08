@@ -93,6 +93,14 @@ def searchprod(request):
         'products': products
         })
 
+def photoorder(request):
+    broads = []
+    broads.append(f'<li class="breadcrumb-item active">Заказ по фото</li>')
+    return render(request, 'baseapp/photoorder.html', {
+        'categories': categorytonav(),
+        'broads': broads,
+        })
+
 def categorytonav():
     categories = Categories.objects.all()
     return categories

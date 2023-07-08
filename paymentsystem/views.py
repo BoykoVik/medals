@@ -110,3 +110,6 @@ def paymentstate(request):
         'paylink': 'confirmation_url'
     }
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
+
+def photoordersave(request):
+    pass

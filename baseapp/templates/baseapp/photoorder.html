@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "layout/headers.html" %}
+</head>
+
+<body>
+    {% csrf_token %}
+    <div id="app" class="wrapper">
+        <notification></notification>
+        {% include "layout/header.html" %}
+        {% include "layout/navigation.html" %}
+
+        <section class="section contacts">
+            <div class="container">
+                <h1 class="section-title contacts-title info-title">Заказ по фото</h1>
+                <div class="row" style="gap: 20px 0">
+                    <div class="col-12 col-md-6">
+                        <section class="section info">
+                            <div class="container">
+                                <div class="info-subtitle">У нас Вы можете заказать орденские планки и колодки лишь загрузив их фото.</div>
+                                <div class="info-paragraph">После получения фото Мы рассчитаем стоимость и свяжемся с Вами.</div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <section class="section order">
+                            <div class="container">
+                                <h2 class="info-title">Загрузите фотографию</h2>
+                                <form method="post" action="{% url 'payment:categorylist' %}" enctype="multipart/form-data">
+                                    <div class="order-wrapper">
+
+                                        <div class="order-form-group">
+                                            <label for="formOrderPhone">Номер телефона</label>
+                                            <input id="formOrderPhone" name="phone" class="input" type="text" required>
+                                        </div>
+
+                                        <div class="order-form-group">
+                                            <label for="email">Email</label>
+                                            <input id="email" name="email" class="input" type="email" required>
+                                        </div>
+                                        <div class="file-input">
+                                            <div class="file-input-wrapper">
+                                                <label class="file-input-control" for="image">Выберите файл</label>
+                                                <div class="file-input-control-name">файл не выбран</div>
+                                                <input type="file" id="image" name="image"
+                                                    accept="image/jpeg, image/png, image/jpg" required>
+                                            </div>
+                                            <img class="file-input-control-img" src="" alt="">
+                                        </div>
+                                        <input class="btn submit" type="submit" value="Оформить заказ">
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {% include "layout/footer.html" %}
+    </div>
+    <script>
+        localStorage.setItem("cart", "{}");
+    </script>
+    <script type="application/javascript" defer src="{% static 'baseapp/js/bundle.js' %}"></script>
+    <script type="application/javascript" src="//code.jivo.ru/widget/vr84HCIabX" async></script>
+</body>
+
+</html>

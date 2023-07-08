@@ -29,3 +29,17 @@ class Obtains(models.Model):#КУПЛЕННЫЕ ТОВАРЫ
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
         ordering = ['order']
+
+class Photoorder(models.Model):#КУПЛЕННЫЕ ТОВАРЫ
+    order = models.ForeignKey(Orders, null=True, on_delete=models.CASCADE, verbose_name='Заказ')
+    image = models.ImageField(blank=True, upload_to='photoorders/', verbose_name='Фото заказа')
+    phone = models.CharField(blank=False, max_length=20, verbose_name='Номер телефона')
+    email = models.CharField(blank=False, max_length=50, verbose_name='Электронная почта')
+
+    def __str__(self):
+        return str(self.order)
+
+    class Meta:
+        verbose_name = 'Заказ по фото'
+        verbose_name_plural = 'Заказы по фото'
+        ordering = ['order']

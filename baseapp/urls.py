@@ -11,4 +11,5 @@ urlpatterns = [
     path('add_request', views.add_request, name='add_request'),
     path('searchprod', views.searchprod, name='searchprod'),
     path('paymentsusses', views.paysus, name='paysus'),
+    path('photoorder', views.photoorder, name='photoorder'),
 ]
