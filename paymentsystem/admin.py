@@ -16,7 +16,6 @@ class ObtainsAdmin(admin.ModelAdmin):
 @admin.register(Photoorder)
 class PhotoorderAdmin(admin.ModelAdmin):
     list_display = ("order",)
-    list_filter = ("order",)
     search_fields = ("order",)
 
 @admin.register(Orders)

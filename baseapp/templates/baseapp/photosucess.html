@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "layout/headers.html" %}
+</head>
+<body>
+    {% csrf_token %}
+<div id="app" class="wrapper">
+    <notification></notification>
+        {% include "layout/header.html" %}
+        {% include "layout/navigation.html" %}
+        <!----------------------------------------------------------------------------------------------------------------------------->
+        <section class="section info">
+                <div class="container">
+                    <h2 class="info-title">Ваш заказ № {{ order.id }}</h2>
+                    <div class="info-paragraph">в ожидании подтверждения.</div>
+                    <div class="info-icon">
+                        <i class="fa-solid fa-check fa-xl"></i>
+                        <div>Изображение загружено</div>
+                    </div>
+                    <br>
+                    <div class="info-paragraph">после проверки заказа мы свяжемся с Вами.</div>
+                    <div class="info-paragraph">для дополнительной информации о статусе заказа Вы можете связаться с нами по номеру
+                        <a href="tel:+79652960909">8 (965) 296-09-09</a>
+                    </div>
+                </div>
+            </section>
+        <!----------------------------------------------------------------------------------------------------------------------------->
+
+    {% include "layout/footer.html" %}
+</div>
+<script>
+    localStorage.setItem("cart", "{}");
+</script>
+<script type="application/javascript" defer src="{% static 'baseapp/js/bundle.js' %}"></script>
+<script type="application/javascript" src="//code.jivo.ru/widget/vr84HCIabX" async></script>
+</body>
+</html>

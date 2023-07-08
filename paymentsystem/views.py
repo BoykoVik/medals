@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from .models import Obtains, Orders, Photoorder
 from baseapp.models import Product, Bases
 from apiapp.views import getcolors
+from baseapp.views import categorytonav
 import json
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
@@ -110,18 +111,21 @@ def paymentstate(request):
     return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
 
 def photoordersave(request):
-    order = Orders()
-    order.email = request.POST.get('email')
-    order.phone = request.POST.get('phone')
-    order.save()
-    task = Photoorder()
-    task.phone = request.POST.get('phone')
-    task.email = request.POST.get('email')
-    task.image = request.FILES.get('image')
-    task.order = order
-    task.save()
-    print(task.image)
-    answer = {
-        'paylink': 'asd'
-    }
-    return JsonResponse(answer, safe=False, encoder=DjangoJSONEncoder)
+    if request.method == 'POST':
+        order = Orders()
+        order.email = request.POST.get('email')
+        order.phone = request.POST.get('phone')
+        order.save()
+        task = Photoorder()
+        task.image = request.FILES.get('image')
+        task.order = order
+        task.save()
+        return render(request, 'baseapp/photosucess.html', {
+        'categories': categorytonav(),
+        'order': order
+        })
+    else:
+        return HttpResponseRedirect(request, 'baseapp/photosucess.html', {
+        'categories': categorytonav(),
+        })
+    
