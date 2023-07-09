@@ -109,9 +109,13 @@ def searchprod(request):
 def photoorder(request):
     broads = []
     broads.append(f'<li class="breadcrumb-item active">Заказ по фото</li>')
+    keywords = f'медаль заказать по фото, заказать изготовление планки'
+    description = f'В магазине планки.москва Вы можете заказать орденскую планку по фото.'
     return render(request, 'baseapp/photoorder.html', {
         'categories': categorytonav(),
         'broads': broads,
+        'keywords': keywords,
+        'description': description,
         })
 
 def categorytonav():
