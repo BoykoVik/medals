@@ -41,7 +41,7 @@
                             <div class="detail-img--main">
                                 <!-- здесь основная картинка, она обязательно должна быть -->
                                 <a href="{{ product.image.url }}" data-fancybox="gallery" data-caption="{{ product.description }}">
-                                    <img src="{{ product.image.url }}" />
+                                    <img src="{{ product.image.url }}" alt="купить {{ product.title }} в Москве" />
                                 </a>
                             </div>
 
@@ -50,7 +50,7 @@
                                 {% for image in imgs %}
                                 <a href="{{ image.image.url }}" data-fancybox="gallery"
                                    data-caption="{{ product.description }}">
-                                    <img src="{{ image.image.url }}" alt="купить {{ product.title }} в Москве"/>
+                                    <img src="{{ image.image.url }}" alt="заказать {{ product.title }} в Москве"/>
                                 </a>
                                 {% endfor %}
                                
