@@ -120,20 +120,19 @@ def photoordersave(request):
         task.image = request.FILES.get('image')
         task.order = order
         task.save()
-        msgForTg = f'Новый заказ по фото. Номер заказа {order.id}. Телефон клиента {order.phone}'
+        dir(task.image)
         url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
         admins = ('628257666',)
         for admin in admins:
-            data = {'chat_id': admin, 'text': msgForTg, 'parse_mode': 'HTML'}
+            data = {'chat_id': admin, 'text': f'Заказ по фото № {order}\nтелефон {order.phone}', 'parse_mode': 'HTML'}
             url_values = urllib.parse.urlencode(data)
             full_url = url + '?' + url_values
-            data = urllib.request.urlopen(full_url)
-        return render(request, 'baseapp/photosucess.html', {
-        'categories': categorytonav(),
-        'order': order
-        })
-    else:
-        return HttpResponseRedirect(request, 'baseapp/photosucess.html', {
-        'categories': categorytonav(),
-        })
+            try:
+                data = urllib.request.urlopen(full_url)
+            except:
+                pass
+    return render(request, 'baseapp/photosucess.html', {
+    'categories': categorytonav(),
+    'order': order
+    })
     

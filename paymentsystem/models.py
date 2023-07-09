@@ -1,5 +1,6 @@
 from django.db import models
 from baseapp.models import Product
+from .utils import get_rename
 # Create your models here.
 class Orders(models.Model):
     phone = models.CharField(blank=False, max_length=20, verbose_name='Номер телефона')
@@ -32,7 +33,7 @@ class Obtains(models.Model):#КУПЛЕННЫЕ ТОВАРЫ
 
 class Photoorder(models.Model):#КУПЛЕННЫЕ ТОВАРЫ
     order = models.ForeignKey(Orders, null=True, on_delete=models.CASCADE, verbose_name='Заказ')
-    image = models.ImageField(blank=True, upload_to='photoorders/', verbose_name='Фото заказа')
+    image = models.ImageField(blank=True, upload_to=get_rename, verbose_name='Фото заказа')
 
     def __str__(self):
         return str(self.order)
