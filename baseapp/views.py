@@ -9,14 +9,16 @@ from django.views.generic import TemplateView
 
 # Create your views here.
 def index(request):
-    keywords = 'Орденские планки колодки крепления заказать купить Москва, купить Медали России'
-    description = 'Мы предлагаем широкий ассортимент орденских планок и колодок'
+    keywords = 'Орденские планки колодки крепления заказать купить Москва, купить Медали России, лазерная гравировка в Москве'
+    description = 'Мы предлагаем широкий ассортимент орденских планок и колодок, услуги лазерной гравировки.'
     examples = Examples.objects.all()
+    maintitle = 'Орденские планки и колодки лазерная гравировка'
     return render(request, 'baseapp/home.html', {
         'categories': categorytonav(),
         'keywords': keywords,
         'description': description,
         'examples': examples,
+        'maintitle': maintitle,
     })
 
 def detail(request, id):
@@ -24,10 +26,27 @@ def detail(request, id):
     product = get_object_or_404(Product, pk = itemId)
     imgs = product.imgs.all()
     broads = []
+    print(product.category.id)
     broads.append(f'<li class="breadcrumb-item"><a href="../category/{ product.category.id }">{product.category}</a></li>')
     broads.append(f'<li class="breadcrumb-item active">{product.title}</li>')
-    keywords = f'{product.title}, купить {product.title}, заказать планку {product.title}, купить планку {product.title}, {product.title} на офисную форму'
-    description = f'В магазине планки.москва Вы можете заказать орденскую планку или колодку {product.title} на различных видах креплений и подложке'
+    if product.category.id == 4:
+        keywords = f'{product.title}, купить {product.title}, заказать планку {product.title} в Москве, купить планку {product.title}, {product.title} на офисную форму'
+        description = f'В магазине планки.москва Вы можете заказать орденскую планку или колодку {product.title} на различных видах креплений и подложке'
+    elif product.category.id == 5:
+        keywords = f'купить {product.title}, заказать {product.title}, купить жетон с гравировкой номера в Москве, {product.title} гравировка'
+        description = f'В магазине планки.москва Вы можете заказать {product.title} с гравировкой номера'
+    elif product.category.id == 6:
+        keywords = f'купить {product.title}, заказать {product.title}, купить нагрудный знак с гравировкой номера в Москве, {product.title} гравировка'
+        description = f'В магазине планки.москва Вы можете заказать {product.title} с гравировкой номера'
+    elif product.category.id == 7:
+        keywords = f'купить сувенирный {product.title} в Москве, заказать {product.title} сувенирный, {product.title} в Москве'
+        description = f'В магазине планки.москва Вы можете заказать {product.title} с гравировкой номера'
+    elif product.category.id == 9:
+        keywords = f'купить расходные материалы для изготовления орденских планок и колодок {product.title} в Москве'
+        description = f'В магазине планки.москва Вы можете заказать или купить расходные материалы для изготовления орденских планок и колодок'
+    else:
+        keywords = f'{product.title}, купить {product.title}, заказать планку {product.title}, купить планку {product.title}, {product.title} на офисную форму'
+        description = f'В магазине планки.москва Вы можете заказать орденскую планку или колодку {product.title} на различных видах креплений и подложке'
     return render(request, 'baseapp/detail.html', {
         'product': product,
         'categories': categorytonav(),
@@ -111,11 +130,13 @@ def photoorder(request):
     broads.append(f'<li class="breadcrumb-item active">Заказ по фото</li>')
     keywords = f'медаль заказать по фото, заказать изготовление планки'
     description = f'В магазине планки.москва Вы можете заказать орденскую планку по фото.'
+    maintitle = 'Заказать орденскую планку по фото'
     return render(request, 'baseapp/photoorder.html', {
         'categories': categorytonav(),
         'broads': broads,
         'keywords': keywords,
         'description': description,
+        'maintitle': maintitle,
         })
 
 def categorytonav():
