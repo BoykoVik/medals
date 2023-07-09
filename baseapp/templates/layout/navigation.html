@@ -33,8 +33,8 @@
                     </div>
 
                     <div class="site-search nav-search" data-method="GET" data-url="search">
-                        <!-- API -->
-                        <form action="search" method="get">
+                        <!-- API 11 -->
+                        <form action="{% url 'baseapp:searchprod' %}" method="get">
                             <input class="site-search-input header-search" name="query" type="text" value="" placeholder="Поиск по сайту"/>
                             <a class="site-search-btn">
                                 <i class="fa-solid fa-magnifying-glass"></i>
