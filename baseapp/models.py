@@ -122,6 +122,24 @@ class Examples(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Пример работы'
-        verbose_name_plural = 'Примеры работ'
+        verbose_name = 'Пример работы (слайдер)'
+        verbose_name_plural = 'Примеры работ (слайдер)'
         ordering = ['title']
+
+class ExampleImage(models.Model):
+    image = models.ImageField(blank=True, upload_to='photogallery/', verbose_name='Фото фотогалереи')
+    
+    class Meta:
+        verbose_name = 'Фото фотогалереи'
+        verbose_name_plural = 'Фото фотогалереи'
+
+    def __str__(self):
+        return str(self.image.url)
+    
+    def save(self):
+        super().save()
+        img = Image.open(self.image.path)
+        mask = Image.open('mask.png')
+        mask_crop = mask.crop((0, 0, img.width, img.height))
+        img.paste(mask_crop, (0, 0), mask_crop)
+        img.save(self.image.path)

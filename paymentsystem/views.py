@@ -117,10 +117,12 @@ def photoordersave(request):
         order.phone = request.POST.get('phone')
         order.save()
         task = Photoorder()
-        task.image = request.FILES.get('image')
-        task.order = order
-        task.save()
-        dir(task.image)
+        for obj in request.FILES.getlist('images'):
+            print(dir(obj))
+            task = Photoorder()
+            task.image = obj
+            task.order = order
+            task.save()
         url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
         admins = ('628257666', '701668128',)
         for admin in admins:

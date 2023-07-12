@@ -21,16 +21,20 @@
                             <section class="section info">
                                 <div class="container">
                                     <div class="info-subtitle">У нас Вы можете заказать орденские планки и колодки лишь загрузив их фото.</div>
-                                    <div class="info-paragraph">После получения фото Мы рассчитаем стоимость и свяжемся с Вами.</div>
+                                    <div class="info-paragraph">Для заказа орденских планок и колодок по фото ведите адрес электронной почты и номер телефона.</div>
+                                    <div class="info-paragraph">Нажмите "Выберите файлы", выделите все нужные фотографии и добавьте. Затем нажмите "Оформить заказ".</div>
+                                    <div class="info-paragraph">После получения фотографий Мы рассчитаем стоимость и свяжемся с Вами.</div>
                                 </div>
                             </section>
                         </div>
                         <div class="col-12 col-md-6">
+
                             <section class="section order">
                                 <div class="container">
                                     <h2 class="section-title order-title">Заказать по фото</h2>
                 
                                     <form method="post" action="{% url 'payment:photoordersave' %}" enctype="multipart/form-data">
+                                        {% csrf_token %}
                                         <div class="order-wrapper">
                 
                                             <div class="order-form-group">
@@ -57,6 +61,7 @@
                                     </form>
                                 </div>
                             </section>
+                            
                         </div>
                     </div>
                 </div>
@@ -67,9 +72,6 @@
 
     {% include "layout/footer.html" %}
     </div>
-    <script>
-        localStorage.setItem("cart", "{}");
-    </script>
     <script type="application/javascript" defer src="{% static 'baseapp/js/bundle.js' %}"></script>
     <script type="application/javascript" src="//code.jivo.ru/widget/vr84HCIabX" async></script>
 </body>
