@@ -139,6 +139,11 @@ def photoorder(request):
         'maintitle': maintitle,
         })
 
+def photoalbum(request):
+    return render(request, 'baseapp/photoalbum.html', {
+        'categories': categorytonav(),
+        })
+
 def categorytonav():
     categories = Categories.objects.all()
     return categories

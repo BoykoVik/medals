@@ -28,34 +28,33 @@
                         <div class="col-12 col-md-6">
                             <section class="section order">
                                 <div class="container">
-                                    <h2 class="info-title">Загрузите фотографию</h2>
-    
+                                    <h2 class="section-title order-title">Заказать по фото</h2>
+                
                                     <form method="post" action="{% url 'payment:photoordersave' %}" enctype="multipart/form-data">
-                                        {% csrf_token %}
                                         <div class="order-wrapper">
-    
+                
                                             <div class="order-form-group">
                                                 <label for="formOrderPhone">Номер телефона</label>
                                                 <input id="formOrderPhone" name="phone" class="input" type="text" required>
                                             </div>
-    
+                
                                             <div class="order-form-group">
                                                 <label for="email">Email</label>
                                                 <input id="email" name="email" class="input" type="email" required>
                                             </div>
-                                            <div class="file-input">
-                                                <div class="file-input-wrapper">
-                                                    <label class="file-input-control" for="image">Выберите файл</label>
-                                                    <div class="file-input-control-name">файл не выбран</div>
-                                                    <input type="file" id="image" name="image"
-                                                        accept="image/jpeg, image/png, image/jpg" required>
+                
+                                            <div class="order-form-group">
+                                                <label for="images">Файлы фотографий</label>
+                                                <div class="input-group custom-file-button">
+                                                    <label class="input-group-text" for="images">Выберите файлы</label>
+                                                    <input class="form-control2" type="file" id="images" name="images"
+                                                           accept="image/jpeg, image/png, image/jpg" required multiple>
                                                 </div>
-                                                <img class="file-input-control-img" src="" alt="">
                                             </div>
+                
                                             <input class="btn submit" type="submit" value="Оформить заказ">
                                         </div>
                                     </form>
-                                    
                                 </div>
                             </section>
                         </div>

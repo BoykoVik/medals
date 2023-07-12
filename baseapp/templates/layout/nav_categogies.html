@@ -2,4 +2,4 @@
     <a href="{% url 'baseapp:categorylist' id=category.id %}" class="nav-link">{{ category.title|capfirst }}</a>
 {% endfor %}
     <a href="{% url 'baseapp:photoorder' %}" class="nav-link">Заказ по фото</a>
-    <a href="" class="nav-link">Фотогалерея</a>
+    <a href="{% url 'baseapp:photoalbum' %}" class="nav-link">Фотогалерея</a>

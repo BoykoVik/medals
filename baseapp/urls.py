@@ -23,5 +23,6 @@ urlpatterns = [
     path('searchprod', views.searchprod, name='searchprod'),
     path('paymentsusses', views.paysus, name='paysus'),
     path('photoorder', views.photoorder, name='photoorder'),
+    path('photoalbum', views.photoalbum, name='photoalbum'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
 ]
