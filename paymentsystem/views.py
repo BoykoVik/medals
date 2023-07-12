@@ -65,7 +65,7 @@ def createorder(request):
     msgForTg = msgForTg + f'\nСумма заказа: {sumOfOrder}'
     
     url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
-    admins = ('628257666',)
+    admins = ('628257666', '701668128',)
     for admin in admins:
         data = {'chat_id': admin, 'text': msgForTg + '\nперейдите в юкассу для списания средств.', 'parse_mode': 'HTML'}
         url_values = urllib.parse.urlencode(data)
@@ -122,7 +122,7 @@ def photoordersave(request):
         task.save()
         dir(task.image)
         url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
-        admins = ('628257666',)
+        admins = ('628257666', '701668128',)
         for admin in admins:
             data = {'chat_id': admin, 'text': f'Заказ по фото № {order}\nтелефон {order.phone}', 'parse_mode': 'HTML'}
             url_values = urllib.parse.urlencode(data)

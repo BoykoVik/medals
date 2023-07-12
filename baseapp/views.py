@@ -106,7 +106,7 @@ def add_request(request):
         req.save()
 
         url = u'https://api.telegram.org/bot6359888423:AAGEfUcoYBAcutK4DzvSjkmlfxmPNh23qPQ/sendMessage'
-        admins = ('628257666',)
+        admins = ('628257666', '701668128',)
         trans_table = {ord(' ') : None, ord('-') : None, ord('(') : None, ord(')') : None}
         num = num.translate(trans_table)
         msgForTg = f'Заказан обратный звонок на номер {num}'
