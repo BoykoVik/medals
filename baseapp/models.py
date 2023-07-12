@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image
+from medals.settings import STATIC_ROOT
 
 # Create your models here.
 INPUTKIND = [
@@ -63,7 +64,7 @@ class Product(models.Model):
     def save(self):
         super().save()
         img = Image.open(self.image.path)
-        mask = Image.open('mask.png')
+        mask = Image.open(STATIC_ROOT + '/mask.png')
         mask_crop = mask.crop((0, 0, img.width, img.height))
         img.paste(mask_crop, (0, 0), mask_crop)
         img.save(self.image.path)
@@ -139,7 +140,7 @@ class ExampleImage(models.Model):
     def save(self):
         super().save()
         img = Image.open(self.image.path)
-        mask = Image.open('mask.png')
+        mask = Image.open(STATIC_ROOT + '/mask.png')
         mask_crop = mask.crop((0, 0, img.width, img.height))
         img.paste(mask_crop, (0, 0), mask_crop)
         img.save(self.image.path)
