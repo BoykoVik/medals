@@ -15,24 +15,11 @@
         <!----------------------------------------------------------------------------------------------------------------------------->
         <section class="section photo">
             <div class="container">
-                <h2 class="photo-title">Заголовок, если нужен</h2>
+                <h2 class="photo-title">Галерея работ от планки.Москва</h2>
                 <div class="photo-list">
-                    <img src="https://images.unsplash.com/photo-1688499693696-9c754d94a56e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1548&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1688171200066-2418f29abcf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1744&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1688728215345-0990b69a1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1542&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1688293696592-f67a77ddc11f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1688417168179-8fcc50e5e290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1688297400200-d601bf8fba32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1548&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1664380163606-31d93eb399c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="" data-fancybox="list-1">
-                    <img src="https://images.unsplash.com/photo-1688744031311-84cc68ab96c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="" data-fancybox="list-1">
-                </div>
-
-                <h2 class="photo-title">Заголовок, если нужен</h2>
-                <div class="photo-list">
-                    <img src="./images/j2.png" alt="" data-fancybox="list-2">
-                    <img src="./images/col.jpg" alt="" data-fancybox="list-2">
-                    <img src="./images/j3.png" alt="" data-fancybox="list-2">
-                    <img src="./images/j4.png" alt="" data-fancybox="list-2">
+                    {% for photo in photos %}
+                        <img src="{{ photo.image.url }}" alt="" data-fancybox="list-1">
+                    {% endfor %}
                 </div>
             </div>
         </section>

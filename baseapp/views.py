@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime
-from .models import Product, ProductImage, Categories, Categorymedals, Callrequest, Examples
+from .models import Product, ProductImage, Categories, Categorymedals, Callrequest, Examples, ExampleImage
 from paymentsystem.models import Orders
 from django.db.models import Q
 import urllib.request
@@ -140,8 +140,10 @@ def photoorder(request):
         })
 
 def photoalbum(request):
+    photos = ExampleImage.objects.all()
     return render(request, 'baseapp/photoalbum.html', {
         'categories': categorytonav(),
+        'photos': photos,
         })
 
 def categorytonav():
